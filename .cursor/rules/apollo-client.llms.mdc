@@ -1,0 +1,3483 @@
+---
+alwaysApply: true
+---
+
+========================
+CODE SNIPPETS
+========================
+TITLE: Installing Apollo Client and GraphQL Dependencies (Bash)
+DESCRIPTION: This command installs the necessary npm packages for an Apollo Client application. It includes `@apollo/client` for core Apollo Client functionalities (in-memory cache, local state, error handling, React view layer) and `graphql` for parsing GraphQL queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client graphql
+```
+
+----------------------------------------
+
+TITLE: Installing Dependencies for Transform Examples
+DESCRIPTION: This command installs the necessary Node.js package dependencies required for running the jscodeshift transform examples. It should be executed within the directory containing the `package.json` file for the examples to ensure all prerequisites are met.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_3
+
+LANGUAGE: sh
+CODE:
+```
+npm install
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for All React Paradigms - Shell
+DESCRIPTION: Installs `@apollo/client` along with `@apollo/react-components` and `@apollo/react-hoc` to support all three React paradigms (hooks, render props, HOCs). This requires removing older `react-apollo` or `@apollo/react-hooks` packages if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_3
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client @apollo/react-components @apollo/react-hoc
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for Hooks - Shell
+DESCRIPTION: Installs the `@apollo/client` package, which includes React hooks functionality. This is the recommended approach for new Apollo code and requires removing older `react-apollo` or `@apollo/react-hooks` packages if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for Render Prop Components - Shell
+DESCRIPTION: Installs `@apollo/client` along with `@apollo/react-components` for using render prop components. This approach requires removing the older `react-apollo` package if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_1
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client @apollo/react-components
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client Imports in App.jsx (React)
+DESCRIPTION: This snippet initializes the main `App` component in a React application, importing necessary hooks (`useQuery`, `gql`) from `@apollo/client` to prepare for GraphQL data fetching. It sets up a basic structure for the root component.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_5
+
+LANGUAGE: jsx
+CODE:
+```
+// Import everything needed to use the `useQuery` hook
+import { useQuery, gql } from '@apollo/client';
+
+export default function App() {
+  return (
+    <div>
+      <h2>My first Apollo app 🚀</h2>
+    </div>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for HOCs - Shell
+DESCRIPTION: Installs `@apollo/client` along with `@apollo/react-hoc` for using Higher-Order Components (HOCs). This approach requires removing the older `react-apollo` package if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_2
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client @apollo/react-hoc
+```
+
+----------------------------------------
+
+TITLE: Starting Apollo Fullstack Tutorial Server
+DESCRIPTION: This snippet navigates to the server directory of the fullstack tutorial and starts the server process. This is a prerequisite for the client application to function correctly and interact with the backend.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_8
+
+LANGUAGE: bash
+CODE:
+```
+# ... assuming still in [fullstack-tutorial-root]/final/client/node_modules from step 4
+cd ../../server
+npm start
+```
+
+----------------------------------------
+
+TITLE: Importing Apollo Client Core Modules (JavaScript/JSX)
+DESCRIPTION: This import statement brings in essential modules from the `@apollo/client` package. `ApolloClient` is the core client instance, `InMemoryCache` provides caching capabilities, `ApolloProvider` connects Apollo Client to React, and `gql` is used for parsing GraphQL query strings.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client 3.0 with npm
+DESCRIPTION: Instructions for installing the `@apollo/client` package using npm. This command installs or updates the core Apollo Client library, which now consolidates functionality previously spread across multiple packages.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/apollo-client-3-migration.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Starting Apollo Fullstack Tutorial Client
+DESCRIPTION: This snippet navigates to the client directory of the fullstack tutorial and starts the client application. This should be run in a separate terminal window from the server to allow both components to run concurrently.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_9
+
+LANGUAGE: bash
+CODE:
+```
+# ... in a separate terminal window
+cd [fullstack-tutorial-root]/final/client
+npm start
+```
+
+----------------------------------------
+
+TITLE: Installing Docs Site Dependencies (Shell)
+DESCRIPTION: Navigates into the cloned documentation repository and installs its Node.js dependencies using npm. This is a prerequisite for running the local documentation server.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/README.md#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+cd docs && npm i
+```
+
+----------------------------------------
+
+TITLE: Connecting Apollo Client to React with ApolloProvider (React/JSX)
+DESCRIPTION: This code wraps the root of a React application with the `ApolloProvider` component. By passing the initialized `client` instance as a prop, `ApolloProvider` makes the Apollo Client available to all components within the application's component tree via React Context, enabling them to perform GraphQL operations.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_4
+
+LANGUAGE: jsx
+CODE:
+```
+import React from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import App from './App';
+
+const client = new ApolloClient({
+  uri: 'https://flyby-router-demo.herokuapp.com/',
+  cache: new InMemoryCache(),
+});
+
+// Supported in React 18+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+);
+```
+
+----------------------------------------
+
+TITLE: Cloning and Installing Apollo Fullstack Tutorial
+DESCRIPTION: This snippet clones the Apollo fullstack tutorial repository, navigates into its server and client directories, and installs their respective Node.js dependencies. This sets up the target application for integration with the local Apollo Client checkout.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_5
+
+LANGUAGE: bash
+CODE:
+```
+git clone https://github.com/apollographql/fullstack-tutorial.git
+cd fullstack-tutorial
+cd final/server
+npm i
+cd ../client
+npm i
+```
+
+----------------------------------------
+
+TITLE: Installing apollo-upload-client package with npm
+DESCRIPTION: This command installs the `apollo-upload-client` package, which is required to enable file upload capabilities in Apollo Client. It's a prerequisite for setting up the upload link.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/file-uploads.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install apollo-upload-client
+```
+
+----------------------------------------
+
+TITLE: Starting Local Docs Server (Shell)
+DESCRIPTION: Starts the local documentation server in 'local' mode, linking it to the Apollo Client repository. This command makes the documentation accessible via a web browser at `http://localhost:3000`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/README.md#_snippet_2
+
+LANGUAGE: Shell
+CODE:
+```
+DOCS_MODE='local' npm run start:local -- ../apollo-client
+```
+
+----------------------------------------
+
+TITLE: Installing graphql-ws Library (Shell)
+DESCRIPTION: Installs the `graphql-ws` library using npm, which is a required dependency for `GraphQLWsLink` to establish WebSocket connections for GraphQL subscriptions.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-subscriptions.mdx#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm install graphql-ws
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client Instance (JavaScript/JSX)
+DESCRIPTION: This code initializes a new `ApolloClient` instance. The `uri` field specifies the endpoint of the GraphQL server (`https://flyby-router-demo.herokuapp.com/`), and the `cache` field is set to a new `InMemoryCache` instance, which Apollo Client uses to store query results.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_2
+
+LANGUAGE: jsx
+CODE:
+```
+const client = new ApolloClient({
+  uri: 'https://flyby-router-demo.herokuapp.com/',
+  cache: new InMemoryCache(),
+});
+```
+
+----------------------------------------
+
+TITLE: Setup and Teardown MSW Server in Jest
+DESCRIPTION: This snippet demonstrates how to integrate the MSW server setup and teardown into Jest's test lifecycle using `beforeAll`, `afterAll`, and `afterEach`. It ensures the server starts before all tests, stops after all tests, and resets handlers after each test.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_7
+
+LANGUAGE: TypeScript
+CODE:
+```
+import "@testing-library/jest-dom";
+import { gql } from "@apollo/client";
+import { server } from "./server";
+
+gql.disableFragmentWarnings();
+
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+afterAll(() => server.close());
+afterEach(() => server.resetHandlers());
+```
+
+----------------------------------------
+
+TITLE: Initializing `WebSocketLink` with `SubscriptionClient` in TypeScript
+DESCRIPTION: This TypeScript example demonstrates how to initialize a `WebSocketLink` using `SubscriptionClient` from `subscriptions-transport-ws`. It configures the WebSocket connection URL and includes `connectionParams` for authentication, showing a typical setup for Apollo Client subscriptions.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/subscriptions.mdx#_snippet_20
+
+LANGUAGE: ts
+CODE:
+```
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+
+const wsLink = new WebSocketLink(
+  new SubscriptionClient("ws://localhost:4000/subscriptions", {
+    connectionParams: {
+      authToken: user.authToken
+    }
+  })
+);
+```
+
+----------------------------------------
+
+TITLE: Installing GraphQL-WS Library for WebSocket Subscriptions
+DESCRIPTION: This command installs the `graphql-ws` library, which is a required dependency for setting up WebSocket-based subscriptions with Apollo Client. This library enables the `GraphQLWsLink` to establish and manage WebSocket connections for real-time data.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/subscriptions.mdx#_snippet_5
+
+LANGUAGE: Bash
+CODE:
+```
+npm install graphql-ws
+```
+
+----------------------------------------
+
+TITLE: Initial Test File Setup with createSchemaFetch
+DESCRIPTION: This snippet shows the initial setup for a test file using `createSchemaFetch` and `createTestSchema`. It imports necessary testing utilities, a GraphQL schema file, and sets up an executable schema with mock resolvers and default scalar values. It also includes a helper function for rendering the component within an `ApolloProvider`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_9
+
+LANGUAGE: tsx
+CODE:
+```
+import {
+  createSchemaFetch,
+  createTestSchema,
+} from "@apollo/client/testing/experimental";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { render as rtlRender, screen } from "@testing-library/react";
+import graphqlSchema from "../../../schema.graphql";
+// This should be a function that returns a new ApolloClient instance
+// configured just like your production Apollo Client instance - see the FAQ.
+import { makeClient } from "../../client";
+import { ApolloProvider, NormalizedCacheObject } from "@apollo/client";
+import { Products } from "../../products";
+import { Suspense } from "react";
+
+// First, let's create an executable schema...
+const staticSchema = makeExecutableSchema({ typeDefs: graphqlSchema });
+
+// which is then passed as the first argument to `createTestSchema`.
+const schema = createTestSchema(staticSchema, {
+  // Next, let's define mock resolvers
+  resolvers: {
+    Query: {
+      products: () =>
+        Array.from({ length: 5 }, (_element, id) => ({
+          id,
+          mediaUrl: `https://example.com/image${id}.jpg`,
+        })),
+    },
+  },
+  // ...and default scalar values
+  scalars: {
+    Int: () => 6,
+    Float: () => 22.1,
+    String: () => "default string",
+  },
+});
+
+// This `render` helper function would typically be extracted and shared between
+// test files.
+const render = (renderedClient: ApolloClient<NormalizedCacheObject>) =>
+  rtlRender(
+    <ApolloProvider client={renderedClient}>
+      <Suspense fallback="Loading...">
+        <Products />
+      </Suspense>
+    </ApolloProvider>
+  );
+```
+
+----------------------------------------
+
+TITLE: Installing `subscriptions-transport-ws` via npm
+DESCRIPTION: This snippet shows the command to install the `subscriptions-transport-ws` library using npm, which is required when your server uses this older library instead of `graphql-ws`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/subscriptions.mdx#_snippet_17
+
+LANGUAGE: bash
+CODE:
+```
+npm install subscriptions-transport-ws
+```
+
+----------------------------------------
+
+TITLE: Installing graphql-tag-swc-plugin with Yarn
+DESCRIPTION: This command installs the `graphql-tag-swc-plugin` package as a development dependency using Yarn. This plugin integrates with SWC to provide build-time precompilation of GraphQL queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_4
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev graphql-tag-swc-plugin
+```
+
+----------------------------------------
+
+TITLE: Installing `babel-plugin-import-graphql` (Yarn)
+DESCRIPTION: Installs the `babel-plugin-import-graphql` development dependency using Yarn, enabling direct import of GraphQL files into JavaScript/TypeScript.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_9
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev babel-plugin-import-graphql
+```
+
+----------------------------------------
+
+TITLE: Initializing ApolloClient with Local State Options (JavaScript)
+DESCRIPTION: Provides an example of configuring the `ApolloClient` constructor with options relevant to local state management, such as `cache`, `resolvers`, and `typeDefs`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/local-state/local-resolvers.mdx#_snippet_30
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  resolvers: { ... },
+  typeDefs: { ... },
+});
+```
+
+----------------------------------------
+
+TITLE: Installing `ts-transform-graphql-tag` (npm)
+DESCRIPTION: Installs the `ts-transform-graphql-tag` development dependency using npm, providing a TypeScript transformer for processing `graphql-tag` imports.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_12
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev ts-transform-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Cloning and Installing Apollo Client
+DESCRIPTION: This snippet clones the Apollo Client repository from GitHub, navigates into its directory, and installs its Node.js dependencies using npm. This prepares the local Apollo Client checkout for linking with an application.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+git clone https://github.com/apollographql/apollo-client.git
+cd apollo-client
+npm i
+cd ..
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Dependencies (Shell)
+DESCRIPTION: This shell command installs the necessary Node.js dependencies for the cloned `apollo-client` repository, preparing it for running codemods.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/fragments.mdx#_snippet_62
+
+LANGUAGE: sh
+CODE:
+```
+npm install
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Testing Dependencies (Bash)
+DESCRIPTION: Installs the necessary peer dependencies (`@graphql-tools/merge`, `@graphql-tools/schema`, `@graphql-tools/utils`, `undici`) required for using the schema-driven testing utilities (`createTestSchema`, `createSchemaFetch`) in Apollo Client v3.10+. These are installed as development dependencies.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm i @graphql-tools/merge @graphql-tools/schema @graphql-tools/utils undici --save-dev
+```
+
+----------------------------------------
+
+TITLE: Installing graphql-tag-swc-plugin with npm
+DESCRIPTION: This command installs the `graphql-tag-swc-plugin` package as a development dependency using npm. This plugin is designed for SWC to precompile GraphQL queries, similar to its Babel counterpart.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_3
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev graphql-tag-swc-plugin
+```
+
+----------------------------------------
+
+TITLE: Measuring Operation Duration with ApolloLink Context (JavaScript)
+DESCRIPTION: This example demonstrates managing context across multiple links. timeStartLink sets a start timestamp in the operation's context. logTimeLink then retrieves this start time from the context after the operation completes, calculates the duration, and logs it. This illustrates how context can be used to pass metadata between links in a chain.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/introduction.mdx#_snippet_15
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { ApolloLink, from } from '@apollo/client';
+
+const timeStartLink = new ApolloLink((operation, forward) => {
+  operation.setContext({ start: new Date() });
+  return forward(operation);
+});
+
+const logTimeLink = new ApolloLink((operation, forward) => {
+  return forward(operation).map((data) => {
+    // data from a previous link
+    const time = new Date() - operation.getContext().start;
+    console.log(`operation ${operation.operationName} took ${time} to complete`);
+    return data;
+  })
+});
+
+const additiveLink = from([
+  timeStartLink,
+  logTimeLink
+]);
+```
+
+----------------------------------------
+
+TITLE: Installing babel-plugin-graphql-tag with npm
+DESCRIPTION: This command installs the `babel-plugin-graphql-tag` package as a development dependency using npm. This plugin is used to precompile GraphQL queries at build time, reducing runtime overhead.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev babel-plugin-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Render Prop Library
+DESCRIPTION: This snippet demonstrates how to install the `@apollo/client` package using npm. This package includes the deprecated React Apollo render prop components, which are no longer actively supported or updated.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/components.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing `ts-transform-graphql-tag` (Yarn)
+DESCRIPTION: Installs the `ts-transform-graphql-tag` development dependency using Yarn, providing a TypeScript transformer for processing `graphql-tag` imports.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_13
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev ts-transform-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Installing babel-plugin-graphql-tag with Yarn
+DESCRIPTION: This command installs the `babel-plugin-graphql-tag` package as a development dependency using Yarn. This plugin helps in precompiling GraphQL queries during the build process.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_1
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev babel-plugin-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Defining GraphQL Query for Locations in App.jsx (Apollo Client)
+DESCRIPTION: This snippet defines a GraphQL query named `GET_LOCATIONS` using the `gql` template literal. It specifies the fields (`id`, `name`, `description`, `photo`) to be fetched for a list of `locations`, which will be used by the `useQuery` hook.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_6
+
+LANGUAGE: jsx
+CODE:
+```
+const GET_LOCATIONS = gql`
+  query GetLocations {
+    locations {
+      id
+      name
+      description
+      photo
+    }
+  }
+`;
+```
+
+----------------------------------------
+
+TITLE: Installing subscriptions-transport-ws Library (Shell)
+DESCRIPTION: This command installs the `subscriptions-transport-ws` library, which is a required dependency for using `WebSocketLink` in Apollo Client. It fetches the package from npm and adds it to the project's `node_modules` directory.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-ws.mdx#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm install subscriptions-transport-ws
+```
+
+----------------------------------------
+
+TITLE: Integrating DisplayLocations Component into App.jsx (React)
+DESCRIPTION: This snippet updates the main `App` component to include the `DisplayLocations` component. This integration ensures that the fetched GraphQL data is rendered within the application's main view, completing the data display flow.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_8
+
+LANGUAGE: jsx
+CODE:
+```
+export default function App() {
+  return (
+    <div>
+      <h2>My first Apollo app 🚀</h2>
+      <br/>
+      <DisplayLocations />
+    </div>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for APQ
+DESCRIPTION: Installs the core `@apollo/client` package, which is a prerequisite for implementing Automatic Persisted Queries (APQ). This package provides the `createPersistedQueryLink` used for APQ.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_7
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Executing a GraphQL Query Directly with Apollo Client (JavaScript/GraphQL)
+DESCRIPTION: This snippet demonstrates how to execute a GraphQL query directly using the `client.query()` method. It fetches a list of locations from the configured GraphQL API. The `gql` template literal parses the GraphQL query string, and the `.then()` block logs the `result` object, which contains the fetched `data`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_3
+
+LANGUAGE: jsx
+CODE:
+```
+// const client = ...
+
+client
+  .query({
+    query: gql`
+      query GetLocations {
+        locations {
+          id
+          name
+          description
+          photo
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client and REST Link Dependencies
+DESCRIPTION: This snippet provides the npm command to install the necessary packages for using Apollo Client with `apollo-link-rest`. It includes `@apollo/client`, `apollo-link-rest`, `graphql`, and `qs` as peer dependencies required for functionality.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-rest.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install --save @apollo/client apollo-link-rest graphql qs
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client with a Composed Link (JavaScript)
+DESCRIPTION: This example shows how to provide a previously composed `ApolloLink` chain to the `ApolloClient` constructor. It configures the client with an `InMemoryCache` and the `directionalLink` for handling all network operations, demonstrating the final step of link integration.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/introduction.mdx#_snippet_9
+
+LANGUAGE: js
+CODE:
+```
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { RetryLink } from '@apollo/client/link/retry';
+
+const directionalLink = new RetryLink().split(
+  (operation) => operation.getContext().version === 1,
+  new HttpLink({ uri: "http://localhost:4000/v1/graphql" }),
+  new HttpLink({ uri: "http://localhost:4000/v2/graphql" })
+);
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: directionalLink
+});
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client HOC Library
+DESCRIPTION: This command installs the `@apollo/client` package, which includes the deprecated Higher-Order Component (HOC) library. The HOC symbols are then imported from `@apollo/client/react/hoc`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for Persisted Queries (Manifest)
+DESCRIPTION: Installs the core `@apollo/client` package, which is a prerequisite for implementing persisted queries with an operation manifest. This package provides the `createPersistedQueryLink`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_3
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing babel-plugin-import-graphql with npm
+DESCRIPTION: This command installs the `babel-plugin-import-graphql` package as a development dependency using npm. This plugin allows importing GraphQL operations and fragments from separate `.graphql` or `.gql` files, transparently using `graphql-tag` under the hood with precompilation benefits.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_8
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev babel-plugin-import-graphql
+```
+
+----------------------------------------
+
+TITLE: Displaying Locations with useQuery Hook in App.jsx (React)
+DESCRIPTION: This `DisplayLocations` component uses the `useQuery` hook with `GET_LOCATIONS` to fetch and render location data. It handles loading and error states, then maps over the fetched `data.locations` to display each location's name, image, and description.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_7
+
+LANGUAGE: jsx
+CODE:
+```
+function DisplayLocations() {
+  const { loading, error, data } = useQuery(GET_LOCATIONS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
+  return data.locations.map(({ id, name, description, photo }) => (
+    <div key={id}>
+      <h3>{name}</h3>
+      <img width="400" height="250" alt="location-reference" src={`${photo}`} />
+      <br />
+      <b>About this location:</b>
+      <p>{description}</p>
+      <br />
+    </div>
+  ));
+}
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client and Querying Products in JavaScript
+DESCRIPTION: This snippet initializes an Apollo Client instance, configuring it with a GraphQL endpoint and an in-memory cache. It then executes a GraphQL query to retrieve product IDs and titles, subsequently rendering the product titles as a list within the 'main' HTML element.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/integration-tests/browser-esm/html/jspm-prepared.html#_snippet_0
+
+LANGUAGE: javascript
+CODE:
+```
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+const client = new ApolloClient({
+  uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
+  cache: new InMemoryCache(),
+});
+client
+  .query({
+    query: gql`
+      query {
+        products {
+          id
+          title
+        }
+      }
+    `,
+  })
+  .then((r) => {
+    const main = document.querySelector("main");
+    const ul = document.createElement("ul");
+    main.replaceChildren(ul);
+    r.data.products.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p.title;
+      ul.appendChild(li);
+    });
+  })
+  .catch(console.error);
+```
+
+----------------------------------------
+
+TITLE: Running jscodeshift Transform on JavaScript Examples
+DESCRIPTION: This command applies the jscodeshift transform to example JavaScript files to demonstrate its functionality. It targets `.js` files located within the `examples` directory using the `imports.js` transform script.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_4
+
+LANGUAGE: sh
+CODE:
+```
+npx jscodeshift -t imports.js --extensions js examples
+```
+
+----------------------------------------
+
+TITLE: Querying Products with Apollo Client in JavaScript
+DESCRIPTION: This snippet initializes an Apollo Client instance, configures it with a GraphQL URI and an in-memory cache, and then executes a query to fetch product IDs and titles. Upon successful data retrieval, it dynamically creates an unordered list and populates it with product titles on the webpage. It requires Apollo Client and gql for GraphQL operations.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/integration-tests/browser-esm/html/jsdeliver-esm.html#_snippet_0
+
+LANGUAGE: JavaScript
+CODE:
+```
+// give playwright time to load await new Promise((r) => setTimeout(r, 100));
+import { ApolloClient, InMemoryCache, gql, } from "https://cdn.jsdelivr.net/npm/@apollo/client@0.0.0-pr-10915-20230616125401/+esm";
+const client = new ApolloClient({
+  uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
+  cache: new InMemoryCache(),
+});
+client
+  .query({
+    query: gql`
+      query {
+        products {
+          id
+          title
+        }
+      }
+    `,
+  })
+  .then((r) => {
+    const main = document.querySelector("main");
+    const ul = document.createElement("ul");
+    main.replaceChildren(ul);
+    r.data.products.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p.title;
+      ul.appendChild(li);
+    });
+  })
+  .catch(console.error);
+```
+
+----------------------------------------
+
+TITLE: Implementing Data Polling with Apollo Client's `startPolling` in React
+DESCRIPTION: This example illustrates how to use `data.startPolling` to periodically refetch data from the server. It demonstrates calling `startPolling` with an interval in milliseconds within the `componentDidMount` lifecycle method of a React component. This technique is useful for emulating real-time data updates without a full subscription setup.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_26
+
+LANGUAGE: JavaScript
+CODE:
+```
+class MyComponent extends Component {
+  componentDidMount() {
+    // In this specific case you may want to use `options.pollInterval` instead.
+    this.props.data.startPolling(1000);
+  }
+
+  render() {
+    // ...
+  }
+}
+
+export default graphql(gql`query MyComponentQuery { ... }`)(MyComponent);
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client and GraphQL in React Native
+DESCRIPTION: This command installs the necessary `@apollo/client` library and `graphql` peer dependency using npm, enabling Apollo Client functionality in a React Native project.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/integrations/react-native.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client graphql
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Devtools VS Code Package
+DESCRIPTION: Installs the `@apollo/client-devtools-vscode` package using npm, which is a prerequisite for connecting Apollo Client to the VS Code DevTools for remote debugging capabilities.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/developer-tooling.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client-devtools-vscode
+```
+
+----------------------------------------
+
+TITLE: Running jscodeshift Transform on TypeScript Examples
+DESCRIPTION: This command applies the jscodeshift transform to example TypeScript files to demonstrate its functionality. It targets `.ts` files within the `examples` directory and explicitly uses the `ts` parser for accurate processing.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_5
+
+LANGUAGE: sh
+CODE:
+```
+npx jscodeshift -t imports.js --extensions ts --parser ts examples
+```
+
+----------------------------------------
+
+TITLE: Configuring Jest Test Environment and Setup Files - TypeScript
+DESCRIPTION: This Jest configuration file sets up the testing environment. It defines a global __DEV__ variable, specifies jsdom as the test environment, and includes ./jest.polyfills.js and <rootDir>/setupTests.ts in the setup files. It also includes configurations for MSW compatibility and transforming GraphQL files.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+import type { Config } from "jest";
+
+const config: Config = {
+  globals: {
+    "globalThis.__DEV__": JSON.stringify(true),
+  },
+  testEnvironment: "jsdom",
+  setupFiles: ["./jest.polyfills.js"],
+  // You may also have an e.g. setupTests.ts file here
+  setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
+  // If you're using MSW, opt out of the browser export condition for MSW tests
+  // For more information, see: https://github.com/mswjs/msw/issues/1786#issuecomment-1782559851
+  testEnvironmentOptions: {
+    customExportConditions: [""]
+  },
+  // If you plan on importing .gql/.graphql files in your tests, transform them with @graphql-tools/jest-transform
+  transform: {
+    "\\.(gql|graphql)$": "@graphql-tools/jest-transform"
+  }
+};
+
+export default config;
+```
+
+----------------------------------------
+
+TITLE: Test Apollo Client Component with MSW
+DESCRIPTION: This snippet provides examples of testing a React component (`Products`) that uses Apollo Client, leveraging the MSW setup. It shows how to render the component within an `ApolloProvider` and assert on the data fetched from the mocked API via the MSW handler and test schema. It also demonstrates updating and resetting the test schema.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_8
+
+LANGUAGE: TSX
+CODE:
+```
+import { Suspense } from "react";
+import { render as rtlRender, screen } from "@testing-library/react";
+import {
+  ApolloClient,
+  ApolloProvider,
+  NormalizedCacheObject,
+} from "@apollo/client";
+import { testSchema } from "./handlers";
+import { Products } from "../products";
+// This should be a function that returns a new ApolloClient instance
+// configured just like your production Apollo Client instance - see the FAQ.
+import { makeClient } from "../client";
+
+const render = (renderedClient: ApolloClient<NormalizedCacheObject>) =>
+  rtlRender(
+    <ApolloProvider client={renderedClient}>
+      <Suspense fallback="Loading...">
+        <Products />
+      </Suspense>
+    </ApolloProvider>
+  );
+
+describe("Products", () => {
+  test("renders", async () => {
+    render(makeClient());
+
+    await screen.findByText("Loading...");
+
+    // This is the data from our initial mock resolver in the test schema
+    // defined in the handlers file 🎉
+    expect(await screen.findByText(/blue jays hat/i)).toBeInTheDocument();
+  });
+
+  test("allows resolvers to be updated via .add", async () => {
+    // Calling .add on the test schema will update the resolvers
+    // with new data
+    testSchema.add({
+      resolvers: {
+        Query: {
+          products: () => {
+            return [
+              {
+                id: "2",
+                title: "Mets Hat",
+              },
+            ];
+          },
+        },
+      },
+    });
+
+    render(makeClient());
+
+    await screen.findByText("Loading...");
+
+    // Our component now renders the new data from the updated resolver
+    await screen.findByText(/mets hat/i);
+  });
+
+  test("handles test schema resetting via .reset", async () => {
+    // Calling .reset on the test schema will reset the resolvers
+    testSchema.reset();
+
+    render(makeClient());
+
+    await screen.findByText("Loading...");
+
+    // The component will likely render an error or empty state
+    // depending on how it handles missing data after reset.
+    // Add assertions here based on expected behavior.
+  });
+});
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Persisted Query Lists
+DESCRIPTION: Installs the `@apollo/persisted-query-lists` package, which provides utilities like `generatePersistedQueryIdsFromManifest` for working with operation manifests in Apollo Client's persisted queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/persisted-query-lists
+```
+
+----------------------------------------
+
+TITLE: Building and Watching Apollo Client for Changes
+DESCRIPTION: This snippet navigates to the root of the local Apollo Client checkout and starts the build process with a watch command. This allows for automatic recompilation of Apollo Client whenever source files are modified, enabling rapid iteration and testing.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_10
+
+LANGUAGE: bash
+CODE:
+```
+# ... in a separate terminal window
+cd [apollo-client-root]
+npm run watch
+```
+
+----------------------------------------
+
+TITLE: Example Apollo Persisted Query Manifest (JSON)
+DESCRIPTION: An example of the `persisted-query-manifest.json` file generated by the `@apollo/generate-persisted-query-manifest` package. It defines the format, version, and a list of operations, each with a unique ID, the original query body, name, and type, used for safelisting.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_2
+
+LANGUAGE: json
+CODE:
+```
+{
+  "format": "apollo-persisted-query-manifest",
+  "version": 1,
+  "operations": [
+    {
+      "id": "e0321f6b438bb42c022f633d38c19549dea9a2d55c908f64c5c6cb8403442fef",
+      "body": "query GetItem { thing { __typename } }",
+      "name": "GetItem",
+      "type": "query"
+    }
+  ]
+}
+```
+
+----------------------------------------
+
+TITLE: Installing GraphQL Code Generator Dependencies (Bash)
+DESCRIPTION: This command installs the necessary development dependencies for GraphQL Code Generator, TypeScript, and related Apollo Client packages. These packages are crucial for setting up the type generation process in your project.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/static-typing.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+yarn add -D typescript graphql @graphql-codegen/cli @graphql-codegen/client-preset @graphql-typed-document-node/core
+```
+
+----------------------------------------
+
+TITLE: Running jscodeshift Transform on TypeScript React Examples
+DESCRIPTION: This command applies the jscodeshift transform to example TypeScript React files to demonstrate its functionality. It targets `.tsx` files within the `examples` directory and uses the `tsx` parser to correctly handle JSX syntax.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_6
+
+LANGUAGE: sh
+CODE:
+```
+npx jscodeshift -t imports.js --extensions tsx --parser tsx examples
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client and Querying Product Data in JavaScript
+DESCRIPTION: This JavaScript code initializes an Apollo Client instance, configured with a specific GraphQL URI and an in-memory cache. It includes a brief delay for potential testing environments like Playwright, then executes a GraphQL query to fetch product IDs and titles. The fetched data is subsequently rendered as a list of product titles within the 'main' element of the HTML document, with error handling for any query failures.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/integration-tests/browser-esm/html/unpkg-unmangled.html#_snippet_0
+
+LANGUAGE: javascript
+CODE:
+```
+// give playwright time to load
+await new Promise((r) => setTimeout(r, 100));
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
+  cache: new InMemoryCache(),
+});
+
+client
+  .query({
+    query: gql`
+      query {
+        products {
+          id
+          title
+        }
+      }
+    `,
+  })
+  .then((r) => {
+    const main = document.querySelector("main");
+    const ul = document.createElement("ul");
+    main.replaceChildren(ul);
+    r.data.products.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p.title;
+      ul.appendChild(li);
+    });
+  })
+  .catch(console.error);
+```
+
+----------------------------------------
+
+TITLE: Complete RestLink Configuration Options Example - JavaScript
+DESCRIPTION: This JavaScript snippet provides a comprehensive example of various configuration options available for `RestLink`. It demonstrates setting global `uri`, `endpoints`, `customFetch`, default `headers`, `credentials`, `fieldNameNormalizer` and `fieldNameDenormalizer` for case conversion, `typePatcher` for type-specific logic, and `defaultSerializer` for custom request body serialization.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-rest.mdx#_snippet_20
+
+LANGUAGE: js
+CODE:
+```
+import fetch from 'cross-fetch';
+import * as camelCase from 'camelcase';
+import * as snake_case from 'snake-case';
+
+const link = new RestLink({
+  endpoints: { github: 'github.com' },
+  uri: 'api.com',
+  customFetch: fetch,
+  headers: {
+    "Content-Type": "application/json"
+  },
+  credentials: "same-origin",
+  fieldNameNormalizer: (key) => camelCase(key),
+  fieldNameDenormalizer: (key) => snake_case(key),
+  typePatcher: {
+    Post: ()=> {
+      bodySnippet...
+    }
+  },
+  defaultSerializer: (data, headers) => {
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    headers.set("Content-Type", "x-www-form-encoded")
+    return {data: formData, headers};
+  }
+});
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Persisted Query Manifest Generator (npm)
+DESCRIPTION: Installs the `@apollo/generate-persisted-query-manifest` package as a development dependency using npm. This package is essential for generating operation manifests required for Apollo Persisted Queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install --save-dev @apollo/generate-persisted-query-manifest
+```
+
+----------------------------------------
+
+TITLE: Showing Pending UI with React useTransition Hook (TypeScript)
+DESCRIPTION: This snippet enhances the transition example by providing visual feedback during a pending data fetch. It utilizes React's useTransition hook to get an isPending boolean, which is then used to dim the select dropdown, indicating that a background transition is in progress without showing a full Suspense fallback.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/suspense.mdx#_snippet_3
+
+LANGUAGE: tsx
+CODE:
+```
+import { useState, Suspense, useTransition } from "react";
+
+function App() {
+  const [isPending, startTransition] = useTransition();
+  const { data } = useSuspenseQuery(GET_DOGS_QUERY);
+  const [selectedDog, setSelectedDog] = useState(
+    data.dogs[0].id
+  );
+
+  return (
+    <>
+      <select
+        style={{ opacity: isPending ? 0.5 : 1 }}
+        onChange={(e) => {
+          startTransition(() => {
+            setSelectedDog(e.target.value);
+          });
+        }}
+      >
+        {data.dogs.map(({ id, name }) => (
+          <option key={id} value={id}>{name}</option>
+        ))}
+      </select>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Dog id={selectedDog} />
+      </Suspense>
+    </>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Using ApolloProvider Component - JSX
+DESCRIPTION: This example illustrates the usage of the `ApolloProvider` component. It initializes an `ApolloClient` instance with an `InMemoryCache` and a GraphQL URI, then renders a React component tree wrapped by `ApolloProvider` to make the client accessible to all child components.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hooks.mdx#_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "http://localhost:4000/graphql"
+});
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <MyRootComponent />
+  </ApolloProvider>,
+  document.getElementById('root'),
+);
+```
+
+----------------------------------------
+
+TITLE: Installing SHA-256 Hash Function for APQ
+DESCRIPTION: Installs a SHA-256 hashing library, `crypto-hash`, which is required by the `createPersistedQueryLink` for APQ. Developers must provide their own hash function as it's not bundled with `@apollo/client`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_8
+
+LANGUAGE: bash
+CODE:
+```
+npm install crypto-hash
+```
+
+----------------------------------------
+
+TITLE: Importing Testing Utilities from Apollo Client - JavaScript
+DESCRIPTION: Imports the `MockedProvider` component from `@apollo/client/testing`. This provides access to React testing utilities for Apollo Client, which are not included in the default bundle and must be imported separately.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_5
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { MockedProvider } from '@apollo/client/testing';
+```
+
+----------------------------------------
+
+TITLE: Example of graphql-tag.macro usage in JavaScript
+DESCRIPTION: This JavaScript snippet demonstrates how to use `graphql-tag.macro` instead of the direct `graphql-tag` import. This macro, when processed by `babel-macros`, precompiles the GraphQL query at build time, avoiding runtime overhead while maintaining similar syntax.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_7
+
+LANGUAGE: JavaScript
+CODE:
+```
+import gql from 'graphql-tag.macro'; // <-- Use the macro
+
+const query = gql`
+  query HelloWorld {
+    hello {
+      world
+    }
+  }
+`;
+```
+
+----------------------------------------
+
+TITLE: Code Splitting with react-loadable (JavaScript)
+DESCRIPTION: Shows a basic example of using `react-loadable` to asynchronously load a React component, which can be used in conjunction with dynamically adding Apollo Client resolvers.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/local-state/local-resolvers.mdx#_snippet_28
+
+LANGUAGE: JavaScript
+CODE:
+```
+import Loadable from 'react-loadable';
+
+import Loading from './components/Loading';
+
+export const Stats = Loadable({
+  loader: () => import('./components/stats/Stats'),
+  loading: Loading,
+});
+```
+
+----------------------------------------
+
+TITLE: Using @client and @export on Nested Field (JS)
+DESCRIPTION: This example shows how to apply the `@client` directive to a selection set (`currentAuthor`) and the `@export` directive to a nested field (`authorId`) within that set. The value of the nested field is retrieved from the cache and exported as a variable (`authorId`) for use in another field (`postCount`) in the same operation. It includes client setup, query definition, and cache writing for the nested data.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/local-state/local-resolvers.mdx#_snippet_22
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { ApolloClient, InMemoryCache, HttpLink, gql } from '@apollo/client';
+
+const query = gql`
+  query CurrentAuthorPostCount($authorId: Int!) {
+    currentAuthor @client {
+      name
+      authorId @export(as: "authorId")
+    }
+    postCount(authorId: $authorId)
+  }
+`;
+
+const cache = new InMemoryCache();
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  cache,
+  resolvers: {},
+});
+
+cache.writeQuery({
+  query: gql`
+    query GetCurrentAuthor {
+      currentAuthor {
+        name
+        authorId
+      }
+    }
+  `,
+  data: {
+    currentAuthor: {
+      __typename: 'Author',
+      name: 'John Smith',
+      authorId: 12345,
+    },
+  },
+});
+
+// ... run the query using client.query, the <Query /> component, etc.
+```
+
+----------------------------------------
+
+TITLE: Create New Apollo Client Instance (TS)
+DESCRIPTION: Provides an example of a `makeClient` function pattern. This function is used to create a fresh instance of `ApolloClient` for each test, preventing state leakage and ensuring test isolation.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_14
+
+LANGUAGE: ts
+CODE:
+```
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+
+const httpLink = new HttpLink({
+  uri: "https://example.com/graphql",
+});
+
+export const makeClient = () => {
+  return new ApolloClient({
+    cache: new InMemoryCache(),
+    link: httpLink,
+  });
+};
+
+export const client = makeClient();
+```
+
+----------------------------------------
+
+TITLE: Illustrating Offset-Based Pagination Flow with Mermaid
+DESCRIPTION: This Mermaid sequence diagram visualizes the flow of offset-based pagination. It shows a client application making two successive GraphQL queries to a server, first requesting 20 elements starting from offset 0, then 10 elements starting from offset 20, demonstrating how data is fetched in manageable pages.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/pagination/overview.mdx#_snippet_1
+
+LANGUAGE: mermaid
+CODE:
+```
+sequenceDiagram;
+  Client app->>GraphQL server: query GetBookTitles(offset=0 limit=20)
+  GraphQL server->>Client app: Returns the first 20 list elements
+  Client app->>GraphQL server: query GetBookTitles(offset=20 limit=10)
+  GraphQL server->>Client app: Returns the next 10 list elements
+```
+
+----------------------------------------
+
+TITLE: Configuring Apollo Client with URI and Headers (JavaScript)
+DESCRIPTION: This example shows how to configure ApolloClient in version 3.0 by directly providing uri and headers options to the constructor. These options are internally used to create an HttpLink instance, simplifying network configuration without explicitly creating a link chain. It requires a cache instance to be defined.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/apollo-client-3-migration.mdx#_snippet_6
+
+LANGUAGE: JavaScript
+CODE:
+```
+const client = new ApolloClient({
+  cache,
+  uri: 'http://localhost:4000/graphql',
+  headers: {
+    authorization: localStorage.getItem('token') || '',
+    'client-name': 'Space Explorer [web]',
+    'client-version': '1.0.0',
+  },
+  ...
+});
+```
+
+----------------------------------------
+
+TITLE: Basic React Component Rendering Test with MockedProvider
+DESCRIPTION: This test snippet demonstrates the basic setup for rendering a React component that uses Apollo Client within a test environment. It utilizes `MockedProvider` to make Apollo Client available on React's context, allowing the `Dog` component to render. Initially, no mocks are provided, so the test asserts that the 'Loading...' state is displayed, indicating the query is in progress.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/testing.mdx#_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import { MockedProvider } from "@apollo/client/testing";
+import { GET_DOG_QUERY, Dog } from "./dog";
+
+const mocks = []; // We'll fill this in next
+
+it("renders without error", async () => {
+  render(
+    <MockedProvider mocks={mocks}>
+      <Dog name="Buck" />
+    </MockedProvider>
+  );
+  expect(await screen.findByText("Loading...")).toBeInTheDocument();
+});
+```
+
+----------------------------------------
+
+TITLE: Configuring Apollo Client Query Options (JavaScript)
+DESCRIPTION: This example shows how to provide a static object for `config.options` to configure how a query is fetched and updated. These options are passed to the `graphql()` higher-order component and can include various settings depending on the operation type.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_29
+
+LANGUAGE: JavaScript
+CODE:
+```
+export default graphql(gql`query MyQuery { ... }`, {
+  options: {
+    // Options go here.
+  },
+})(MyComponent);
+```
+
+----------------------------------------
+
+TITLE: Express.js Application Setup for Server-Side Rendering with Apollo Client and React Router
+DESCRIPTION: This JSX snippet outlines an Express.js server setup for SSR, demonstrating how to initialize a new Apollo Client instance for each incoming request to prevent data leakage. It wraps the React application with `ApolloProvider` and `StaticRouter`, configuring the client with `ssrMode: true` and an `HttpLink` to handle server-side GraphQL requests, including passing cookies.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/server-side-rendering.mdx#_snippet_2
+
+LANGUAGE: JSX
+CODE:
+```
+import {
+  ApolloProvider,
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache
+} from '@apollo/client';
+import Express from 'express';
+import React from 'react';
+import { StaticRouter } from 'react-router';
+
+// File shown below
+import Layout from './routes/Layout';
+
+const app = new Express();
+app.use((req, res) => {
+
+  const client = new ApolloClient({
+    ssrMode: true,
+    link: createHttpLink({
+      uri: 'http://localhost:3010',
+      credentials: 'same-origin',
+      headers: {
+        cookie: req.header('Cookie'),
+      },
+    }),
+    cache: new InMemoryCache(),
+  });
+
+  const context = {};
+
+  // The client-side App will instead use <BrowserRouter>
+  const App = (
+    <ApolloProvider client={client}>
+      <StaticRouter location={req.url} context={context}>
+        <Layout />
+      </StaticRouter>
+    </ApolloProvider>
+  );
+
+  // TODO: rendering code (see below)
+});
+
+app.listen(basePort, () => console.log(
+  `app Server is now running on http://localhost:${basePort}`
+));
+```
+
+----------------------------------------
+
+TITLE: Updating React Testing Utilities Imports in Apollo Client 3.0
+DESCRIPTION: This example demonstrates the new import path for React Apollo's testing utilities, such as `MockedProvider`. In Apollo Client 3.0, these utilities are now available through `@apollo/client/testing`, removing the need for a separate `@apollo/react-testing` package.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/apollo-client-3-migration.mdx#_snippet_4
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { MockedProvider } from '@apollo/client/testing';
+```
+
+----------------------------------------
+
+TITLE: Setting Up Jest Test Environment with Testing Library and Apollo Client - TypeScript
+DESCRIPTION: This file performs additional test setup. It imports @testing-library/jest-dom to extend Jest's matchers with DOM-specific assertions. It also imports gql from @apollo/client and calls gql.disableFragmentWarnings() to suppress warnings about fragments in the test output.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_4
+
+LANGUAGE: TypeScript
+CODE:
+```
+import "@testing-library/jest-dom";
+import { gql } from "@apollo/client";
+
+gql.disableFragmentWarnings();
+```
+
+----------------------------------------
+
+TITLE: Example GraphQL Query for Viewer and Todos
+DESCRIPTION: This snippet defines a simple GraphQL query named `ViewerAndTodos`. It requests the `name` of the `viewer` and the `text` of `todos`, illustrating a typical structure for fetching multiple data types in a single query. This query is used as context for the subsequent JavaScript examples.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_16
+
+LANGUAGE: graphql
+CODE:
+```
+query ViewerAndTodos {
+  viewer {
+    name
+  }
+  todos {
+    text
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Initiating Background Queries with useBackgroundQuery and useReadQuery in React
+DESCRIPTION: This example illustrates the use of `useBackgroundQuery` to initiate a query in a parent component and `useReadQuery` to read its data in a child component, leveraging React Suspense for loading states. It sets up an Apollo Client instance and demonstrates the `queryRef` pattern for avoiding request waterfalls.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hooks.mdx#_snippet_8
+
+LANGUAGE: jsx
+CODE:
+```
+import { Suspense } from 'react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  useBackgroundQuery,
+  useReadQuery,
+} from '@apollo/client';
+
+const query = gql`
+  foo {
+    bar
+  }
+`;
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql",
+  cache: new InMemoryCache()
+});
+
+function SuspenseFallback() {
+  return <div>Loading...</div>;
+}
+
+function Child({ queryRef }) {
+  const { data } = useReadQuery(queryRef);
+
+  return <div>{data.foo.bar}</div>;
+}
+
+function Parent() {
+  const [queryRef] = useBackgroundQuery(query);
+
+  return (
+    <Suspense fallback={<SuspenseFallback />}>
+      <Child queryRef={queryRef} />
+    </Suspense>
+  );
+}
+
+function App() {
+  return (
+    <ApolloProvider client={client}>
+      <Parent />
+    </ApolloProvider>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Configuring Apollo Client with SchemaLink for Mocking Data - JavaScript
+DESCRIPTION: This example illustrates how to set up Apollo Client with `SchemaLink` for mocking GraphQL data. It uses `graphql-tools` to create an executable schema and apply mock functions, enabling client-side testing and development without a live backend. It requires `@apollo/client` and `graphql-tools`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-schema.mdx#_snippet_1
+
+LANGUAGE: javascript
+CODE:
+```
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { SchemaLink } from '@apollo/client/link/schema';
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+
+const typeDefs = `
+  Query {
+  ...
+  }
+`;
+
+const mocks = {
+  Query: () => ...,
+  Mutation: () => ...
+};
+
+const schema = makeExecutableSchema({ typeDefs });
+const schemaWithMocks = addMockFunctionsToSchema({
+  schema,
+  mocks
+});
+
+const apolloCache = new InMemoryCache(window.__APOLLO_STATE__);
+
+const graphqlClient = new ApolloClient({
+  cache: apolloCache,
+  link: new SchemaLink({ schema: schemaWithMocks })
+});
+```========================
+CODE SNIPPETS
+========================
+TITLE: Installing Apollo Client and GraphQL Dependencies (Bash)
+DESCRIPTION: This command installs the necessary npm packages for an Apollo Client application. It includes `@apollo/client` for core Apollo Client functionalities (in-memory cache, local state, error handling, React view layer) and `graphql` for parsing GraphQL queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client graphql
+```
+
+----------------------------------------
+
+TITLE: Installing Dependencies for Transform Examples
+DESCRIPTION: This command installs the necessary Node.js package dependencies required for running the jscodeshift transform examples. It should be executed within the directory containing the `package.json` file for the examples to ensure all prerequisites are met.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_3
+
+LANGUAGE: sh
+CODE:
+```
+npm install
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for All React Paradigms - Shell
+DESCRIPTION: Installs `@apollo/client` along with `@apollo/react-components` and `@apollo/react-hoc` to support all three React paradigms (hooks, render props, HOCs). This requires removing older `react-apollo` or `@apollo/react-hooks` packages if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_3
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client @apollo/react-components @apollo/react-hoc
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for Hooks - Shell
+DESCRIPTION: Installs the `@apollo/client` package, which includes React hooks functionality. This is the recommended approach for new Apollo code and requires removing older `react-apollo` or `@apollo/react-hooks` packages if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for Render Prop Components - Shell
+DESCRIPTION: Installs `@apollo/client` along with `@apollo/react-components` for using render prop components. This approach requires removing the older `react-apollo` package if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_1
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client @apollo/react-components
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client Imports in App.jsx (React)
+DESCRIPTION: This snippet initializes the main `App` component in a React application, importing necessary hooks (`useQuery`, `gql`) from `@apollo/client` to prepare for GraphQL data fetching. It sets up a basic structure for the root component.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_5
+
+LANGUAGE: jsx
+CODE:
+```
+// Import everything needed to use the `useQuery` hook
+import { useQuery, gql } from '@apollo/client';
+
+export default function App() {
+  return (
+    <div>
+      <h2>My first Apollo app 🚀</h2>
+    </div>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for HOCs - Shell
+DESCRIPTION: Installs `@apollo/client` along with `@apollo/react-hoc` for using Higher-Order Components (HOCs). This approach requires removing the older `react-apollo` package if previously installed.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_2
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client @apollo/react-hoc
+```
+
+----------------------------------------
+
+TITLE: Starting Apollo Fullstack Tutorial Server
+DESCRIPTION: This snippet navigates to the server directory of the fullstack tutorial and starts the server process. This is a prerequisite for the client application to function correctly and interact with the backend.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_8
+
+LANGUAGE: bash
+CODE:
+```
+# ... assuming still in [fullstack-tutorial-root]/final/client/node_modules from step 4
+cd ../../server
+npm start
+```
+
+----------------------------------------
+
+TITLE: Importing Apollo Client Core Modules (JavaScript/JSX)
+DESCRIPTION: This import statement brings in essential modules from the `@apollo/client` package. `ApolloClient` is the core client instance, `InMemoryCache` provides caching capabilities, `ApolloProvider` connects Apollo Client to React, and `gql` is used for parsing GraphQL query strings.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client 3.0 with npm
+DESCRIPTION: Instructions for installing the `@apollo/client` package using npm. This command installs or updates the core Apollo Client library, which now consolidates functionality previously spread across multiple packages.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/apollo-client-3-migration.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Starting Apollo Fullstack Tutorial Client
+DESCRIPTION: This snippet navigates to the client directory of the fullstack tutorial and starts the client application. This should be run in a separate terminal window from the server to allow both components to run concurrently.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_9
+
+LANGUAGE: bash
+CODE:
+```
+# ... in a separate terminal window
+cd [fullstack-tutorial-root]/final/client
+npm start
+```
+
+----------------------------------------
+
+TITLE: Installing Docs Site Dependencies (Shell)
+DESCRIPTION: Navigates into the cloned documentation repository and installs its Node.js dependencies using npm. This is a prerequisite for running the local documentation server.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/README.md#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+cd docs && npm i
+```
+
+----------------------------------------
+
+TITLE: Connecting Apollo Client to React with ApolloProvider (React/JSX)
+DESCRIPTION: This code wraps the root of a React application with the `ApolloProvider` component. By passing the initialized `client` instance as a prop, `ApolloProvider` makes the Apollo Client available to all components within the application's component tree via React Context, enabling them to perform GraphQL operations.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_4
+
+LANGUAGE: jsx
+CODE:
+```
+import React from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import App from './App';
+
+const client = new ApolloClient({
+  uri: 'https://flyby-router-demo.herokuapp.com/',
+  cache: new InMemoryCache(),
+});
+
+// Supported in React 18+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+);
+```
+
+----------------------------------------
+
+TITLE: Cloning and Installing Apollo Fullstack Tutorial
+DESCRIPTION: This snippet clones the Apollo fullstack tutorial repository, navigates into its server and client directories, and installs their respective Node.js dependencies. This sets up the target application for integration with the local Apollo Client checkout.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_5
+
+LANGUAGE: bash
+CODE:
+```
+git clone https://github.com/apollographql/fullstack-tutorial.git
+cd fullstack-tutorial
+cd final/server
+npm i
+cd ../client
+npm i
+```
+
+----------------------------------------
+
+TITLE: Installing apollo-upload-client package with npm
+DESCRIPTION: This command installs the `apollo-upload-client` package, which is required to enable file upload capabilities in Apollo Client. It's a prerequisite for setting up the upload link.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/file-uploads.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install apollo-upload-client
+```
+
+----------------------------------------
+
+TITLE: Starting Local Docs Server (Shell)
+DESCRIPTION: Starts the local documentation server in 'local' mode, linking it to the Apollo Client repository. This command makes the documentation accessible via a web browser at `http://localhost:3000`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/README.md#_snippet_2
+
+LANGUAGE: Shell
+CODE:
+```
+DOCS_MODE='local' npm run start:local -- ../apollo-client
+```
+
+----------------------------------------
+
+TITLE: Installing graphql-ws Library (Shell)
+DESCRIPTION: Installs the `graphql-ws` library using npm, which is a required dependency for `GraphQLWsLink` to establish WebSocket connections for GraphQL subscriptions.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-subscriptions.mdx#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm install graphql-ws
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client Instance (JavaScript/JSX)
+DESCRIPTION: This code initializes a new `ApolloClient` instance. The `uri` field specifies the endpoint of the GraphQL server (`https://flyby-router-demo.herokuapp.com/`), and the `cache` field is set to a new `InMemoryCache` instance, which Apollo Client uses to store query results.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_2
+
+LANGUAGE: jsx
+CODE:
+```
+const client = new ApolloClient({
+  uri: 'https://flyby-router-demo.herokuapp.com/',
+  cache: new InMemoryCache(),
+});
+```
+
+----------------------------------------
+
+TITLE: Setup and Teardown MSW Server in Jest
+DESCRIPTION: This snippet demonstrates how to integrate the MSW server setup and teardown into Jest's test lifecycle using `beforeAll`, `afterAll`, and `afterEach`. It ensures the server starts before all tests, stops after all tests, and resets handlers after each test.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_7
+
+LANGUAGE: TypeScript
+CODE:
+```
+import "@testing-library/jest-dom";
+import { gql } from "@apollo/client";
+import { server } from "./server";
+
+gql.disableFragmentWarnings();
+
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+afterAll(() => server.close());
+afterEach(() => server.resetHandlers());
+```
+
+----------------------------------------
+
+TITLE: Initializing `WebSocketLink` with `SubscriptionClient` in TypeScript
+DESCRIPTION: This TypeScript example demonstrates how to initialize a `WebSocketLink` using `SubscriptionClient` from `subscriptions-transport-ws`. It configures the WebSocket connection URL and includes `connectionParams` for authentication, showing a typical setup for Apollo Client subscriptions.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/subscriptions.mdx#_snippet_20
+
+LANGUAGE: ts
+CODE:
+```
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+
+const wsLink = new WebSocketLink(
+  new SubscriptionClient("ws://localhost:4000/subscriptions", {
+    connectionParams: {
+      authToken: user.authToken
+    }
+  })
+);
+```
+
+----------------------------------------
+
+TITLE: Installing GraphQL-WS Library for WebSocket Subscriptions
+DESCRIPTION: This command installs the `graphql-ws` library, which is a required dependency for setting up WebSocket-based subscriptions with Apollo Client. This library enables the `GraphQLWsLink` to establish and manage WebSocket connections for real-time data.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/subscriptions.mdx#_snippet_5
+
+LANGUAGE: Bash
+CODE:
+```
+npm install graphql-ws
+```
+
+----------------------------------------
+
+TITLE: Initial Test File Setup with createSchemaFetch
+DESCRIPTION: This snippet shows the initial setup for a test file using `createSchemaFetch` and `createTestSchema`. It imports necessary testing utilities, a GraphQL schema file, and sets up an executable schema with mock resolvers and default scalar values. It also includes a helper function for rendering the component within an `ApolloProvider`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_9
+
+LANGUAGE: tsx
+CODE:
+```
+import {
+  createSchemaFetch,
+  createTestSchema,
+} from "@apollo/client/testing/experimental";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { render as rtlRender, screen } from "@testing-library/react";
+import graphqlSchema from "../../../schema.graphql";
+// This should be a function that returns a new ApolloClient instance
+// configured just like your production Apollo Client instance - see the FAQ.
+import { makeClient } from "../../client";
+import { ApolloProvider, NormalizedCacheObject } from "@apollo/client";
+import { Products } from "../../products";
+import { Suspense } from "react";
+
+// First, let's create an executable schema...
+const staticSchema = makeExecutableSchema({ typeDefs: graphqlSchema });
+
+// which is then passed as the first argument to `createTestSchema`.
+const schema = createTestSchema(staticSchema, {
+  // Next, let's define mock resolvers
+  resolvers: {
+    Query: {
+      products: () =>
+        Array.from({ length: 5 }, (_element, id) => ({
+          id,
+          mediaUrl: `https://example.com/image${id}.jpg`,
+        })),
+    },
+  },
+  // ...and default scalar values
+  scalars: {
+    Int: () => 6,
+    Float: () => 22.1,
+    String: () => "default string",
+  },
+});
+
+// This `render` helper function would typically be extracted and shared between
+// test files.
+const render = (renderedClient: ApolloClient<NormalizedCacheObject>) =>
+  rtlRender(
+    <ApolloProvider client={renderedClient}>
+      <Suspense fallback="Loading...">
+        <Products />
+      </Suspense>
+    </ApolloProvider>
+  );
+```
+
+----------------------------------------
+
+TITLE: Installing `subscriptions-transport-ws` via npm
+DESCRIPTION: This snippet shows the command to install the `subscriptions-transport-ws` library using npm, which is required when your server uses this older library instead of `graphql-ws`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/subscriptions.mdx#_snippet_17
+
+LANGUAGE: bash
+CODE:
+```
+npm install subscriptions-transport-ws
+```
+
+----------------------------------------
+
+TITLE: Installing graphql-tag-swc-plugin with Yarn
+DESCRIPTION: This command installs the `graphql-tag-swc-plugin` package as a development dependency using Yarn. This plugin integrates with SWC to provide build-time precompilation of GraphQL queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_4
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev graphql-tag-swc-plugin
+```
+
+----------------------------------------
+
+TITLE: Installing `babel-plugin-import-graphql` (Yarn)
+DESCRIPTION: Installs the `babel-plugin-import-graphql` development dependency using Yarn, enabling direct import of GraphQL files into JavaScript/TypeScript.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_9
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev babel-plugin-import-graphql
+```
+
+----------------------------------------
+
+TITLE: Initializing ApolloClient with Local State Options (JavaScript)
+DESCRIPTION: Provides an example of configuring the `ApolloClient` constructor with options relevant to local state management, such as `cache`, `resolvers`, and `typeDefs`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/local-state/local-resolvers.mdx#_snippet_30
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  resolvers: { ... },
+  typeDefs: { ... },
+});
+```
+
+----------------------------------------
+
+TITLE: Installing `ts-transform-graphql-tag` (npm)
+DESCRIPTION: Installs the `ts-transform-graphql-tag` development dependency using npm, providing a TypeScript transformer for processing `graphql-tag` imports.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_12
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev ts-transform-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Cloning and Installing Apollo Client
+DESCRIPTION: This snippet clones the Apollo Client repository from GitHub, navigates into its directory, and installs its Node.js dependencies using npm. This prepares the local Apollo Client checkout for linking with an application.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+git clone https://github.com/apollographql/apollo-client.git
+cd apollo-client
+npm i
+cd ..
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Dependencies (Shell)
+DESCRIPTION: This shell command installs the necessary Node.js dependencies for the cloned `apollo-client` repository, preparing it for running codemods.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/fragments.mdx#_snippet_62
+
+LANGUAGE: sh
+CODE:
+```
+npm install
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Testing Dependencies (Bash)
+DESCRIPTION: Installs the necessary peer dependencies (`@graphql-tools/merge`, `@graphql-tools/schema`, `@graphql-tools/utils`, `undici`) required for using the schema-driven testing utilities (`createTestSchema`, `createSchemaFetch`) in Apollo Client v3.10+. These are installed as development dependencies.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm i @graphql-tools/merge @graphql-tools/schema @graphql-tools/utils undici --save-dev
+```
+
+----------------------------------------
+
+TITLE: Installing graphql-tag-swc-plugin with npm
+DESCRIPTION: This command installs the `graphql-tag-swc-plugin` package as a development dependency using npm. This plugin is designed for SWC to precompile GraphQL queries, similar to its Babel counterpart.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_3
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev graphql-tag-swc-plugin
+```
+
+----------------------------------------
+
+TITLE: Measuring Operation Duration with ApolloLink Context (JavaScript)
+DESCRIPTION: This example demonstrates managing context across multiple links. timeStartLink sets a start timestamp in the operation's context. logTimeLink then retrieves this start time from the context after the operation completes, calculates the duration, and logs it. This illustrates how context can be used to pass metadata between links in a chain.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/introduction.mdx#_snippet_15
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { ApolloLink, from } from '@apollo/client';
+
+const timeStartLink = new ApolloLink((operation, forward) => {
+  operation.setContext({ start: new Date() });
+  return forward(operation);
+});
+
+const logTimeLink = new ApolloLink((operation, forward) => {
+  return forward(operation).map((data) => {
+    // data from a previous link
+    const time = new Date() - operation.getContext().start;
+    console.log(`operation ${operation.operationName} took ${time} to complete`);
+    return data;
+  })
+});
+
+const additiveLink = from([
+  timeStartLink,
+  logTimeLink
+]);
+```
+
+----------------------------------------
+
+TITLE: Installing babel-plugin-graphql-tag with npm
+DESCRIPTION: This command installs the `babel-plugin-graphql-tag` package as a development dependency using npm. This plugin is used to precompile GraphQL queries at build time, reducing runtime overhead.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev babel-plugin-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Render Prop Library
+DESCRIPTION: This snippet demonstrates how to install the `@apollo/client` package using npm. This package includes the deprecated React Apollo render prop components, which are no longer actively supported or updated.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/components.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing `ts-transform-graphql-tag` (Yarn)
+DESCRIPTION: Installs the `ts-transform-graphql-tag` development dependency using Yarn, providing a TypeScript transformer for processing `graphql-tag` imports.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_13
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev ts-transform-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Installing babel-plugin-graphql-tag with Yarn
+DESCRIPTION: This command installs the `babel-plugin-graphql-tag` package as a development dependency using Yarn. This plugin helps in precompiling GraphQL queries during the build process.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_1
+
+LANGUAGE: Shell
+CODE:
+```
+yarn add --dev babel-plugin-graphql-tag
+```
+
+----------------------------------------
+
+TITLE: Defining GraphQL Query for Locations in App.jsx (Apollo Client)
+DESCRIPTION: This snippet defines a GraphQL query named `GET_LOCATIONS` using the `gql` template literal. It specifies the fields (`id`, `name`, `description`, `photo`) to be fetched for a list of `locations`, which will be used by the `useQuery` hook.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_6
+
+LANGUAGE: jsx
+CODE:
+```
+const GET_LOCATIONS = gql`
+  query GetLocations {
+    locations {
+      id
+      name
+      description
+      photo
+    }
+  }
+`;
+```
+
+----------------------------------------
+
+TITLE: Installing subscriptions-transport-ws Library (Shell)
+DESCRIPTION: This command installs the `subscriptions-transport-ws` library, which is a required dependency for using `WebSocketLink` in Apollo Client. It fetches the package from npm and adds it to the project's `node_modules` directory.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-ws.mdx#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm install subscriptions-transport-ws
+```
+
+----------------------------------------
+
+TITLE: Integrating DisplayLocations Component into App.jsx (React)
+DESCRIPTION: This snippet updates the main `App` component to include the `DisplayLocations` component. This integration ensures that the fetched GraphQL data is rendered within the application's main view, completing the data display flow.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_8
+
+LANGUAGE: jsx
+CODE:
+```
+export default function App() {
+  return (
+    <div>
+      <h2>My first Apollo app 🚀</h2>
+      <br/>
+      <DisplayLocations />
+    </div>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for APQ
+DESCRIPTION: Installs the core `@apollo/client` package, which is a prerequisite for implementing Automatic Persisted Queries (APQ). This package provides the `createPersistedQueryLink` used for APQ.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_7
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Executing a GraphQL Query Directly with Apollo Client (JavaScript/GraphQL)
+DESCRIPTION: This snippet demonstrates how to execute a GraphQL query directly using the `client.query()` method. It fetches a list of locations from the configured GraphQL API. The `gql` template literal parses the GraphQL query string, and the `.then()` block logs the `result` object, which contains the fetched `data`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_3
+
+LANGUAGE: jsx
+CODE:
+```
+// const client = ...
+
+client
+  .query({
+    query: gql`
+      query GetLocations {
+        locations {
+          id
+          name
+          description
+          photo
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client and REST Link Dependencies
+DESCRIPTION: This snippet provides the npm command to install the necessary packages for using Apollo Client with `apollo-link-rest`. It includes `@apollo/client`, `apollo-link-rest`, `graphql`, and `qs` as peer dependencies required for functionality.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-rest.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install --save @apollo/client apollo-link-rest graphql qs
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client with a Composed Link (JavaScript)
+DESCRIPTION: This example shows how to provide a previously composed `ApolloLink` chain to the `ApolloClient` constructor. It configures the client with an `InMemoryCache` and the `directionalLink` for handling all network operations, demonstrating the final step of link integration.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/introduction.mdx#_snippet_9
+
+LANGUAGE: js
+CODE:
+```
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { RetryLink } from '@apollo/client/link/retry';
+
+const directionalLink = new RetryLink().split(
+  (operation) => operation.getContext().version === 1,
+  new HttpLink({ uri: "http://localhost:4000/v1/graphql" }),
+  new HttpLink({ uri: "http://localhost:4000/v2/graphql" })
+);
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: directionalLink
+});
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client HOC Library
+DESCRIPTION: This command installs the `@apollo/client` package, which includes the deprecated Higher-Order Component (HOC) library. The HOC symbols are then imported from `@apollo/client/react/hoc`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client for Persisted Queries (Manifest)
+DESCRIPTION: Installs the core `@apollo/client` package, which is a prerequisite for implementing persisted queries with an operation manifest. This package provides the `createPersistedQueryLink`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_3
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client
+```
+
+----------------------------------------
+
+TITLE: Installing babel-plugin-import-graphql with npm
+DESCRIPTION: This command installs the `babel-plugin-import-graphql` package as a development dependency using npm. This plugin allows importing GraphQL operations and fragments from separate `.graphql` or `.gql` files, transparently using `graphql-tag` under the hood with precompilation benefits.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_8
+
+LANGUAGE: Shell
+CODE:
+```
+npm install --save-dev babel-plugin-import-graphql
+```
+
+----------------------------------------
+
+TITLE: Displaying Locations with useQuery Hook in App.jsx (React)
+DESCRIPTION: This `DisplayLocations` component uses the `useQuery` hook with `GET_LOCATIONS` to fetch and render location data. It handles loading and error states, then maps over the fetched `data.locations` to display each location's name, image, and description.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/get-started.mdx#_snippet_7
+
+LANGUAGE: jsx
+CODE:
+```
+function DisplayLocations() {
+  const { loading, error, data } = useQuery(GET_LOCATIONS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
+  return data.locations.map(({ id, name, description, photo }) => (
+    <div key={id}>
+      <h3>{name}</h3>
+      <img width="400" height="250" alt="location-reference" src={`${photo}`} />
+      <br />
+      <b>About this location:</b>
+      <p>{description}</p>
+      <br />
+    </div>
+  ));
+}
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client and Querying Products in JavaScript
+DESCRIPTION: This snippet initializes an Apollo Client instance, configuring it with a GraphQL endpoint and an in-memory cache. It then executes a GraphQL query to retrieve product IDs and titles, subsequently rendering the product titles as a list within the 'main' HTML element.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/integration-tests/browser-esm/html/jspm-prepared.html#_snippet_0
+
+LANGUAGE: javascript
+CODE:
+```
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+const client = new ApolloClient({
+  uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
+  cache: new InMemoryCache(),
+});
+client
+  .query({
+    query: gql`
+      query {
+        products {
+          id
+          title
+        }
+      }
+    `,
+  })
+  .then((r) => {
+    const main = document.querySelector("main");
+    const ul = document.createElement("ul");
+    main.replaceChildren(ul);
+    r.data.products.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p.title;
+      ul.appendChild(li);
+    });
+  })
+  .catch(console.error);
+```
+
+----------------------------------------
+
+TITLE: Running jscodeshift Transform on JavaScript Examples
+DESCRIPTION: This command applies the jscodeshift transform to example JavaScript files to demonstrate its functionality. It targets `.js` files located within the `examples` directory using the `imports.js` transform script.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_4
+
+LANGUAGE: sh
+CODE:
+```
+npx jscodeshift -t imports.js --extensions js examples
+```
+
+----------------------------------------
+
+TITLE: Querying Products with Apollo Client in JavaScript
+DESCRIPTION: This snippet initializes an Apollo Client instance, configures it with a GraphQL URI and an in-memory cache, and then executes a query to fetch product IDs and titles. Upon successful data retrieval, it dynamically creates an unordered list and populates it with product titles on the webpage. It requires Apollo Client and gql for GraphQL operations.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/integration-tests/browser-esm/html/jsdeliver-esm.html#_snippet_0
+
+LANGUAGE: JavaScript
+CODE:
+```
+// give playwright time to load await new Promise((r) => setTimeout(r, 100));
+import { ApolloClient, InMemoryCache, gql, } from "https://cdn.jsdelivr.net/npm/@apollo/client@0.0.0-pr-10915-20230616125401/+esm";
+const client = new ApolloClient({
+  uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
+  cache: new InMemoryCache(),
+});
+client
+  .query({
+    query: gql`
+      query {
+        products {
+          id
+          title
+        }
+      }
+    `,
+  })
+  .then((r) => {
+    const main = document.querySelector("main");
+    const ul = document.createElement("ul");
+    main.replaceChildren(ul);
+    r.data.products.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p.title;
+      ul.appendChild(li);
+    });
+  })
+  .catch(console.error);
+```
+
+----------------------------------------
+
+TITLE: Implementing Data Polling with Apollo Client's `startPolling` in React
+DESCRIPTION: This example illustrates how to use `data.startPolling` to periodically refetch data from the server. It demonstrates calling `startPolling` with an interval in milliseconds within the `componentDidMount` lifecycle method of a React component. This technique is useful for emulating real-time data updates without a full subscription setup.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_26
+
+LANGUAGE: JavaScript
+CODE:
+```
+class MyComponent extends Component {
+  componentDidMount() {
+    // In this specific case you may want to use `options.pollInterval` instead.
+    this.props.data.startPolling(1000);
+  }
+
+  render() {
+    // ...
+  }
+}
+
+export default graphql(gql`query MyComponentQuery { ... }`)(MyComponent);
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client and GraphQL in React Native
+DESCRIPTION: This command installs the necessary `@apollo/client` library and `graphql` peer dependency using npm, enabling Apollo Client functionality in a React Native project.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/integrations/react-native.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/client graphql
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Client Devtools VS Code Package
+DESCRIPTION: Installs the `@apollo/client-devtools-vscode` package using npm, which is a prerequisite for connecting Apollo Client to the VS Code DevTools for remote debugging capabilities.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/developer-tooling.mdx#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm install @apollo/client-devtools-vscode
+```
+
+----------------------------------------
+
+TITLE: Running jscodeshift Transform on TypeScript Examples
+DESCRIPTION: This command applies the jscodeshift transform to example TypeScript files to demonstrate its functionality. It targets `.ts` files within the `examples` directory and explicitly uses the `ts` parser for accurate processing.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_5
+
+LANGUAGE: sh
+CODE:
+```
+npx jscodeshift -t imports.js --extensions ts --parser ts examples
+```
+
+----------------------------------------
+
+TITLE: Configuring Jest Test Environment and Setup Files - TypeScript
+DESCRIPTION: This Jest configuration file sets up the testing environment. It defines a global __DEV__ variable, specifies jsdom as the test environment, and includes ./jest.polyfills.js and <rootDir>/setupTests.ts in the setup files. It also includes configurations for MSW compatibility and transforming GraphQL files.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+import type { Config } from "jest";
+
+const config: Config = {
+  globals: {
+    "globalThis.__DEV__": JSON.stringify(true),
+  },
+  testEnvironment: "jsdom",
+  setupFiles: ["./jest.polyfills.js"],
+  // You may also have an e.g. setupTests.ts file here
+  setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
+  // If you're using MSW, opt out of the browser export condition for MSW tests
+  // For more information, see: https://github.com/mswjs/msw/issues/1786#issuecomment-1782559851
+  testEnvironmentOptions: {
+    customExportConditions: [""]
+  },
+  // If you plan on importing .gql/.graphql files in your tests, transform them with @graphql-tools/jest-transform
+  transform: {
+    "\\.(gql|graphql)$": "@graphql-tools/jest-transform"
+  }
+};
+
+export default config;
+```
+
+----------------------------------------
+
+TITLE: Test Apollo Client Component with MSW
+DESCRIPTION: This snippet provides examples of testing a React component (`Products`) that uses Apollo Client, leveraging the MSW setup. It shows how to render the component within an `ApolloProvider` and assert on the data fetched from the mocked API via the MSW handler and test schema. It also demonstrates updating and resetting the test schema.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_8
+
+LANGUAGE: TSX
+CODE:
+```
+import { Suspense } from "react";
+import { render as rtlRender, screen } from "@testing-library/react";
+import {
+  ApolloClient,
+  ApolloProvider,
+  NormalizedCacheObject,
+} from "@apollo/client";
+import { testSchema } from "./handlers";
+import { Products } from "../products";
+// This should be a function that returns a new ApolloClient instance
+// configured just like your production Apollo Client instance - see the FAQ.
+import { makeClient } from "../client";
+
+const render = (renderedClient: ApolloClient<NormalizedCacheObject>) =>
+  rtlRender(
+    <ApolloProvider client={renderedClient}>
+      <Suspense fallback="Loading...">
+        <Products />
+      </Suspense>
+    </ApolloProvider>
+  );
+
+describe("Products", () => {
+  test("renders", async () => {
+    render(makeClient());
+
+    await screen.findByText("Loading...");
+
+    // This is the data from our initial mock resolver in the test schema
+    // defined in the handlers file 🎉
+    expect(await screen.findByText(/blue jays hat/i)).toBeInTheDocument();
+  });
+
+  test("allows resolvers to be updated via .add", async () => {
+    // Calling .add on the test schema will update the resolvers
+    // with new data
+    testSchema.add({
+      resolvers: {
+        Query: {
+          products: () => {
+            return [
+              {
+                id: "2",
+                title: "Mets Hat",
+              },
+            ];
+          },
+        },
+      },
+    });
+
+    render(makeClient());
+
+    await screen.findByText("Loading...");
+
+    // Our component now renders the new data from the updated resolver
+    await screen.findByText(/mets hat/i);
+  });
+
+  test("handles test schema resetting via .reset", async () => {
+    // Calling .reset on the test schema will reset the resolvers
+    testSchema.reset();
+
+    render(makeClient());
+
+    await screen.findByText("Loading...");
+
+    // The component will likely render an error or empty state
+    // depending on how it handles missing data after reset.
+    // Add assertions here based on expected behavior.
+  });
+});
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Persisted Query Lists
+DESCRIPTION: Installs the `@apollo/persisted-query-lists` package, which provides utilities like `generatePersistedQueryIdsFromManifest` for working with operation manifests in Apollo Client's persisted queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+npm install @apollo/persisted-query-lists
+```
+
+----------------------------------------
+
+TITLE: Building and Watching Apollo Client for Changes
+DESCRIPTION: This snippet navigates to the root of the local Apollo Client checkout and starts the build process with a watch command. This allows for automatic recompilation of Apollo Client whenever source files are modified, enabling rapid iteration and testing.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/CONTRIBUTING.md#_snippet_10
+
+LANGUAGE: bash
+CODE:
+```
+# ... in a separate terminal window
+cd [apollo-client-root]
+npm run watch
+```
+
+----------------------------------------
+
+TITLE: Example Apollo Persisted Query Manifest (JSON)
+DESCRIPTION: An example of the `persisted-query-manifest.json` file generated by the `@apollo/generate-persisted-query-manifest` package. It defines the format, version, and a list of operations, each with a unique ID, the original query body, name, and type, used for safelisting.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_2
+
+LANGUAGE: json
+CODE:
+```
+{
+  "format": "apollo-persisted-query-manifest",
+  "version": 1,
+  "operations": [
+    {
+      "id": "e0321f6b438bb42c022f633d38c19549dea9a2d55c908f64c5c6cb8403442fef",
+      "body": "query GetItem { thing { __typename } }",
+      "name": "GetItem",
+      "type": "query"
+    }
+  ]
+}
+```
+
+----------------------------------------
+
+TITLE: Installing GraphQL Code Generator Dependencies (Bash)
+DESCRIPTION: This command installs the necessary development dependencies for GraphQL Code Generator, TypeScript, and related Apollo Client packages. These packages are crucial for setting up the type generation process in your project.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/static-typing.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+yarn add -D typescript graphql @graphql-codegen/cli @graphql-codegen/client-preset @graphql-typed-document-node/core
+```
+
+----------------------------------------
+
+TITLE: Running jscodeshift Transform on TypeScript React Examples
+DESCRIPTION: This command applies the jscodeshift transform to example TypeScript React files to demonstrate its functionality. It targets `.tsx` files within the `examples` directory and uses the `tsx` parser to correctly handle JSX syntax.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/scripts/codemods/ac2-to-ac3/README.md#_snippet_6
+
+LANGUAGE: sh
+CODE:
+```
+npx jscodeshift -t imports.js --extensions tsx --parser tsx examples
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client and Querying Product Data in JavaScript
+DESCRIPTION: This JavaScript code initializes an Apollo Client instance, configured with a specific GraphQL URI and an in-memory cache. It includes a brief delay for potential testing environments like Playwright, then executes a GraphQL query to fetch product IDs and titles. The fetched data is subsequently rendered as a list of product titles within the 'main' element of the HTML document, with error handling for any query failures.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/integration-tests/browser-esm/html/unpkg-unmangled.html#_snippet_0
+
+LANGUAGE: javascript
+CODE:
+```
+// give playwright time to load
+await new Promise((r) => setTimeout(r, 100));
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://main--hack-the-e-commerce.apollographos.net/graphql",
+  cache: new InMemoryCache(),
+});
+
+client
+  .query({
+    query: gql`
+      query {
+        products {
+          id
+          title
+        }
+      }
+    `,
+  })
+  .then((r) => {
+    const main = document.querySelector("main");
+    const ul = document.createElement("ul");
+    main.replaceChildren(ul);
+    r.data.products.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p.title;
+      ul.appendChild(li);
+    });
+  })
+  .catch(console.error);
+```
+
+----------------------------------------
+
+TITLE: Complete RestLink Configuration Options Example - JavaScript
+DESCRIPTION: This JavaScript snippet provides a comprehensive example of various configuration options available for `RestLink`. It demonstrates setting global `uri`, `endpoints`, `customFetch`, default `headers`, `credentials`, `fieldNameNormalizer` and `fieldNameDenormalizer` for case conversion, `typePatcher` for type-specific logic, and `defaultSerializer` for custom request body serialization.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-rest.mdx#_snippet_20
+
+LANGUAGE: js
+CODE:
+```
+import fetch from 'cross-fetch';
+import * as camelCase from 'camelcase';
+import * as snake_case from 'snake-case';
+
+const link = new RestLink({
+  endpoints: { github: 'github.com' },
+  uri: 'api.com',
+  customFetch: fetch,
+  headers: {
+    "Content-Type": "application/json"
+  },
+  credentials: "same-origin",
+  fieldNameNormalizer: (key) => camelCase(key),
+  fieldNameDenormalizer: (key) => snake_case(key),
+  typePatcher: {
+    Post: ()=> {
+      bodySnippet...
+    }
+  },
+  defaultSerializer: (data, headers) => {
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    headers.set("Content-Type", "x-www-form-encoded")
+    return {data: formData, headers};
+  }
+});
+```
+
+----------------------------------------
+
+TITLE: Installing Apollo Persisted Query Manifest Generator (npm)
+DESCRIPTION: Installs the `@apollo/generate-persisted-query-manifest` package as a development dependency using npm. This package is essential for generating operation manifests required for Apollo Persisted Queries.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install --save-dev @apollo/generate-persisted-query-manifest
+```
+
+----------------------------------------
+
+TITLE: Showing Pending UI with React useTransition Hook (TypeScript)
+DESCRIPTION: This snippet enhances the transition example by providing visual feedback during a pending data fetch. It utilizes React's useTransition hook to get an isPending boolean, which is then used to dim the select dropdown, indicating that a background transition is in progress without showing a full Suspense fallback.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/data/suspense.mdx#_snippet_3
+
+LANGUAGE: tsx
+CODE:
+```
+import { useState, Suspense, useTransition } from "react";
+
+function App() {
+  const [isPending, startTransition] = useTransition();
+  const { data } = useSuspenseQuery(GET_DOGS_QUERY);
+  const [selectedDog, setSelectedDog] = useState(
+    data.dogs[0].id
+  );
+
+  return (
+    <>
+      <select
+        style={{ opacity: isPending ? 0.5 : 1 }}
+        onChange={(e) => {
+          startTransition(() => {
+            setSelectedDog(e.target.value);
+          });
+        }}
+      >
+        {data.dogs.map(({ id, name }) => (
+          <option key={id} value={id}>{name}</option>
+        ))}
+      </select>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Dog id={selectedDog} />
+      </Suspense>
+    </>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Using ApolloProvider Component - JSX
+DESCRIPTION: This example illustrates the usage of the `ApolloProvider` component. It initializes an `ApolloClient` instance with an `InMemoryCache` and a GraphQL URI, then renders a React component tree wrapped by `ApolloProvider` to make the client accessible to all child components.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hooks.mdx#_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "http://localhost:4000/graphql"
+});
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <MyRootComponent />
+  </ApolloProvider>,
+  document.getElementById('root'),
+);
+```
+
+----------------------------------------
+
+TITLE: Installing SHA-256 Hash Function for APQ
+DESCRIPTION: Installs a SHA-256 hashing library, `crypto-hash`, which is required by the `createPersistedQueryLink` for APQ. Developers must provide their own hash function as it's not bundled with `@apollo/client`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/persisted-queries.mdx#_snippet_8
+
+LANGUAGE: bash
+CODE:
+```
+npm install crypto-hash
+```
+
+----------------------------------------
+
+TITLE: Importing Testing Utilities from Apollo Client - JavaScript
+DESCRIPTION: Imports the `MockedProvider` component from `@apollo/client/testing`. This provides access to React testing utilities for Apollo Client, which are not included in the default bundle and must be imported separately.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/hooks-migration.mdx#_snippet_5
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { MockedProvider } from '@apollo/client/testing';
+```
+
+----------------------------------------
+
+TITLE: Example of graphql-tag.macro usage in JavaScript
+DESCRIPTION: This JavaScript snippet demonstrates how to use `graphql-tag.macro` instead of the direct `graphql-tag` import. This macro, when processed by `babel-macros`, precompiles the GraphQL query at build time, avoiding runtime overhead while maintaining similar syntax.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/babel.mdx#_snippet_7
+
+LANGUAGE: JavaScript
+CODE:
+```
+import gql from 'graphql-tag.macro'; // <-- Use the macro
+
+const query = gql`
+  query HelloWorld {
+    hello {
+      world
+    }
+  }
+`;
+```
+
+----------------------------------------
+
+TITLE: Code Splitting with react-loadable (JavaScript)
+DESCRIPTION: Shows a basic example of using `react-loadable` to asynchronously load a React component, which can be used in conjunction with dynamically adding Apollo Client resolvers.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/local-state/local-resolvers.mdx#_snippet_28
+
+LANGUAGE: JavaScript
+CODE:
+```
+import Loadable from 'react-loadable';
+
+import Loading from './components/Loading';
+
+export const Stats = Loadable({
+  loader: () => import('./components/stats/Stats'),
+  loading: Loading,
+});
+```
+
+----------------------------------------
+
+TITLE: Using @client and @export on Nested Field (JS)
+DESCRIPTION: This example shows how to apply the `@client` directive to a selection set (`currentAuthor`) and the `@export` directive to a nested field (`authorId`) within that set. The value of the nested field is retrieved from the cache and exported as a variable (`authorId`) for use in another field (`postCount`) in the same operation. It includes client setup, query definition, and cache writing for the nested data.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/local-state/local-resolvers.mdx#_snippet_22
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { ApolloClient, InMemoryCache, HttpLink, gql } from '@apollo/client';
+
+const query = gql`
+  query CurrentAuthorPostCount($authorId: Int!) {
+    currentAuthor @client {
+      name
+      authorId @export(as: "authorId")
+    }
+    postCount(authorId: $authorId)
+  }
+`;
+
+const cache = new InMemoryCache();
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  cache,
+  resolvers: {},
+});
+
+cache.writeQuery({
+  query: gql`
+    query GetCurrentAuthor {
+      currentAuthor {
+        name
+        authorId
+      }
+    }
+  `,
+  data: {
+    currentAuthor: {
+      __typename: 'Author',
+      name: 'John Smith',
+      authorId: 12345,
+    },
+  },
+});
+
+// ... run the query using client.query, the <Query /> component, etc.
+```
+
+----------------------------------------
+
+TITLE: Create New Apollo Client Instance (TS)
+DESCRIPTION: Provides an example of a `makeClient` function pattern. This function is used to create a fresh instance of `ApolloClient` for each test, preventing state leakage and ensuring test isolation.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_14
+
+LANGUAGE: ts
+CODE:
+```
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+
+const httpLink = new HttpLink({
+  uri: "https://example.com/graphql",
+});
+
+export const makeClient = () => {
+  return new ApolloClient({
+    cache: new InMemoryCache(),
+    link: httpLink,
+  });
+};
+
+export const client = makeClient();
+```
+
+----------------------------------------
+
+TITLE: Illustrating Offset-Based Pagination Flow with Mermaid
+DESCRIPTION: This Mermaid sequence diagram visualizes the flow of offset-based pagination. It shows a client application making two successive GraphQL queries to a server, first requesting 20 elements starting from offset 0, then 10 elements starting from offset 20, demonstrating how data is fetched in manageable pages.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/pagination/overview.mdx#_snippet_1
+
+LANGUAGE: mermaid
+CODE:
+```
+sequenceDiagram;
+  Client app->>GraphQL server: query GetBookTitles(offset=0 limit=20)
+  GraphQL server->>Client app: Returns the first 20 list elements
+  Client app->>GraphQL server: query GetBookTitles(offset=20 limit=10)
+  GraphQL server->>Client app: Returns the next 10 list elements
+```
+
+----------------------------------------
+
+TITLE: Configuring Apollo Client with URI and Headers (JavaScript)
+DESCRIPTION: This example shows how to configure ApolloClient in version 3.0 by directly providing uri and headers options to the constructor. These options are internally used to create an HttpLink instance, simplifying network configuration without explicitly creating a link chain. It requires a cache instance to be defined.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/apollo-client-3-migration.mdx#_snippet_6
+
+LANGUAGE: JavaScript
+CODE:
+```
+const client = new ApolloClient({
+  cache,
+  uri: 'http://localhost:4000/graphql',
+  headers: {
+    authorization: localStorage.getItem('token') || '',
+    'client-name': 'Space Explorer [web]',
+    'client-version': '1.0.0',
+  },
+  ...
+});
+```
+
+----------------------------------------
+
+TITLE: Basic React Component Rendering Test with MockedProvider
+DESCRIPTION: This test snippet demonstrates the basic setup for rendering a React component that uses Apollo Client within a test environment. It utilizes `MockedProvider` to make Apollo Client available on React's context, allowing the `Dog` component to render. Initially, no mocks are provided, so the test asserts that the 'Loading...' state is displayed, indicating the query is in progress.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/testing.mdx#_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import { MockedProvider } from "@apollo/client/testing";
+import { GET_DOG_QUERY, Dog } from "./dog";
+
+const mocks = []; // We'll fill this in next
+
+it("renders without error", async () => {
+  render(
+    <MockedProvider mocks={mocks}>
+      <Dog name="Buck" />
+    </MockedProvider>
+  );
+  expect(await screen.findByText("Loading...")).toBeInTheDocument();
+});
+```
+
+----------------------------------------
+
+TITLE: Configuring Apollo Client Query Options (JavaScript)
+DESCRIPTION: This example shows how to provide a static object for `config.options` to configure how a query is fetched and updated. These options are passed to the `graphql()` higher-order component and can include various settings depending on the operation type.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_29
+
+LANGUAGE: JavaScript
+CODE:
+```
+export default graphql(gql`query MyQuery { ... }`, {
+  options: {
+    // Options go here.
+  },
+})(MyComponent);
+```
+
+----------------------------------------
+
+TITLE: Express.js Application Setup for Server-Side Rendering with Apollo Client and React Router
+DESCRIPTION: This JSX snippet outlines an Express.js server setup for SSR, demonstrating how to initialize a new Apollo Client instance for each incoming request to prevent data leakage. It wraps the React application with `ApolloProvider` and `StaticRouter`, configuring the client with `ssrMode: true` and an `HttpLink` to handle server-side GraphQL requests, including passing cookies.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/performance/server-side-rendering.mdx#_snippet_2
+
+LANGUAGE: JSX
+CODE:
+```
+import {
+  ApolloProvider,
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache
+} from '@apollo/client';
+import Express from 'express';
+import React from 'react';
+import { StaticRouter } from 'react-router';
+
+// File shown below
+import Layout from './routes/Layout';
+
+const app = new Express();
+app.use((req, res) => {
+
+  const client = new ApolloClient({
+    ssrMode: true,
+    link: createHttpLink({
+      uri: 'http://localhost:3010',
+      credentials: 'same-origin',
+      headers: {
+        cookie: req.header('Cookie'),
+      },
+    }),
+    cache: new InMemoryCache(),
+  });
+
+  const context = {};
+
+  // The client-side App will instead use <BrowserRouter>
+  const App = (
+    <ApolloProvider client={client}>
+      <StaticRouter location={req.url} context={context}>
+        <Layout />
+      </StaticRouter>
+    </ApolloProvider>
+  );
+
+  // TODO: rendering code (see below)
+});
+
+app.listen(basePort, () => console.log(
+  `app Server is now running on http://localhost:${basePort}`
+));
+```
+
+----------------------------------------
+
+TITLE: Updating React Testing Utilities Imports in Apollo Client 3.0
+DESCRIPTION: This example demonstrates the new import path for React Apollo's testing utilities, such as `MockedProvider`. In Apollo Client 3.0, these utilities are now available through `@apollo/client/testing`, removing the need for a separate `@apollo/react-testing` package.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/migrating/apollo-client-3-migration.mdx#_snippet_4
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { MockedProvider } from '@apollo/client/testing';
+```
+
+----------------------------------------
+
+TITLE: Setting Up Jest Test Environment with Testing Library and Apollo Client - TypeScript
+DESCRIPTION: This file performs additional test setup. It imports @testing-library/jest-dom to extend Jest's matchers with DOM-specific assertions. It also imports gql from @apollo/client and calls gql.disableFragmentWarnings() to suppress warnings about fragments in the test output.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/development-testing/schema-driven-testing.mdx#_snippet_4
+
+LANGUAGE: TypeScript
+CODE:
+```
+import "@testing-library/jest-dom";
+import { gql } from "@apollo/client";
+
+gql.disableFragmentWarnings();
+```
+
+----------------------------------------
+
+TITLE: Example GraphQL Query for Viewer and Todos
+DESCRIPTION: This snippet defines a simple GraphQL query named `ViewerAndTodos`. It requests the `name` of the `viewer` and the `text` of `todos`, illustrating a typical structure for fetching multiple data types in a single query. This query is used as context for the subsequent JavaScript examples.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hoc.mdx#_snippet_16
+
+LANGUAGE: graphql
+CODE:
+```
+query ViewerAndTodos {
+  viewer {
+    name
+  }
+  todos {
+    text
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Initiating Background Queries with useBackgroundQuery and useReadQuery in React
+DESCRIPTION: This example illustrates the use of `useBackgroundQuery` to initiate a query in a parent component and `useReadQuery` to read its data in a child component, leveraging React Suspense for loading states. It sets up an Apollo Client instance and demonstrates the `queryRef` pattern for avoiding request waterfalls.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/react/hooks.mdx#_snippet_8
+
+LANGUAGE: jsx
+CODE:
+```
+import { Suspense } from 'react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  useBackgroundQuery,
+  useReadQuery,
+} from '@apollo/client';
+
+const query = gql`
+  foo {
+    bar
+  }
+`;
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql",
+  cache: new InMemoryCache()
+});
+
+function SuspenseFallback() {
+  return <div>Loading...</div>;
+}
+
+function Child({ queryRef }) {
+  const { data } = useReadQuery(queryRef);
+
+  return <div>{data.foo.bar}</div>;
+}
+
+function Parent() {
+  const [queryRef] = useBackgroundQuery(query);
+
+  return (
+    <Suspense fallback={<SuspenseFallback />}>
+      <Child queryRef={queryRef} />
+    </Suspense>
+  );
+}
+
+function App() {
+  return (
+    <ApolloProvider client={client}>
+      <Parent />
+    </ApolloProvider>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Configuring Apollo Client with SchemaLink for Mocking Data - JavaScript
+DESCRIPTION: This example illustrates how to set up Apollo Client with `SchemaLink` for mocking GraphQL data. It uses `graphql-tools` to create an executable schema and apply mock functions, enabling client-side testing and development without a live backend. It requires `@apollo/client` and `graphql-tools`.
+
+SOURCE: https://github.com/apollographql/apollo-client/blob/main/docs/source/api/link/apollo-link-schema.mdx#_snippet_1
+
+LANGUAGE: javascript
+CODE:
+```
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { SchemaLink } from '@apollo/client/link/schema';
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+
+const typeDefs = `
+  Query {
+  ...
+  }
+`;
+
+const mocks = {
+  Query: () => ...,
+  Mutation: () => ...
+};
+
+const schema = makeExecutableSchema({ typeDefs });
+const schemaWithMocks = addMockFunctionsToSchema({
+  schema,
+  mocks
+});
+
+const apolloCache = new InMemoryCache(window.__APOLLO_STATE__);
+
+const graphqlClient = new ApolloClient({
+  cache: apolloCache,
+  link: new SchemaLink({ schema: schemaWithMocks })
+});
+```

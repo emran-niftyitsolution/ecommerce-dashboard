@@ -1,0 +1,3425 @@
+---
+alwaysApply: true
+---
+
+========================
+CODE SNIPPETS
+========================
+TITLE: Install TypeScript and Types
+DESCRIPTION: Installs TypeScript globally and links it to the project. Also installs Node.js declaration files for type checking.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_0
+
+LANGUAGE: sh
+CODE:
+```
+npm install -g typescript
+npm link typescript
+npm install -D @types/node
+```
+
+----------------------------------------
+
+TITLE: TypeScript Greeter Example
+DESCRIPTION: A basic TypeScript example demonstrating how to import a module ('./greeter') and use its exported class ('Greeter'). It includes DOM manipulation to get an element and then instantiate the Greeter class, followed by calling its 'start' method.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/copyrightWithoutNewLine1.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+import model = require("./greeter")
+
+var el = document.getElementById('content');
+var greeter = new model.Greeter(el);
+/** things */
+greeter.start();
+```
+
+----------------------------------------
+
+TITLE: Install and Link TypeScript
+DESCRIPTION: Installs TypeScript globally using npm and links it to the project. This is the initial step for using TypeScript.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API-(TypeScript-1.4).md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install -g typescript
+npm link typescript
+```
+
+----------------------------------------
+
+TITLE: Install and Use pprof-it Locally
+DESCRIPTION: Instructions for installing pprof-it as a local dependency and running build scripts with the `--node-option` flag to enable profiling.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_28
+
+LANGUAGE: sh
+CODE:
+```
+npm install --no-save pprof-it
+```
+
+LANGUAGE: sh
+CODE:
+```
+npm --node-option="--require pprof-it" run <your-script-name>
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript MSBuild from NuGet
+DESCRIPTION: Steps to install the Microsoft.TypeScript.MSBuild package from the official NuGet feed for stable releases. This involves searching for the package and installing it.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Configuring-MSBuild-projects-to-use-NuGet.md#_snippet_0
+
+LANGUAGE: text
+CODE:
+```
+1. Right-Click -> Manage NuGet Packages
+2. Search for `Microsoft.TypeScript.MSBuild`
+3. Hit `Install`
+4. Rebuild the project.
+```
+
+----------------------------------------
+
+TITLE: Example Usage: Machine without Provided Actors
+DESCRIPTION: Shows a basic example of creating a machine using `setup` when no specific actors are provided, demonstrating the flexibility of the system.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/inferenceExactOptionalProperties2.errors.txt#_snippet_2
+
+LANGUAGE: typescript
+CODE:
+```
+// no provided actors, `assign` should still work
+setup().createMachine({
+  entry: assign(() => ({})),
+});
+
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript MSBuild from MyGet (Nightly)
+DESCRIPTION: Instructions for installing the Microsoft.TypeScript.MSBuild package from a MyGet feed for nightly builds. This requires adding a new package source in Visual Studio.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Configuring-MSBuild-projects-to-use-NuGet.md#_snippet_1
+
+LANGUAGE: text
+CODE:
+```
+1. Add a new Package Source:
+   - Go to `Tools` -> `Options` -> `NuGet Package Manager` -> `Package Sources`
+   - Name: `TypeScript Nightly`
+   - Source: `https://www.myget.org/F/typescript-preview/`
+2. Use the new Package Source:
+   - On Project node Right-Click -> `Manage NuGet Packages`
+   - Search for `Microsoft.TypeScript.MSBuild`
+   - Hit `Install`
+3. Rebuild the project.
+```
+
+----------------------------------------
+
+TITLE: TypeScript Actor Logic Setup
+DESCRIPTION: Defines types and functions for actor-based state machines, including `ActorLogic`, `ProvidedActor`, `ActionFunction`, `AssignAction`, `MachineConfig`, `ToProvidedActor`, and `setup`. The `setup` function is used to configure actor implementations and create a `createMachine` function.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/inferenceExactOptionalProperties2.errors.txt#_snippet_0
+
+LANGUAGE: typescript
+CODE:
+```
+type Values<T> = T[keyof T];
+    
+type EventObject = {
+  type: string;
+};
+    
+interface ActorLogic<TEvent extends EventObject> {
+  transition: (ev: TEvent) => unknown;
+}
+    
+type UnknownActorLogic = ActorLogic<never>;
+    
+interface ProvidedActor {
+  src: string;
+  logic: UnknownActorLogic;
+}
+    
+interface ActionFunction<TActor extends ProvidedActor> {
+  (): void;
+  _out_TActor?: TActor;
+}
+    
+interface AssignAction<TActor extends ProvidedActor> {
+  (): void;
+  _out_TActor?: TActor;
+}
+    
+interface MachineConfig<TActor extends ProvidedActor> {
+  entry?: ActionFunction<TActor>;
+}
+    
+declare function assign<TActor extends ProvidedActor>(
+  _: (spawn: (actor: TActor["src"]) => void) => {},
+): AssignAction<TActor>;
+    
+type ToProvidedActor<TActors extends Record<string, UnknownActorLogic>> =
+  Values<{
+    [K in keyof TActors & string]: {
+      src: K;
+      logic: TActors[K];
+    };
+  }>;
+    
+declare function setup< 
+  TActors extends Record<string, UnknownActorLogic> = {},
+>(implementations?: {
+  actors?: { [K in keyof TActors]: TActors[K] };
+}): {
+  createMachine: <
+    const TConfig extends MachineConfig<ToProvidedActor<TActors>>,
+  >(
+    config: TConfig,
+  ) => void;
+};
+```
+
+----------------------------------------
+
+TITLE: Install hereby CLI
+DESCRIPTION: Command to globally install the 'hereby' command-line interface tool, used for building and testing TypeScript.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+npm install -g hereby
+```
+
+----------------------------------------
+
+TITLE: TS Server Log Output Example
+DESCRIPTION: An example of the initial lines found in a TS Server log file, showing the server startup information, version, and arguments used.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Getting-logs-from-TS-Server-in-VS-Code.md#_snippet_0
+
+LANGUAGE: typescript
+CODE:
+```
+Info 0    [13:5:26.815] Starting TS Server
+Info 1    [13:5:26.816] Version: 3.7.0-dev.20190922
+Info 2    [13:5:26.816] Arguments: /Applications/Visual Studio Code - Insiders.app/Contents/Frameworks/Code - Insiders Helper.app/Contents/MacOS/Code - Insiders Helper /Users/ortatherox/dev/typescript/TypeScript/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --enableTelemetry --cancellationPipeName /var/folders/3d/j0zt8n5d77n_4mthj6nsb6h00000gn/T/vscode-typescript501/58d39090e29f4276f14f/tscancellation-e9842eb530b8e993176a.tmp* --logVerbosity verbose --logFile /Users/ortatherox/Library/Application Support/Code - Insiders/logs/20191014T045453/exthost13/vscode.typescript-language-features/tsserver-log-w6HewS/tsserver.log --globalPlugins typescript-tslint-plugin --pluginProbeLocations /Users/ortatherox/.vscode-insiders/extensions/ms-vscode.vscode-typescript-tslint-plugin-1.2.2 --locale en --noGetErrOnBackgroundUpdate --validateDefaultNpmLocation
+```
+
+----------------------------------------
+
+TITLE: Install Package in Node.js Container
+DESCRIPTION: Demonstrates installing an npm package ('1line-aa') within a Node.js container after switching to the 'node' user. Requires exiting the container twice (or thrice if Node.js was also started).
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_5
+
+LANGUAGE: shell
+CODE:
+```
+docker run -it --rm node bash
+$ su -l node
+$ npm install 1line-aa
+```
+
+----------------------------------------
+
+TITLE: Docker Quickstart for TypeScript Development
+DESCRIPTION: A guide to setting up a Docker environment for TypeScript development. This allows for consistent build and development environments across different machines.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/_Sidebar.md#_snippet_6
+
+LANGUAGE: Dockerfile
+CODE:
+```
+# Use an official Node.js runtime as a parent image
+FROM node:18-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json (or yarn.lock)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose port if your application runs a server
+# EXPOSE 3000
+
+# Command to run the application
+# CMD [ "npm", "start" ]
+
+# For building TypeScript, you might just need the build tools
+# RUN npm run build
+```
+
+----------------------------------------
+
+TITLE: Executing Commands in a Running Docker Container
+DESCRIPTION: This example shows how to start an interactive bash shell within a running Docker container. First, you use `docker ps` to find the container ID, then `docker exec -it <container-id> bash` to enter the container's environment.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_14
+
+LANGUAGE: shell
+CODE:
+```
+C:\> docker ps
+... node id ...
+C:\> docker exec -it 123 bash
+```
+
+----------------------------------------
+
+TITLE: Install Next TypeScript Build
+DESCRIPTION: Command to install the latest nightly build of TypeScript, useful for testing potential bug fixes.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install typescript@next
+```
+
+----------------------------------------
+
+TITLE: Run TypeScript Wiki Locally
+DESCRIPTION: Instructions to set up and run the TypeScript wiki locally using Gollum. This involves installing dependencies with RubyGems and starting the Gollum server.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/README.md#_snippet_0
+
+LANGUAGE: sh
+CODE:
+```
+# Install the deps
+gem install gollum
+
+# Start the server
+gollum
+```
+
+----------------------------------------
+
+TITLE: TypeScript Actor Spawning Example
+DESCRIPTION: Demonstrates the usage of the `setup` and `assign` functions to create a machine with a 'counter' actor. It shows a successful spawn of the 'counter' actor and an intentional error when trying to spawn an 'alarm' actor, highlighting TypeScript's type checking.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/inferenceExactOptionalProperties2.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+declare const counterLogic: ActorLogic<{ type: "INCREMENT" }>;
+    
+    // example usage
+    setup({
+      actors: { counter: counterLogic },
+    }).createMachine({
+      entry: assign((spawn) => {
+        spawn("counter"); // ok
+        spawn("alarm"); // error
+              ~~~~~~~
+!!! error TS2345: Argument of type '"alarm"' is not assignable to parameter of type '"counter"'.
+        return {};
+      }),
+    });
+    
+    // no provided actors, `assign` should still work
+    setup().createMachine({
+      entry: assign(() => ({})),
+    });
+```
+
+----------------------------------------
+
+TITLE: Install Latest TypeScript Version
+DESCRIPTION: Installs the latest nightly build of TypeScript using npm or yarn. This is a prerequisite for reporting performance issues to ensure the problem hasn't already been resolved.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_25
+
+LANGUAGE: sh
+CODE:
+```
+npm install --save-dev typescript@next
+
+# or
+
+yarn add typescript@next --dev
+```
+
+----------------------------------------
+
+TITLE: Run a Node.js Container with Bash
+DESCRIPTION: Starts an interactive, temporary Node.js container and overrides the default command to launch a bash shell, allowing custom commands like package installations.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_2
+
+LANGUAGE: docker
+CODE:
+```
+docker run -it --rm node bash
+```
+
+----------------------------------------
+
+TITLE: JavaScript Example with Docker GUI Reference
+DESCRIPTION: This snippet demonstrates a JavaScript string concatenation, referencing the availability of a Docker GUI for Windows users. It's a simple example illustrating how JavaScript might be used in conjunction with Docker concepts.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_12
+
+LANGUAGE: javascript
+CODE:
+```
+const orGUI =
+  "Or, as long as you're a gui-dependent windows user,"
+  + "just use the docker gui...";
+
+console.log(orGUI);
+```
+
+----------------------------------------
+
+TITLE: Remove Default TypeScript Imports
+DESCRIPTION: Guide to manually remove default TypeScript import references from a project file to prevent conflicts, typically before installing the MSBuild package.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Configuring-MSBuild-projects-to-use-NuGet.md#_snippet_2
+
+LANGUAGE: XML
+CODE:
+```
+<Import
+         Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props"
+         Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+```
+
+LANGUAGE: XML
+CODE:
+```
+<Import
+        Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets"
+        Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with --outFile and Compatible Modules
+DESCRIPTION: This example demonstrates a valid TypeScript setup using the 'system' module format with the `--outFile` flag. It includes two files, `m1.ts` and `test.ts`, which are compiled into a single output file without errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/maprootUrlSimpleSpecifyOutputFile/node/maprootUrlSimpleSpecifyOutputFile.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== m1.ts (0 errors) ====
+    var m1_a1 = 10;
+    class m1_c1 {
+        public m1_c1_p1: number;
+    }
+    
+    var m1_instance1 = new m1_c1();
+    function m1_f1() {
+        return m1_instance1;
+    }
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== test.ts (0 errors) ====
+    /// <reference path='m1.ts'/>
+    var a1 = 10;
+    class c1 {
+        public p1: number;
+    }
+    
+    var instance1 = new c1();
+    function f1() {
+        return instance1;
+    }
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with --outFile and Compatible Modules
+DESCRIPTION: This example demonstrates a valid TypeScript setup using the 'system' module format with the `--outFile` flag. It includes two files, `m1.ts` and `test.ts`, which are compiled into a single output file without errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/sourcerootUrlSimpleSpecifyOutputFile/node/sourcerootUrlSimpleSpecifyOutputFile.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== m1.ts (0 errors) ====
+    var m1_a1 = 10;
+    class m1_c1 {
+        public m1_c1_p1: number;
+    }
+    
+    var m1_instance1 = new m1_c1();
+    function m1_f1() {
+        return m1_instance1;
+    }
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== test.ts (0 errors) ====
+    /// <reference path='m1.ts'/>
+    var a1 = 10;
+    class c1 {
+        public p1: number;
+    }
+    
+    var instance1 = new c1();
+    function f1() {
+        return instance1;
+    }
+```
+
+----------------------------------------
+
+TITLE: Clone TypeScript Repository
+DESCRIPTION: Example of cloning the TypeScript repository with a shallow depth to save time and disk space.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+git clone --depth=1 <repository_url>
+```
+
+----------------------------------------
+
+TITLE: TypeScript GUI String Example
+DESCRIPTION: Demonstrates a TypeScript string variable that suggests using a GUI for Docker operations, often relevant for Windows users.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_8
+
+LANGUAGE: typescript
+CODE:
+```
+const orGUI =
+  "Or, as long as you're a gui-dependent windows user,"
+  + "just use the docker gui...";
+
+console.log(orGUI);
+```
+
+----------------------------------------
+
+TITLE: TypeScript Type Parameter Inference Example
+DESCRIPTION: Demonstrates type parameter inference by showing how a generic function `setup` infers the type argument `T` from the return type of a provided configuration object.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/reference/Reference-Checker-Inference.md#_snippet_5
+
+LANGUAGE: typescript
+CODE:
+```
+declare function setup<T>(config: { initial(): T }): T
+setup({ initial() { return "last" } })
+
+// Equivalent to:
+// setup<string>({ initial() { return "last" } })
+
+```
+
+----------------------------------------
+
+TITLE: Writing TypeScript Definition Files (.d.ts)
+DESCRIPTION: A walkthrough example of how to write a TypeScript definition file (.d.ts) to describe the shape of existing JavaScript code.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Blog-Post-Ideas.md#_snippet_18
+
+LANGUAGE: TypeScript
+CODE:
+```
+// Example: mylib.d.ts
+declare module 'mylib' {
+  export function greet(name: string): string;
+  export const version: string;
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with --outFile and Compatible Modules
+DESCRIPTION: This example demonstrates a valid TypeScript setup using the 'system' module format with the `--outFile` flag. It includes two files, `m1.ts` and `test.ts`, which are compiled into a single output file without errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/outSimpleSpecifyOutputFile/node/outSimpleSpecifyOutputFile.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== m1.ts (0 errors) ====
+    var m1_a1 = 10;
+    class m1_c1 {
+        public m1_c1_p1: number;
+    }
+    
+    var m1_instance1 = new m1_c1();
+    function m1_f1() {
+        return m1_instance1;
+    }
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== test.ts (0 errors) ====
+    /// <reference path='m1.ts'/>
+    var a1 = 10;
+    class c1 {
+        public p1: number;
+    }
+    
+    var instance1 = new c1();
+    function f1() {
+        return instance1;
+    }
+```
+
+----------------------------------------
+
+TITLE: TypeScript 'get' Accessor Errors
+DESCRIPTION: This snippet addresses two common TypeScript errors related to 'get' accessors: TS1054, which states a 'get' accessor cannot have parameters, and TS2378, which indicates a 'get' accessor must return a value. The example demonstrates a class with an incorrect 'get' accessor definition.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserMemberAccessorDeclaration12.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+class C {
+   get Foo(a: number) { }
+       ~~~
+!!! error TS1054: A 'get' accessor cannot have parameters.
+       ~~~
+!!! error TS2378: A 'get' accessor must return a value.
+}
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Incremental Program Watcher Setup
+DESCRIPTION: This snippet demonstrates the core logic for setting up an incremental program watcher in TypeScript. It includes finding the tsconfig.json, selecting a builder program strategy, and configuring the watch host with custom callbacks for program creation and status changes.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_6
+
+LANGUAGE: typescript
+CODE:
+```
+import ts = require("typescript");
+
+const formatHost: ts.FormatDiagnosticsHost = {
+  getCanonicalFileName: path => path,
+  getCurrentDirectory: ts.sys.getCurrentDirectory,
+  getNewLine: () => ts.sys.newLine
+};
+
+function watchMain() {
+  const configPath = ts.findConfigFile(
+    /*searchPath*/ "./",
+    ts.sys.fileExists,
+    "tsconfig.json"
+  );
+  if (!configPath) {
+    throw new Error("Could not find a valid 'tsconfig.json'.");
+  }
+
+  // TypeScript can use several different program creation "strategies":
+  //  * ts.createEmitAndSemanticDiagnosticsBuilderProgram,
+  //  * ts.createSemanticDiagnosticsBuilderProgram
+  //  * ts.createAbstractBuilder
+  // The first two produce "builder programs". These use an incremental strategy
+  // to only re-check and emit files whose contents may have changed, or whose
+  // dependencies may have changes which may impact change the result of prior
+  // type-check and emit.
+  // The last uses an ordinary program which does a full type check after every
+  // change.
+  // Between `createEmitAndSemanticDiagnosticsBuilderProgram` and
+  // `createSemanticDiagnosticsBuilderProgram`, the only difference is emit.
+  // For pure type-checking scenarios, or when another tool/process handles emit,
+  // using `createSemanticDiagnosticsBuilderProgram` may be more desirable.
+  const createProgram = ts.createSemanticDiagnosticsBuilderProgram;
+
+  // Note that there is another overload for `createWatchCompilerHost` that takes
+  // a set of root files.
+  const host = ts.createWatchCompilerHost(
+    configPath,
+    {},
+    ts.sys,
+    createProgram,
+    reportDiagnostic,
+    reportWatchStatusChanged
+  );
+
+  // You can technically override any given hook on the host, though you probably
+  // don't need to.
+  // Note that we're assuming `origCreateProgram` and `origPostProgramCreate`
+  // doesn't use `this` at all.
+  const origCreateProgram = host.createProgram;
+  host.createProgram = (rootNames: ReadonlyArray<string>, options, host, oldProgram) => {
+    console.log("** We're about to create the program! **");
+    return origCreateProgram(rootNames, options, host, oldProgram);
+  };
+  const origPostProgramCreate = host.afterProgramCreate;
+
+  host.afterProgramCreate = program => {
+    console.log("** We finished making the program! **");
+    origPostProgramCreate!(program);
+  };
+
+  // `createWatchProgram` creates an initial program, watches files, and updates
+  // the program over time.
+  ts.createWatchProgram(host);
+}
+
+function reportDiagnostic(diagnostic: ts.Diagnostic) {
+  console.error("Error", diagnostic.code, ":", ts.flattenDiagnosticMessageText( diagnostic.messageText, formatHost.getNewLine()));
+}
+
+/**
+ * Prints a diagnostic every time the watch status changes.
+ * This is mainly for messages like "Starting compilation" or "Compilation completed".
+ */
+function reportWatchStatusChanged(diagnostic: ts.Diagnostic) {
+  console.info(ts.formatDiagnostic(diagnostic, formatHost));
+}
+
+watchMain();
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Class Setter and Getter Example
+DESCRIPTION: Demonstrates a TypeScript class with a setter for a property 'foo' and a getter for a property 'get'. Exports these members.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/exportsAndImportsWithContextualKeywordNames01.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+let set = {
+    set foo(x: number) {
+    }
+}
+let get = 10;
+
+export { set, get };
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript (Stable)
+DESCRIPTION: Installs the latest stable version of TypeScript as a development dependency.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install -D typescript
+```
+
+----------------------------------------
+
+TITLE: Package JSON for Pkg1
+DESCRIPTION: The package.json for @raymondfeng/pkg1 defines the package's metadata, including its name, version, description, main entry point, and typings file. It serves as the core configuration for this package within the monorepo.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/declarationEmitReexportedSymlinkReference3.errors.txt#_snippet_3
+
+LANGUAGE: json
+CODE:
+```
+{
+    "name": "@raymondfeng/pkg1",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts"
+}
+```
+
+----------------------------------------
+
+TITLE: JSX Fragment with Invalid Start Character
+DESCRIPTION: Shows a syntax error where a JSX fragment starts with an unexpected character.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/linkedEditingJsxTag10.linkedEditing.txt#_snippet_12
+
+LANGUAGE: typescript
+CODE:
+```
+const jsx = > </>;
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Class Implementation: StartFindAction
+DESCRIPTION: Demonstrates the implementation of a TypeScript class `StartFindAction` that adheres to the `Sample.Thing.IAction` interface. It includes methods for getting an ID and running an action.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/recursiveClassReferenceTest.sourcemap.txt#_snippet_2
+
+LANGUAGE: typescript
+CODE:
+```
+export class StartFindAction implements Sample.Thing.IAction {
+	
+	public getId() { return "yo"; }
+	
+	public run(Thing:Sample.Thing.ICodeThing):boolean {
+
+		return true;
+	}
+}
+```
+
+----------------------------------------
+
+TITLE: Minimal TypeScript Compiler
+DESCRIPTION: A minimal TypeScript compiler program that takes filenames and compiler options, creates a program, type checks it, emits files, and reports diagnostics. It demonstrates the basic usage of the TypeScript Compiler API.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API-(TypeScript-1.4).md#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+/// <reference path="typings/node/node.d.ts" />
+/// <reference path="typings/typescript/typescript.d.ts" />
+
+import ts = require("typescript");
+
+export function compile(filenames: string[], options: ts.CompilerOptions): void {
+    var host = ts.createCompilerHost(options);
+    var program = ts.createProgram(filenames, options, host);
+    var checker = ts.createTypeChecker(program, /*produceDiagnostics*/ true);
+    var result = checker.emitFiles();
+
+    var allDiagnostics = program.getDiagnostics()
+        .concat(checker.getDiagnostics())
+        .concat(result.diagnostics);
+
+    allDiagnostics.forEach(diagnostic => {
+        var lineChar = diagnostic.file.getLineAndCharacterFromPosition(diagnostic.start);
+        console.log(`${diagnostic.file.filename} (${lineChar.line},${lineChar.character}): ${diagnostic.messageText}`);
+    });
+
+    console.log(`Process exiting with code '${result.emitResultStatus}'.`);
+    process.exit(result.emitResultStatus);
+}
+
+compile(process.argv.slice(2), { noEmitOnError: true, noImplicitAny: true,
+                                 target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS });
+```
+
+----------------------------------------
+
+TITLE: Run a Node.js Container
+DESCRIPTION: Starts an interactive, temporary Node.js container. The image is automatically pulled if not present. Use Ctrl+D to exit.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_0
+
+LANGUAGE: docker
+CODE:
+```
+docker run -it --rm node
+```
+
+----------------------------------------
+
+TITLE: TypeScript MSI Installer File Locations
+DESCRIPTION: Describes the installation paths for TypeScript files when using the MSI installer on Windows, differentiating between versions before and after 2.3.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/TypeScript-MSBuild-In-Depth.md#_snippet_1
+
+LANGUAGE: text
+CODE:
+```
+Microsoft SDKs Folder:
+  "%ProgramFiles%\Microsoft SDKs\TypeScript\<version-number>"
+    (contains tsc.exe and dependencies)
+  "%ProgramFiles%\Microsoft SDKs\TypeScript\<version-number>\build"
+    (versions 2.3+; contains Microsoft.TypeScript.targets, TypeScript.Tasks.dll, dependencies)
+  "%ProgramFiles%\Microsoft SDKs\TypeScript\<version-number>\versions"
+    (versions 2.3+; used by stub target file)
+
+MSBuild folder:
+  "%ProgramFile%\MSBuild\Microsoft\VisualStudio\v14.0\TypeScript"
+    (contains stub target file for versions 2.3+)
+```
+
+----------------------------------------
+
+TITLE: TypeScript Binder Walkthrough Example
+DESCRIPTION: A walkthrough example of the binder's process, showing how it encounters and binds declarations like functions, types, and variables, managing scope and potential conflicts.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/codebase/compiler/Codebase-Compiler-Binder.md#_snippet_3
+
+LANGUAGE: ts
+CODE:
+```
+function f(m: number) {
+    type n = string
+    const n = m + 1
+    return m + n
+}
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript (Nightly)
+DESCRIPTION: Installs the latest nightly build of TypeScript as a development dependency.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install -D typescript@next
+```
+
+----------------------------------------
+
+TITLE: Run tsserverfuzzer with Docker
+DESCRIPTION: Steps to clone the tsserverfuzzer repository, run it in a Docker container with specific mounts and user, install dependencies, build the project, and execute the fuzzer. Includes options for port forwarding and debugging.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_6
+
+LANGUAGE: bash
+CODE:
+```
+c:\> cd work
+C:\work> git clone ...tsserverfuzzer...
+C:\work> cd tsserverfuzzer
+C:\work\tsserverfuzzer> docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node node bash
+```
+
+LANGUAGE: bash
+CODE:
+```
+node@...:/fuzzer$ npm install
+...
+node@...:/fuzzer$ npm run build
+...
+node@...:/fuzzer$ node lib/Fuzzer/main.js
+```
+
+LANGUAGE: bash
+CODE:
+```
+docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node -p 9229:9242 node bash
+```
+
+LANGUAGE: typescript
+CODE:
+```
+'--inspect-brk=0.0.0.0:9242'
+```
+
+LANGUAGE: bash
+CODE:
+```
+docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node -p 9229:9242 node node lib/Fuzzer/main.js
+```
+
+LANGUAGE: bash
+CODE:
+```
+docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node -p 9229:9242 -e GitHubAuthenticationKey=%tok% node node lib/Fuzzer/main.js
+```
+
+----------------------------------------
+
+TITLE: Package JSON for Pkg2
+DESCRIPTION: The package.json for @raymondfeng/pkg2 specifies its name, version, description, main output, and typings. It also indicates its dependency on @raymondfeng/pkg1 for the MetadataAccessor type.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/declarationEmitReexportedSymlinkReference3.errors.txt#_snippet_4
+
+LANGUAGE: json
+CODE:
+```
+{
+    "name": "@raymondfeng/pkg2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts"
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Class: StartFindAction
+DESCRIPTION: Defines the 'StartFindAction' class which implements the 'Sample.Thing.IAction' interface. It includes methods for getting an ID and running an action.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/recursiveClassReferenceTest.sourcemap.txt#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+export class StartFindAction implements Sample.Thing.IAction {
+  public getId() { return "yo"; }
+  public run(Thing:Sample.Thing.ICodeThing):boolean {
+    return true;
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Import Specific Member Example
+DESCRIPTION: Demonstrates importing a specific member named 'get' from the './t1' module in TypeScript.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/exportsAndImportsWithContextualKeywordNames01.errors.txt#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { get } from "./t1";
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript File
+DESCRIPTION: A minimal TypeScript file that compiles without errors, demonstrating a valid setup.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/optionsInlineSourceMapMapRoot.errors.txt#_snippet_2
+
+LANGUAGE: typescript
+CODE:
+```
+==== optionsInlineSourceMapMapRoot.ts (0 errors) ====
+    var a = 10;
+```
+
+----------------------------------------
+
+TITLE: TypeScript 'get' Accessor Errors (TS1054, TS2378)
+DESCRIPTION: This snippet demonstrates common errors encountered when defining 'get' accessors in TypeScript. TS1054 occurs when a 'get' accessor is defined with parameters, which is not allowed. TS2378 occurs when a 'get' accessor does not return a value. The example shows the incorrect syntax and highlights the specific errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserAccessors7.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+var v = { get foo(v: number) { } };
+```
+
+----------------------------------------
+
+TITLE: TypeScript Greeter Class and Functions
+DESCRIPTION: Demonstrates a TypeScript Greeter class with a constructor and a greet method. Includes example functions `foo` and `foo2` to create and use Greeter instances, showcasing class instantiation and array manipulation.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/sourceMapSample.sourcemap.txt#_snippet_19
+
+LANGUAGE: TypeScript
+CODE:
+```
+"use strict";
+
+class Greeter {
+    constructor(public greeting: string) {
+    }
+
+    greet() {
+        return "<h1>" + this.greeting + "</h1>";
+    }
+}
+
+function foo(greeting: string): Foo.Bar.Greeter {
+    return new Greeter(greeting);
+}
+
+var greeter = new Greeter("Hello, world!");
+var str = greeter.greet();
+
+function foo2(greeting: string, ...restGreetings: string[]) {
+    var greeters: Greeter[] = [];
+    greeters[0] = new Greeter(greeting);
+    for (var i = 0; i < restGreetings.length; i++) {
+        greeters.push(new Greeter(restGreetings[i]));
+    }
+
+    return greeters;
+}
+
+var b = foo2("Hello", "World", "!");
+for (var j = 0; j < b.length; j++) {
+    b[j].greet();
+}
+```
+
+----------------------------------------
+
+TITLE: Basic TypeScript Import Example
+DESCRIPTION: A simple TypeScript file demonstrating how to import a module. This snippet shows the basic syntax for importing external modules, which is fundamental for organizing code in TypeScript projects.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/pathsValidation5.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+import 'someModule';
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example: Module Resolution Configuration
+DESCRIPTION: This example demonstrates a typical project setup that might lead to module resolution errors if not configured correctly. It includes a package.json with 'type': 'module' and an app.ts file attempting to import a module.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/nodeNextModuleResolution1.errors.txt#_snippet_2
+
+LANGUAGE: json
+CODE:
+```
+{
+    "name": "e",
+    "version": "1.0.0",
+    "type": "module"
+}
+```
+
+LANGUAGE: typescript
+CODE:
+```
+import {x} from "foo";
+```
+
+----------------------------------------
+
+TITLE: TypeScript Configuration for Pkg3
+DESCRIPTION: The tsconfig.json file for pkg3 configures the TypeScript compiler options for a monorepo environment. It specifies output directories, module systems, strictness, and module interop settings, essential for managing dependencies within the monorepo.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/declarationEmitReexportedSymlinkReference3.errors.txt#_snippet_0
+
+LANGUAGE: json
+CODE:
+```
+{
+    "compilerOptions": {
+      "outDir": "dist",
+      "rootDir": "src",
+      "target": "es5",
+      "module": "commonjs",
+      "strict": true,
+      "esModuleInterop": true,
+      "declaration": true
+    }
+}
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript Nightly Build
+DESCRIPTION: Instructions on how to install the latest nightly build of TypeScript using npm.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/TypeScript's-Release-Process.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install typescript@next
+```
+
+----------------------------------------
+
+TITLE: Build Tool Performance Recommendations
+DESCRIPTION: General advice for optimizing TypeScript builds often involves consulting specific documentation for your chosen build tools. Links are provided to sections on performance for `ts-loader` and `awesome-typescript-loader`.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_13
+
+LANGUAGE: Markdown
+CODE:
+```
+* [ts-loader's section on *Faster Builds*](https://github.com/TypeStrong/ts-loader#faster-builds)
+* [awesome-typescript-loader's section on *Performance Issues*](https://github.com/s-panferov/awesome-typescript-loader/blob/master/README.md#performance-issues)
+```
+
+----------------------------------------
+
+TITLE: TypeScript Incremental Build Server
+DESCRIPTION: Demonstrates setting up an incremental build server using TypeScript's language services. It watches a set of TypeScript files, recompiles changed files, and writes the output. Includes file watching, error logging, and emitting outputs.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_7
+
+LANGUAGE: typescript
+CODE:
+```
+import * as fs from "fs";
+import * as ts from "typescript";
+
+function watch(rootFileNames: string[], options: ts.CompilerOptions) {
+  const files: ts.MapLike<{ version: number }> = {};
+
+  // initialize the list of files
+  rootFileNames.forEach(fileName => {
+    files[fileName] = { version: 0 };
+  });
+
+  // Create the language service host to allow the LS to communicate with the host
+  const servicesHost: ts.LanguageServiceHost = {
+    getScriptFileNames: () => rootFileNames,
+    getScriptVersion: fileName =>
+      files[fileName] && files[fileName].version.toString(),
+    getScriptSnapshot: fileName => {
+      if (!fs.existsSync(fileName)) {
+        return undefined;
+      }
+
+      return ts.ScriptSnapshot.fromString(fs.readFileSync(fileName).toString());
+    },
+    getCurrentDirectory: () => process.cwd(),
+    getCompilationSettings: () => options,
+    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+    fileExists: ts.sys.fileExists,
+    readFile: ts.sys.readFile,
+    readDirectory: ts.sys.readDirectory,
+    directoryExists: ts.sys.directoryExists,
+    getDirectories: ts.sys.getDirectories,
+  };
+
+  // Create the language service files
+  const services = ts.createLanguageService(servicesHost, ts.createDocumentRegistry());
+
+  // Now let's watch the files
+  rootFileNames.forEach(fileName => {
+    // First time around, emit all files
+    emitFile(fileName);
+
+    // Add a watch on the file to handle next change
+    fs.watchFile(fileName, { persistent: true, interval: 250 }, (curr, prev) => {
+      // Check timestamp
+      if (+curr.mtime <= +prev.mtime) {
+        return;
+      }
+
+      // Update the version to signal a change in the file
+      files[fileName].version++;
+
+      // write the changes to disk
+      emitFile(fileName);
+    });
+  });
+
+  function emitFile(fileName: string) {
+    let output = services.getEmitOutput(fileName);
+
+    if (!output.emitSkipped) {
+      console.log(`Emitting ${fileName}`);
+    } else {
+      console.log(`Emitting ${fileName} failed`);
+      logErrors(fileName);
+    }
+
+    output.outputFiles.forEach(o => {
+      fs.writeFileSync(o.name, o.text, "utf8");
+    });
+  }
+
+  function logErrors(fileName: string) {
+    let allDiagnostics = services
+      .getCompilerOptionsDiagnostics()
+      .concat(services.getSyntacticDiagnostics(fileName))
+      .concat(services.getSemanticDiagnostics(fileName));
+
+    allDiagnostics.forEach(diagnostic => {
+      let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+      if (diagnostic.file) {
+        let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(
+          diagnostic.start! 
+        );
+        console.log(`  Error ${diagnostic.file.fileName} (${line + 1},${character +1}): ${message}`);
+      } else {
+        console.log(`  Error: ${message}`);
+      }
+    });
+  }
+}
+
+// Initialize files constituting the program as all .ts files in the current directory
+const currentDirectoryFiles = fs
+  .readdirSync(process.cwd())
+  .filter(fileName => fileName.length >= 3 && fileName.substr(fileName.length - 3, 3) === ".ts");
+
+// Start the watcher
+watch(currentDirectoryFiles, { module: ts.ModuleKind.CommonJS });
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript TS2378: 'get' accessor must return a value
+DESCRIPTION: This snippet addresses the TypeScript error TS2378. It highlights a common mistake where a 'get' accessor is defined without a return statement, which is mandatory in TypeScript. The example shows a class with a 'get' accessor that violates this rule, followed by the error message.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserAccessors1.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+class C {
+    get Foo() { }
+        ~~~ 
+!!! error TS2378: A 'get' accessor must return a value.
+}
+```
+
+----------------------------------------
+
+TITLE: Install and Locate tsserver
+DESCRIPTION: Demonstrates how to install the TypeScript package via npm and locate the tsserver executable within the node_modules directory.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Standalone-Server-(tsserver).md#_snippet_0
+
+LANGUAGE: cmd
+CODE:
+```
+npm install --save typescript
+ls node_modules\typescript\lib\tsserver.js
+```
+
+----------------------------------------
+
+TITLE: Check TypeScript Version
+DESCRIPTION: Command to check the installed version of the TypeScript compiler.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+tsc --v
+```
+
+----------------------------------------
+
+TITLE: TypeScript 'get' Accessor Must Return Value
+DESCRIPTION: This snippet addresses the TypeScript error TS2378, which indicates that a 'get' accessor within a class is missing a return statement. The example shows a class with a 'get' accessor that does not return a value, causing the error. The fix involves adding a return statement to the accessor.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserMemberAccessorDeclaration1.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+class C {
+  get a() { }
+      ~
+!!! error TS2378: A 'get' accessor must return a value.
+}
+
+// Corrected version:
+class C_corrected {
+  get a(): number {
+    return 1;
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Basic Accessor Usage
+DESCRIPTION: Illustrates the basic usage of accessors in TypeScript with the 'Example' class, showing initialization and a getter method.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/controlFlowAutoAccessor1.errors.txt#_snippet_3
+
+LANGUAGE: typescript
+CODE:
+```
+class Example {
+  accessor test;
+
+  constructor(test: number) {
+    this.test = test;
+  }
+
+  getTest() {
+    return this.test;
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript Class for Documentation
+DESCRIPTION: This is an example of a TypeScript class with JSDoc comments for the class itself and its constructor parameters. This input demonstrates the structure expected by the documentation generator script.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_15
+
+LANGUAGE: typescript
+CODE:
+```
+/**
+ * Documentation for C
+ */
+class C {
+    /**
+     * constructor documentation
+     * @param a my parameter documentation
+     * @param b another parameter documentation
+     */
+    constructor(a: string, b: C) { }
+}
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with Correct Source Map Configuration
+DESCRIPTION: This example demonstrates a valid TypeScript configuration where 'sourceMap' is enabled, allowing the use of 'mapRoot'. This setup is typical for projects that generate source maps for debugging purposes.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/mapRootWithNoSourceMapOption/node/mapRootWithNoSourceMapOption.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+/* tsconfig.json example */
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "mapRoot": "./maps"
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript typeof on Classes and Instances
+DESCRIPTION: Illustrates how 'typeof' can be applied to classes to get their constructor type and to instances to get their object type. This helps in typing variables that hold class constructors or instances.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/typeofAnExportedType.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+export class C {
+    foo: string;
+}
+export var c: C;
+var c2: C;
+
+export var r3: typeof C;
+export var r4: typeof c;
+export var r4b: typeof c2;
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript Files (No Errors)
+DESCRIPTION: These are example TypeScript files demonstrating a valid setup that does not produce the TS5102 error. The files include type definitions, class exports, and module imports, showcasing a clean project structure.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/preserveUnusedImports.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== a.ts (0 errors) ====
+    export type A = {};
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== b.ts (0 errors) ====
+    export class B {}
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== c.ts (0 errors) ====
+    import { A } from './a';
+    import { B } from './b';
+    
+    let b: B;
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript Class for Documentation
+DESCRIPTION: A sample TypeScript class with JSDoc comments for the class and its constructor parameters. This input is used to demonstrate the output of the documentation generation script.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_13
+
+LANGUAGE: ts
+CODE:
+```
+/**
+ * Documentation for C
+ */
+class C {
+    /**
+     * constructor documentation
+     * @param a my parameter documentation
+     * @param b another parameter documentation
+     */
+    constructor(a: string, b: C) { }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Module Configuration Example
+DESCRIPTION: Example of a tsconfig.json file correctly configured to resolve the TS5110 error. This setup is suitable for modern Node.js projects using ES Modules.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/allowImportingTypesDtsExtension(allowimportingtsextensions=true,moduleresolution=nodenext).errors.txt#_snippet_1
+
+LANGUAGE: json
+CODE:
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}
+```
+
+----------------------------------------
+
+TITLE: Install and Use pprof-it Locally
+DESCRIPTION: Instructions for installing pprof-it as a local dependency and using it with npm scripts to profile TypeScript builds. This method allows integration with existing build workflows.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_33
+
+LANGUAGE: sh
+CODE:
+```
+npm install --no-save pprof-it
+```
+
+LANGUAGE: sh
+CODE:
+```
+npm --node-option="--require pprof-it" run <your-script-name>
+```
+
+----------------------------------------
+
+TITLE: Converting JavaScript to TypeScript
+DESCRIPTION: A step-by-step guide on how to convert an existing JavaScript file to TypeScript, including common challenges and solutions.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Blog-Post-Ideas.md#_snippet_20
+
+LANGUAGE: TypeScript
+CODE:
+```
+// Example conversion: JS to TS
+// Original JS:
+// function add(a, b) { return a + b; }
+
+// Converted TS:
+function add(a: number, b: number): number { return a + b; }
+```
+
+----------------------------------------
+
+TITLE: TypeScript Module Configuration Example
+DESCRIPTION: Example of a tsconfig.json file correctly configured to resolve the TS5110 error. This setup is suitable for modern Node.js projects using ES Modules.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/allowImportingTypesDtsExtension(allowimportingtsextensions=false,moduleresolution=nodenext).errors.txt#_snippet_1
+
+LANGUAGE: json
+CODE:
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}
+```
+
+----------------------------------------
+
+TITLE: Docker Build Command Usage
+DESCRIPTION: Explains the usage of the `docker build` command with a Dockerfile to create custom images, including installing OS packages and setting default configurations.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_9
+
+LANGUAGE: bash
+CODE:
+```
+# Example Dockerfile content (not shown, but implied)
+# docker build -t my-node-image .
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Private Static Setter Decorators
+DESCRIPTION: Illustrates the application of decorators to private static setters in TypeScript. The example shows the setup for a private static setter `#x` with decorators.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/esDecorators-classDeclaration-sourceMap(target=es2015).sourcemap.txt#_snippet_7
+
+LANGUAGE: typescript
+CODE:
+```
+class C {
+    static set #x(value: number) { }
+
+    @dec
+    static #x;
+}
+```
+
+LANGUAGE: javascript
+CODE:
+```
+class C {
+    static set #x(value: number) { }
+
+    @dec
+    static #x;
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Incremental Build Server
+DESCRIPTION: This TypeScript code demonstrates how to create an incremental build server. It utilizes the TypeScript Language Service to watch files, detect changes, and re-emit outputs, optimizing the build process by only recompiling modified files.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API-(TypeScript-1.4).md#_snippet_5
+
+LANGUAGE: TypeScript
+CODE:
+```
+/// <reference path="typings/node/node.d.ts" />
+/// <reference path="typings/typescript/typescript.d.ts" />
+
+import fs = require("fs");
+import ts = require("typescript");
+import path = require("path");
+
+
+function watch(filenames: string[], options: ts.CompilerOptions) {
+    var files: ts.Map<{ version: number; text: string; }> = {};
+    
+    // Add the default library file
+    filenames.unshift(path.join(path.dirname(require.resolve('typescript')), 'lib.d.ts'));
+
+    // initialize the list of files
+    filenames.forEach(filename => {
+        files[filename] = { version: 0, text: fs.readFileSync(filename).toString() };
+    });
+
+    // Create the language service host to allow the LS to communicate with the host
+    var servicesHost: ts.LanguageServiceHost = {
+        getScriptFileNames: () => filenames,
+        getScriptVersion: (filename) => files[filename] && files[filename].version.toString(),
+        getScriptSnapshot: (filename) => {
+            var file = files[filename];
+            return {
+                getText: (start, end) => file.text.substring(start, end),
+                getLength: () => file.text.length,
+                getLineStartPositions: () => [],
+                getChangeRange: (oldSnapshot) => undefined
+            };
+        },
+        getCurrentDirectory: () => process.cwd(),
+        getScriptIsOpen: () => true,
+        getCompilationSettings: () => options,
+        getDefaultLibFilename:(options) => 'lib.d.ts',
+        log: (message) => console.log(message)
+    };
+
+    // Create the language service files
+    var services = ts.createLanguageService(servicesHost, ts.createDocumentRegistry())
+
+    // Now let's watch the files
+    filenames.forEach(filename => {
+        // First time around, emit all files
+        emitFile(filename);
+
+        // Add a watch on the file to handle next change
+        fs.watchFile(filename, 
+            { persistent: true, interval: 250 }, 
+            (curr, prev) => {
+                // Check timestamp
+                if (+curr.mtime <= +prev.mtime) {
+                    return;
+                }
+
+                var file = files[filename];
+
+                // Update the version to signal a change in the file
+                file.version++;
+
+                // Clear the text to force a new read
+                file.text = fs.readFileSync(filename).toString();
+
+                // write the changes to disk
+                emitFile(filename);
+            });
+    });
+
+
+    function emitFile(filename: string) {
+        var output = services.getEmitOutput(filename);
+
+        if (output.emitOutputStatus === ts.EmitReturnStatus.Succeeded) {
+            console.log(`Emitting ${filename}`);
+        }
+        else {
+            console.log(`Emitting ${filename} failed`);
+            var allDiagnostics = services.getCompilerOptionsDiagnostics()
+                .concat(services.getSyntacticDiagnostics(filename))
+                .concat(services.getSemanticDiagnostics(filename));
+
+            allDiagnostics.forEach(diagnostic => {
+                var lineChar = diagnostic.file.getLineAndCharacterFromPosition(diagnostic.start);
+                console.log(`  ${diagnostic.file && diagnostic.file.filename} (${lineChar.line},${lineChar.character}): ${diagnostic.messageText}`);
+            });
+        }
+
+        output.outputFiles.forEach(o => {
+            fs.writeFileSync(o.name, o.text, "utf8");
+        });
+    }
+}
+
+// Initialize files constituting the program as all .ts files in the current directory
+var currentDirectoryFiles = fs.readdirSync(process.cwd()).
+    filter(filename=> filename.length >= 3 && filename.substr(filename.length - 3, 3) === ".ts");
+    //map(filename => path.join(process.cwd(), filename));
+
+// Start the watcher
+watch(currentDirectoryFiles, { target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS });
+
+```========================
+CODE SNIPPETS
+========================
+TITLE: Install TypeScript and Types
+DESCRIPTION: Installs TypeScript globally and links it to the project. Also installs Node.js declaration files for type checking.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_0
+
+LANGUAGE: sh
+CODE:
+```
+npm install -g typescript
+npm link typescript
+npm install -D @types/node
+```
+
+----------------------------------------
+
+TITLE: TypeScript Greeter Example
+DESCRIPTION: A basic TypeScript example demonstrating how to import a module ('./greeter') and use its exported class ('Greeter'). It includes DOM manipulation to get an element and then instantiate the Greeter class, followed by calling its 'start' method.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/copyrightWithoutNewLine1.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+import model = require("./greeter")
+
+var el = document.getElementById('content');
+var greeter = new model.Greeter(el);
+/** things */
+greeter.start();
+```
+
+----------------------------------------
+
+TITLE: Install and Link TypeScript
+DESCRIPTION: Installs TypeScript globally using npm and links it to the project. This is the initial step for using TypeScript.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API-(TypeScript-1.4).md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install -g typescript
+npm link typescript
+```
+
+----------------------------------------
+
+TITLE: Install and Use pprof-it Locally
+DESCRIPTION: Instructions for installing pprof-it as a local dependency and running build scripts with the `--node-option` flag to enable profiling.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_28
+
+LANGUAGE: sh
+CODE:
+```
+npm install --no-save pprof-it
+```
+
+LANGUAGE: sh
+CODE:
+```
+npm --node-option="--require pprof-it" run <your-script-name>
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript MSBuild from NuGet
+DESCRIPTION: Steps to install the Microsoft.TypeScript.MSBuild package from the official NuGet feed for stable releases. This involves searching for the package and installing it.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Configuring-MSBuild-projects-to-use-NuGet.md#_snippet_0
+
+LANGUAGE: text
+CODE:
+```
+1. Right-Click -> Manage NuGet Packages
+2. Search for `Microsoft.TypeScript.MSBuild`
+3. Hit `Install`
+4. Rebuild the project.
+```
+
+----------------------------------------
+
+TITLE: Example Usage: Machine without Provided Actors
+DESCRIPTION: Shows a basic example of creating a machine using `setup` when no specific actors are provided, demonstrating the flexibility of the system.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/inferenceExactOptionalProperties2.errors.txt#_snippet_2
+
+LANGUAGE: typescript
+CODE:
+```
+// no provided actors, `assign` should still work
+setup().createMachine({
+  entry: assign(() => ({})),
+});
+
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript MSBuild from MyGet (Nightly)
+DESCRIPTION: Instructions for installing the Microsoft.TypeScript.MSBuild package from a MyGet feed for nightly builds. This requires adding a new package source in Visual Studio.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Configuring-MSBuild-projects-to-use-NuGet.md#_snippet_1
+
+LANGUAGE: text
+CODE:
+```
+1. Add a new Package Source:
+   - Go to `Tools` -> `Options` -> `NuGet Package Manager` -> `Package Sources`
+   - Name: `TypeScript Nightly`
+   - Source: `https://www.myget.org/F/typescript-preview/`
+2. Use the new Package Source:
+   - On Project node Right-Click -> `Manage NuGet Packages`
+   - Search for `Microsoft.TypeScript.MSBuild`
+   - Hit `Install`
+3. Rebuild the project.
+```
+
+----------------------------------------
+
+TITLE: TypeScript Actor Logic Setup
+DESCRIPTION: Defines types and functions for actor-based state machines, including `ActorLogic`, `ProvidedActor`, `ActionFunction`, `AssignAction`, `MachineConfig`, `ToProvidedActor`, and `setup`. The `setup` function is used to configure actor implementations and create a `createMachine` function.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/inferenceExactOptionalProperties2.errors.txt#_snippet_0
+
+LANGUAGE: typescript
+CODE:
+```
+type Values<T> = T[keyof T];
+    
+type EventObject = {
+  type: string;
+};
+    
+interface ActorLogic<TEvent extends EventObject> {
+  transition: (ev: TEvent) => unknown;
+}
+    
+type UnknownActorLogic = ActorLogic<never>;
+    
+interface ProvidedActor {
+  src: string;
+  logic: UnknownActorLogic;
+}
+    
+interface ActionFunction<TActor extends ProvidedActor> {
+  (): void;
+  _out_TActor?: TActor;
+}
+    
+interface AssignAction<TActor extends ProvidedActor> {
+  (): void;
+  _out_TActor?: TActor;
+}
+    
+interface MachineConfig<TActor extends ProvidedActor> {
+  entry?: ActionFunction<TActor>;
+}
+    
+declare function assign<TActor extends ProvidedActor>(
+  _: (spawn: (actor: TActor["src"]) => void) => {},
+): AssignAction<TActor>;
+    
+type ToProvidedActor<TActors extends Record<string, UnknownActorLogic>> =
+  Values<{
+    [K in keyof TActors & string]: {
+      src: K;
+      logic: TActors[K];
+    };
+  }>;
+    
+declare function setup< 
+  TActors extends Record<string, UnknownActorLogic> = {},
+>(implementations?: {
+  actors?: { [K in keyof TActors]: TActors[K] };
+}): {
+  createMachine: <
+    const TConfig extends MachineConfig<ToProvidedActor<TActors>>,
+  >(
+    config: TConfig,
+  ) => void;
+};
+```
+
+----------------------------------------
+
+TITLE: Install hereby CLI
+DESCRIPTION: Command to globally install the 'hereby' command-line interface tool, used for building and testing TypeScript.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+npm install -g hereby
+```
+
+----------------------------------------
+
+TITLE: TS Server Log Output Example
+DESCRIPTION: An example of the initial lines found in a TS Server log file, showing the server startup information, version, and arguments used.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Getting-logs-from-TS-Server-in-VS-Code.md#_snippet_0
+
+LANGUAGE: typescript
+CODE:
+```
+Info 0    [13:5:26.815] Starting TS Server
+Info 1    [13:5:26.816] Version: 3.7.0-dev.20190922
+Info 2    [13:5:26.816] Arguments: /Applications/Visual Studio Code - Insiders.app/Contents/Frameworks/Code - Insiders Helper.app/Contents/MacOS/Code - Insiders Helper /Users/ortatherox/dev/typescript/TypeScript/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --enableTelemetry --cancellationPipeName /var/folders/3d/j0zt8n5d77n_4mthj6nsb6h00000gn/T/vscode-typescript501/58d39090e29f4276f14f/tscancellation-e9842eb530b8e993176a.tmp* --logVerbosity verbose --logFile /Users/ortatherox/Library/Application Support/Code - Insiders/logs/20191014T045453/exthost13/vscode.typescript-language-features/tsserver-log-w6HewS/tsserver.log --globalPlugins typescript-tslint-plugin --pluginProbeLocations /Users/ortatherox/.vscode-insiders/extensions/ms-vscode.vscode-typescript-tslint-plugin-1.2.2 --locale en --noGetErrOnBackgroundUpdate --validateDefaultNpmLocation
+```
+
+----------------------------------------
+
+TITLE: Install Package in Node.js Container
+DESCRIPTION: Demonstrates installing an npm package ('1line-aa') within a Node.js container after switching to the 'node' user. Requires exiting the container twice (or thrice if Node.js was also started).
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_5
+
+LANGUAGE: shell
+CODE:
+```
+docker run -it --rm node bash
+$ su -l node
+$ npm install 1line-aa
+```
+
+----------------------------------------
+
+TITLE: Docker Quickstart for TypeScript Development
+DESCRIPTION: A guide to setting up a Docker environment for TypeScript development. This allows for consistent build and development environments across different machines.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/_Sidebar.md#_snippet_6
+
+LANGUAGE: Dockerfile
+CODE:
+```
+# Use an official Node.js runtime as a parent image
+FROM node:18-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json (or yarn.lock)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose port if your application runs a server
+# EXPOSE 3000
+
+# Command to run the application
+# CMD [ "npm", "start" ]
+
+# For building TypeScript, you might just need the build tools
+# RUN npm run build
+```
+
+----------------------------------------
+
+TITLE: Executing Commands in a Running Docker Container
+DESCRIPTION: This example shows how to start an interactive bash shell within a running Docker container. First, you use `docker ps` to find the container ID, then `docker exec -it <container-id> bash` to enter the container's environment.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_14
+
+LANGUAGE: shell
+CODE:
+```
+C:\> docker ps
+... node id ...
+C:\> docker exec -it 123 bash
+```
+
+----------------------------------------
+
+TITLE: Install Next TypeScript Build
+DESCRIPTION: Command to install the latest nightly build of TypeScript, useful for testing potential bug fixes.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install typescript@next
+```
+
+----------------------------------------
+
+TITLE: Run TypeScript Wiki Locally
+DESCRIPTION: Instructions to set up and run the TypeScript wiki locally using Gollum. This involves installing dependencies with RubyGems and starting the Gollum server.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/README.md#_snippet_0
+
+LANGUAGE: sh
+CODE:
+```
+# Install the deps
+gem install gollum
+
+# Start the server
+gollum
+```
+
+----------------------------------------
+
+TITLE: TypeScript Actor Spawning Example
+DESCRIPTION: Demonstrates the usage of the `setup` and `assign` functions to create a machine with a 'counter' actor. It shows a successful spawn of the 'counter' actor and an intentional error when trying to spawn an 'alarm' actor, highlighting TypeScript's type checking.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/inferenceExactOptionalProperties2.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+declare const counterLogic: ActorLogic<{ type: "INCREMENT" }>;
+    
+    // example usage
+    setup({
+      actors: { counter: counterLogic },
+    }).createMachine({
+      entry: assign((spawn) => {
+        spawn("counter"); // ok
+        spawn("alarm"); // error
+              ~~~~~~~
+!!! error TS2345: Argument of type '"alarm"' is not assignable to parameter of type '"counter"'.
+        return {};
+      }),
+    });
+    
+    // no provided actors, `assign` should still work
+    setup().createMachine({
+      entry: assign(() => ({})),
+    });
+```
+
+----------------------------------------
+
+TITLE: Install Latest TypeScript Version
+DESCRIPTION: Installs the latest nightly build of TypeScript using npm or yarn. This is a prerequisite for reporting performance issues to ensure the problem hasn't already been resolved.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_25
+
+LANGUAGE: sh
+CODE:
+```
+npm install --save-dev typescript@next
+
+# or
+
+yarn add typescript@next --dev
+```
+
+----------------------------------------
+
+TITLE: Run a Node.js Container with Bash
+DESCRIPTION: Starts an interactive, temporary Node.js container and overrides the default command to launch a bash shell, allowing custom commands like package installations.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_2
+
+LANGUAGE: docker
+CODE:
+```
+docker run -it --rm node bash
+```
+
+----------------------------------------
+
+TITLE: JavaScript Example with Docker GUI Reference
+DESCRIPTION: This snippet demonstrates a JavaScript string concatenation, referencing the availability of a Docker GUI for Windows users. It's a simple example illustrating how JavaScript might be used in conjunction with Docker concepts.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_12
+
+LANGUAGE: javascript
+CODE:
+```
+const orGUI =
+  "Or, as long as you're a gui-dependent windows user,"
+  + "just use the docker gui...";
+
+console.log(orGUI);
+```
+
+----------------------------------------
+
+TITLE: Remove Default TypeScript Imports
+DESCRIPTION: Guide to manually remove default TypeScript import references from a project file to prevent conflicts, typically before installing the MSBuild package.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Configuring-MSBuild-projects-to-use-NuGet.md#_snippet_2
+
+LANGUAGE: XML
+CODE:
+```
+<Import
+         Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props"
+         Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+```
+
+LANGUAGE: XML
+CODE:
+```
+<Import
+        Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets"
+        Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with --outFile and Compatible Modules
+DESCRIPTION: This example demonstrates a valid TypeScript setup using the 'system' module format with the `--outFile` flag. It includes two files, `m1.ts` and `test.ts`, which are compiled into a single output file without errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/maprootUrlSimpleSpecifyOutputFile/node/maprootUrlSimpleSpecifyOutputFile.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== m1.ts (0 errors) ====
+    var m1_a1 = 10;
+    class m1_c1 {
+        public m1_c1_p1: number;
+    }
+    
+    var m1_instance1 = new m1_c1();
+    function m1_f1() {
+        return m1_instance1;
+    }
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== test.ts (0 errors) ====
+    /// <reference path='m1.ts'/>
+    var a1 = 10;
+    class c1 {
+        public p1: number;
+    }
+    
+    var instance1 = new c1();
+    function f1() {
+        return instance1;
+    }
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with --outFile and Compatible Modules
+DESCRIPTION: This example demonstrates a valid TypeScript setup using the 'system' module format with the `--outFile` flag. It includes two files, `m1.ts` and `test.ts`, which are compiled into a single output file without errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/sourcerootUrlSimpleSpecifyOutputFile/node/sourcerootUrlSimpleSpecifyOutputFile.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== m1.ts (0 errors) ====
+    var m1_a1 = 10;
+    class m1_c1 {
+        public m1_c1_p1: number;
+    }
+    
+    var m1_instance1 = new m1_c1();
+    function m1_f1() {
+        return m1_instance1;
+    }
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== test.ts (0 errors) ====
+    /// <reference path='m1.ts'/>
+    var a1 = 10;
+    class c1 {
+        public p1: number;
+    }
+    
+    var instance1 = new c1();
+    function f1() {
+        return instance1;
+    }
+```
+
+----------------------------------------
+
+TITLE: Clone TypeScript Repository
+DESCRIPTION: Example of cloning the TypeScript repository with a shallow depth to save time and disk space.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+git clone --depth=1 <repository_url>
+```
+
+----------------------------------------
+
+TITLE: TypeScript GUI String Example
+DESCRIPTION: Demonstrates a TypeScript string variable that suggests using a GUI for Docker operations, often relevant for Windows users.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_8
+
+LANGUAGE: typescript
+CODE:
+```
+const orGUI =
+  "Or, as long as you're a gui-dependent windows user,"
+  + "just use the docker gui...";
+
+console.log(orGUI);
+```
+
+----------------------------------------
+
+TITLE: TypeScript Type Parameter Inference Example
+DESCRIPTION: Demonstrates type parameter inference by showing how a generic function `setup` infers the type argument `T` from the return type of a provided configuration object.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/reference/Reference-Checker-Inference.md#_snippet_5
+
+LANGUAGE: typescript
+CODE:
+```
+declare function setup<T>(config: { initial(): T }): T
+setup({ initial() { return "last" } })
+
+// Equivalent to:
+// setup<string>({ initial() { return "last" } })
+
+```
+
+----------------------------------------
+
+TITLE: Writing TypeScript Definition Files (.d.ts)
+DESCRIPTION: A walkthrough example of how to write a TypeScript definition file (.d.ts) to describe the shape of existing JavaScript code.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Blog-Post-Ideas.md#_snippet_18
+
+LANGUAGE: TypeScript
+CODE:
+```
+// Example: mylib.d.ts
+declare module 'mylib' {
+  export function greet(name: string): string;
+  export const version: string;
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with --outFile and Compatible Modules
+DESCRIPTION: This example demonstrates a valid TypeScript setup using the 'system' module format with the `--outFile` flag. It includes two files, `m1.ts` and `test.ts`, which are compiled into a single output file without errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/outSimpleSpecifyOutputFile/node/outSimpleSpecifyOutputFile.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== m1.ts (0 errors) ====
+    var m1_a1 = 10;
+    class m1_c1 {
+        public m1_c1_p1: number;
+    }
+    
+    var m1_instance1 = new m1_c1();
+    function m1_f1() {
+        return m1_instance1;
+    }
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== test.ts (0 errors) ====
+    /// <reference path='m1.ts'/>
+    var a1 = 10;
+    class c1 {
+        public p1: number;
+    }
+    
+    var instance1 = new c1();
+    function f1() {
+        return instance1;
+    }
+```
+
+----------------------------------------
+
+TITLE: TypeScript 'get' Accessor Errors
+DESCRIPTION: This snippet addresses two common TypeScript errors related to 'get' accessors: TS1054, which states a 'get' accessor cannot have parameters, and TS2378, which indicates a 'get' accessor must return a value. The example demonstrates a class with an incorrect 'get' accessor definition.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserMemberAccessorDeclaration12.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+class C {
+   get Foo(a: number) { }
+       ~~~
+!!! error TS1054: A 'get' accessor cannot have parameters.
+       ~~~
+!!! error TS2378: A 'get' accessor must return a value.
+}
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Incremental Program Watcher Setup
+DESCRIPTION: This snippet demonstrates the core logic for setting up an incremental program watcher in TypeScript. It includes finding the tsconfig.json, selecting a builder program strategy, and configuring the watch host with custom callbacks for program creation and status changes.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_6
+
+LANGUAGE: typescript
+CODE:
+```
+import ts = require("typescript");
+
+const formatHost: ts.FormatDiagnosticsHost = {
+  getCanonicalFileName: path => path,
+  getCurrentDirectory: ts.sys.getCurrentDirectory,
+  getNewLine: () => ts.sys.newLine
+};
+
+function watchMain() {
+  const configPath = ts.findConfigFile(
+    /*searchPath*/ "./",
+    ts.sys.fileExists,
+    "tsconfig.json"
+  );
+  if (!configPath) {
+    throw new Error("Could not find a valid 'tsconfig.json'.");
+  }
+
+  // TypeScript can use several different program creation "strategies":
+  //  * ts.createEmitAndSemanticDiagnosticsBuilderProgram,
+  //  * ts.createSemanticDiagnosticsBuilderProgram
+  //  * ts.createAbstractBuilder
+  // The first two produce "builder programs". These use an incremental strategy
+  // to only re-check and emit files whose contents may have changed, or whose
+  // dependencies may have changes which may impact change the result of prior
+  // type-check and emit.
+  // The last uses an ordinary program which does a full type check after every
+  // change.
+  // Between `createEmitAndSemanticDiagnosticsBuilderProgram` and
+  // `createSemanticDiagnosticsBuilderProgram`, the only difference is emit.
+  // For pure type-checking scenarios, or when another tool/process handles emit,
+  // using `createSemanticDiagnosticsBuilderProgram` may be more desirable.
+  const createProgram = ts.createSemanticDiagnosticsBuilderProgram;
+
+  // Note that there is another overload for `createWatchCompilerHost` that takes
+  // a set of root files.
+  const host = ts.createWatchCompilerHost(
+    configPath,
+    {},
+    ts.sys,
+    createProgram,
+    reportDiagnostic,
+    reportWatchStatusChanged
+  );
+
+  // You can technically override any given hook on the host, though you probably
+  // don't need to.
+  // Note that we're assuming `origCreateProgram` and `origPostProgramCreate`
+  // doesn't use `this` at all.
+  const origCreateProgram = host.createProgram;
+  host.createProgram = (rootNames: ReadonlyArray<string>, options, host, oldProgram) => {
+    console.log("** We're about to create the program! **");
+    return origCreateProgram(rootNames, options, host, oldProgram);
+  };
+  const origPostProgramCreate = host.afterProgramCreate;
+
+  host.afterProgramCreate = program => {
+    console.log("** We finished making the program! **");
+    origPostProgramCreate!(program);
+  };
+
+  // `createWatchProgram` creates an initial program, watches files, and updates
+  // the program over time.
+  ts.createWatchProgram(host);
+}
+
+function reportDiagnostic(diagnostic: ts.Diagnostic) {
+  console.error("Error", diagnostic.code, ":", ts.flattenDiagnosticMessageText( diagnostic.messageText, formatHost.getNewLine()));
+}
+
+/**
+ * Prints a diagnostic every time the watch status changes.
+ * This is mainly for messages like "Starting compilation" or "Compilation completed".
+ */
+function reportWatchStatusChanged(diagnostic: ts.Diagnostic) {
+  console.info(ts.formatDiagnostic(diagnostic, formatHost));
+}
+
+watchMain();
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Class Setter and Getter Example
+DESCRIPTION: Demonstrates a TypeScript class with a setter for a property 'foo' and a getter for a property 'get'. Exports these members.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/exportsAndImportsWithContextualKeywordNames01.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+let set = {
+    set foo(x: number) {
+    }
+}
+let get = 10;
+
+export { set, get };
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript (Stable)
+DESCRIPTION: Installs the latest stable version of TypeScript as a development dependency.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm install -D typescript
+```
+
+----------------------------------------
+
+TITLE: Package JSON for Pkg1
+DESCRIPTION: The package.json for @raymondfeng/pkg1 defines the package's metadata, including its name, version, description, main entry point, and typings file. It serves as the core configuration for this package within the monorepo.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/declarationEmitReexportedSymlinkReference3.errors.txt#_snippet_3
+
+LANGUAGE: json
+CODE:
+```
+{
+    "name": "@raymondfeng/pkg1",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts"
+}
+```
+
+----------------------------------------
+
+TITLE: JSX Fragment with Invalid Start Character
+DESCRIPTION: Shows a syntax error where a JSX fragment starts with an unexpected character.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/linkedEditingJsxTag10.linkedEditing.txt#_snippet_12
+
+LANGUAGE: typescript
+CODE:
+```
+const jsx = > </>;
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Class Implementation: StartFindAction
+DESCRIPTION: Demonstrates the implementation of a TypeScript class `StartFindAction` that adheres to the `Sample.Thing.IAction` interface. It includes methods for getting an ID and running an action.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/recursiveClassReferenceTest.sourcemap.txt#_snippet_2
+
+LANGUAGE: typescript
+CODE:
+```
+export class StartFindAction implements Sample.Thing.IAction {
+	
+	public getId() { return "yo"; }
+	
+	public run(Thing:Sample.Thing.ICodeThing):boolean {
+
+		return true;
+	}
+}
+```
+
+----------------------------------------
+
+TITLE: Minimal TypeScript Compiler
+DESCRIPTION: A minimal TypeScript compiler program that takes filenames and compiler options, creates a program, type checks it, emits files, and reports diagnostics. It demonstrates the basic usage of the TypeScript Compiler API.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API-(TypeScript-1.4).md#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+/// <reference path="typings/node/node.d.ts" />
+/// <reference path="typings/typescript/typescript.d.ts" />
+
+import ts = require("typescript");
+
+export function compile(filenames: string[], options: ts.CompilerOptions): void {
+    var host = ts.createCompilerHost(options);
+    var program = ts.createProgram(filenames, options, host);
+    var checker = ts.createTypeChecker(program, /*produceDiagnostics*/ true);
+    var result = checker.emitFiles();
+
+    var allDiagnostics = program.getDiagnostics()
+        .concat(checker.getDiagnostics())
+        .concat(result.diagnostics);
+
+    allDiagnostics.forEach(diagnostic => {
+        var lineChar = diagnostic.file.getLineAndCharacterFromPosition(diagnostic.start);
+        console.log(`${diagnostic.file.filename} (${lineChar.line},${lineChar.character}): ${diagnostic.messageText}`);
+    });
+
+    console.log(`Process exiting with code '${result.emitResultStatus}'.`);
+    process.exit(result.emitResultStatus);
+}
+
+compile(process.argv.slice(2), { noEmitOnError: true, noImplicitAny: true,
+                                 target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS });
+```
+
+----------------------------------------
+
+TITLE: Run a Node.js Container
+DESCRIPTION: Starts an interactive, temporary Node.js container. The image is automatically pulled if not present. Use Ctrl+D to exit.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_0
+
+LANGUAGE: docker
+CODE:
+```
+docker run -it --rm node
+```
+
+----------------------------------------
+
+TITLE: TypeScript MSI Installer File Locations
+DESCRIPTION: Describes the installation paths for TypeScript files when using the MSI installer on Windows, differentiating between versions before and after 2.3.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/TypeScript-MSBuild-In-Depth.md#_snippet_1
+
+LANGUAGE: text
+CODE:
+```
+Microsoft SDKs Folder:
+  "%ProgramFiles%\Microsoft SDKs\TypeScript\<version-number>"
+    (contains tsc.exe and dependencies)
+  "%ProgramFiles%\Microsoft SDKs\TypeScript\<version-number>\build"
+    (versions 2.3+; contains Microsoft.TypeScript.targets, TypeScript.Tasks.dll, dependencies)
+  "%ProgramFiles%\Microsoft SDKs\TypeScript\<version-number>\versions"
+    (versions 2.3+; used by stub target file)
+
+MSBuild folder:
+  "%ProgramFile%\MSBuild\Microsoft\VisualStudio\v14.0\TypeScript"
+    (contains stub target file for versions 2.3+)
+```
+
+----------------------------------------
+
+TITLE: TypeScript Binder Walkthrough Example
+DESCRIPTION: A walkthrough example of the binder's process, showing how it encounters and binds declarations like functions, types, and variables, managing scope and potential conflicts.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/codebase/compiler/Codebase-Compiler-Binder.md#_snippet_3
+
+LANGUAGE: ts
+CODE:
+```
+function f(m: number) {
+    type n = string
+    const n = m + 1
+    return m + n
+}
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript (Nightly)
+DESCRIPTION: Installs the latest nightly build of TypeScript as a development dependency.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install -D typescript@next
+```
+
+----------------------------------------
+
+TITLE: Run tsserverfuzzer with Docker
+DESCRIPTION: Steps to clone the tsserverfuzzer repository, run it in a Docker container with specific mounts and user, install dependencies, build the project, and execute the fuzzer. Includes options for port forwarding and debugging.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_6
+
+LANGUAGE: bash
+CODE:
+```
+c:\> cd work
+C:\work> git clone ...tsserverfuzzer...
+C:\work> cd tsserverfuzzer
+C:\work\tsserverfuzzer> docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node node bash
+```
+
+LANGUAGE: bash
+CODE:
+```
+node@...:/fuzzer$ npm install
+...
+node@...:/fuzzer$ npm run build
+...
+node@...:/fuzzer$ node lib/Fuzzer/main.js
+```
+
+LANGUAGE: bash
+CODE:
+```
+docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node -p 9229:9242 node bash
+```
+
+LANGUAGE: typescript
+CODE:
+```
+'--inspect-brk=0.0.0.0:9242'
+```
+
+LANGUAGE: bash
+CODE:
+```
+docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node -p 9229:9242 node node lib/Fuzzer/main.js
+```
+
+LANGUAGE: bash
+CODE:
+```
+docker run -it --rm -v %cd%:/fuzzer -w /fuzzer -u node -p 9229:9242 -e GitHubAuthenticationKey=%tok% node node lib/Fuzzer/main.js
+```
+
+----------------------------------------
+
+TITLE: Package JSON for Pkg2
+DESCRIPTION: The package.json for @raymondfeng/pkg2 specifies its name, version, description, main output, and typings. It also indicates its dependency on @raymondfeng/pkg1 for the MetadataAccessor type.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/declarationEmitReexportedSymlinkReference3.errors.txt#_snippet_4
+
+LANGUAGE: json
+CODE:
+```
+{
+    "name": "@raymondfeng/pkg2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts"
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Class: StartFindAction
+DESCRIPTION: Defines the 'StartFindAction' class which implements the 'Sample.Thing.IAction' interface. It includes methods for getting an ID and running an action.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/recursiveClassReferenceTest.sourcemap.txt#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+export class StartFindAction implements Sample.Thing.IAction {
+  public getId() { return "yo"; }
+  public run(Thing:Sample.Thing.ICodeThing):boolean {
+    return true;
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Import Specific Member Example
+DESCRIPTION: Demonstrates importing a specific member named 'get' from the './t1' module in TypeScript.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/exportsAndImportsWithContextualKeywordNames01.errors.txt#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { get } from "./t1";
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript File
+DESCRIPTION: A minimal TypeScript file that compiles without errors, demonstrating a valid setup.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/optionsInlineSourceMapMapRoot.errors.txt#_snippet_2
+
+LANGUAGE: typescript
+CODE:
+```
+==== optionsInlineSourceMapMapRoot.ts (0 errors) ====
+    var a = 10;
+```
+
+----------------------------------------
+
+TITLE: TypeScript 'get' Accessor Errors (TS1054, TS2378)
+DESCRIPTION: This snippet demonstrates common errors encountered when defining 'get' accessors in TypeScript. TS1054 occurs when a 'get' accessor is defined with parameters, which is not allowed. TS2378 occurs when a 'get' accessor does not return a value. The example shows the incorrect syntax and highlights the specific errors.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserAccessors7.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+var v = { get foo(v: number) { } };
+```
+
+----------------------------------------
+
+TITLE: TypeScript Greeter Class and Functions
+DESCRIPTION: Demonstrates a TypeScript Greeter class with a constructor and a greet method. Includes example functions `foo` and `foo2` to create and use Greeter instances, showcasing class instantiation and array manipulation.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/sourceMapSample.sourcemap.txt#_snippet_19
+
+LANGUAGE: TypeScript
+CODE:
+```
+"use strict";
+
+class Greeter {
+    constructor(public greeting: string) {
+    }
+
+    greet() {
+        return "<h1>" + this.greeting + "</h1>";
+    }
+}
+
+function foo(greeting: string): Foo.Bar.Greeter {
+    return new Greeter(greeting);
+}
+
+var greeter = new Greeter("Hello, world!");
+var str = greeter.greet();
+
+function foo2(greeting: string, ...restGreetings: string[]) {
+    var greeters: Greeter[] = [];
+    greeters[0] = new Greeter(greeting);
+    for (var i = 0; i < restGreetings.length; i++) {
+        greeters.push(new Greeter(restGreetings[i]));
+    }
+
+    return greeters;
+}
+
+var b = foo2("Hello", "World", "!");
+for (var j = 0; j < b.length; j++) {
+    b[j].greet();
+}
+```
+
+----------------------------------------
+
+TITLE: Basic TypeScript Import Example
+DESCRIPTION: A simple TypeScript file demonstrating how to import a module. This snippet shows the basic syntax for importing external modules, which is fundamental for organizing code in TypeScript projects.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/pathsValidation5.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+import 'someModule';
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example: Module Resolution Configuration
+DESCRIPTION: This example demonstrates a typical project setup that might lead to module resolution errors if not configured correctly. It includes a package.json with 'type': 'module' and an app.ts file attempting to import a module.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/nodeNextModuleResolution1.errors.txt#_snippet_2
+
+LANGUAGE: json
+CODE:
+```
+{
+    "name": "e",
+    "version": "1.0.0",
+    "type": "module"
+}
+```
+
+LANGUAGE: typescript
+CODE:
+```
+import {x} from "foo";
+```
+
+----------------------------------------
+
+TITLE: TypeScript Configuration for Pkg3
+DESCRIPTION: The tsconfig.json file for pkg3 configures the TypeScript compiler options for a monorepo environment. It specifies output directories, module systems, strictness, and module interop settings, essential for managing dependencies within the monorepo.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/declarationEmitReexportedSymlinkReference3.errors.txt#_snippet_0
+
+LANGUAGE: json
+CODE:
+```
+{
+    "compilerOptions": {
+      "outDir": "dist",
+      "rootDir": "src",
+      "target": "es5",
+      "module": "commonjs",
+      "strict": true,
+      "esModuleInterop": true,
+      "declaration": true
+    }
+}
+```
+
+----------------------------------------
+
+TITLE: Install TypeScript Nightly Build
+DESCRIPTION: Instructions on how to install the latest nightly build of TypeScript using npm.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/TypeScript's-Release-Process.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install typescript@next
+```
+
+----------------------------------------
+
+TITLE: Build Tool Performance Recommendations
+DESCRIPTION: General advice for optimizing TypeScript builds often involves consulting specific documentation for your chosen build tools. Links are provided to sections on performance for `ts-loader` and `awesome-typescript-loader`.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_13
+
+LANGUAGE: Markdown
+CODE:
+```
+* [ts-loader's section on *Faster Builds*](https://github.com/TypeStrong/ts-loader#faster-builds)
+* [awesome-typescript-loader's section on *Performance Issues*](https://github.com/s-panferov/awesome-typescript-loader/blob/master/README.md#performance-issues)
+```
+
+----------------------------------------
+
+TITLE: TypeScript Incremental Build Server
+DESCRIPTION: Demonstrates setting up an incremental build server using TypeScript's language services. It watches a set of TypeScript files, recompiles changed files, and writes the output. Includes file watching, error logging, and emitting outputs.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_7
+
+LANGUAGE: typescript
+CODE:
+```
+import * as fs from "fs";
+import * as ts from "typescript";
+
+function watch(rootFileNames: string[], options: ts.CompilerOptions) {
+  const files: ts.MapLike<{ version: number }> = {};
+
+  // initialize the list of files
+  rootFileNames.forEach(fileName => {
+    files[fileName] = { version: 0 };
+  });
+
+  // Create the language service host to allow the LS to communicate with the host
+  const servicesHost: ts.LanguageServiceHost = {
+    getScriptFileNames: () => rootFileNames,
+    getScriptVersion: fileName =>
+      files[fileName] && files[fileName].version.toString(),
+    getScriptSnapshot: fileName => {
+      if (!fs.existsSync(fileName)) {
+        return undefined;
+      }
+
+      return ts.ScriptSnapshot.fromString(fs.readFileSync(fileName).toString());
+    },
+    getCurrentDirectory: () => process.cwd(),
+    getCompilationSettings: () => options,
+    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+    fileExists: ts.sys.fileExists,
+    readFile: ts.sys.readFile,
+    readDirectory: ts.sys.readDirectory,
+    directoryExists: ts.sys.directoryExists,
+    getDirectories: ts.sys.getDirectories,
+  };
+
+  // Create the language service files
+  const services = ts.createLanguageService(servicesHost, ts.createDocumentRegistry());
+
+  // Now let's watch the files
+  rootFileNames.forEach(fileName => {
+    // First time around, emit all files
+    emitFile(fileName);
+
+    // Add a watch on the file to handle next change
+    fs.watchFile(fileName, { persistent: true, interval: 250 }, (curr, prev) => {
+      // Check timestamp
+      if (+curr.mtime <= +prev.mtime) {
+        return;
+      }
+
+      // Update the version to signal a change in the file
+      files[fileName].version++;
+
+      // write the changes to disk
+      emitFile(fileName);
+    });
+  });
+
+  function emitFile(fileName: string) {
+    let output = services.getEmitOutput(fileName);
+
+    if (!output.emitSkipped) {
+      console.log(`Emitting ${fileName}`);
+    } else {
+      console.log(`Emitting ${fileName} failed`);
+      logErrors(fileName);
+    }
+
+    output.outputFiles.forEach(o => {
+      fs.writeFileSync(o.name, o.text, "utf8");
+    });
+  }
+
+  function logErrors(fileName: string) {
+    let allDiagnostics = services
+      .getCompilerOptionsDiagnostics()
+      .concat(services.getSyntacticDiagnostics(fileName))
+      .concat(services.getSemanticDiagnostics(fileName));
+
+    allDiagnostics.forEach(diagnostic => {
+      let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+      if (diagnostic.file) {
+        let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(
+          diagnostic.start! 
+        );
+        console.log(`  Error ${diagnostic.file.fileName} (${line + 1},${character +1}): ${message}`);
+      } else {
+        console.log(`  Error: ${message}`);
+      }
+    });
+  }
+}
+
+// Initialize files constituting the program as all .ts files in the current directory
+const currentDirectoryFiles = fs
+  .readdirSync(process.cwd())
+  .filter(fileName => fileName.length >= 3 && fileName.substr(fileName.length - 3, 3) === ".ts");
+
+// Start the watcher
+watch(currentDirectoryFiles, { module: ts.ModuleKind.CommonJS });
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript TS2378: 'get' accessor must return a value
+DESCRIPTION: This snippet addresses the TypeScript error TS2378. It highlights a common mistake where a 'get' accessor is defined without a return statement, which is mandatory in TypeScript. The example shows a class with a 'get' accessor that violates this rule, followed by the error message.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserAccessors1.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+class C {
+    get Foo() { }
+        ~~~ 
+!!! error TS2378: A 'get' accessor must return a value.
+}
+```
+
+----------------------------------------
+
+TITLE: Install and Locate tsserver
+DESCRIPTION: Demonstrates how to install the TypeScript package via npm and locate the tsserver executable within the node_modules directory.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Standalone-Server-(tsserver).md#_snippet_0
+
+LANGUAGE: cmd
+CODE:
+```
+npm install --save typescript
+ls node_modules\typescript\lib\tsserver.js
+```
+
+----------------------------------------
+
+TITLE: Check TypeScript Version
+DESCRIPTION: Command to check the installed version of the TypeScript compiler.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/CONTRIBUTING.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+tsc --v
+```
+
+----------------------------------------
+
+TITLE: TypeScript 'get' Accessor Must Return Value
+DESCRIPTION: This snippet addresses the TypeScript error TS2378, which indicates that a 'get' accessor within a class is missing a return statement. The example shows a class with a 'get' accessor that does not return a value, causing the error. The fix involves adding a return statement to the accessor.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/parserMemberAccessorDeclaration1.errors.txt#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+class C {
+  get a() { }
+      ~
+!!! error TS2378: A 'get' accessor must return a value.
+}
+
+// Corrected version:
+class C_corrected {
+  get a(): number {
+    return 1;
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Basic Accessor Usage
+DESCRIPTION: Illustrates the basic usage of accessors in TypeScript with the 'Example' class, showing initialization and a getter method.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/controlFlowAutoAccessor1.errors.txt#_snippet_3
+
+LANGUAGE: typescript
+CODE:
+```
+class Example {
+  accessor test;
+
+  constructor(test: number) {
+    this.test = test;
+  }
+
+  getTest() {
+    return this.test;
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript Class for Documentation
+DESCRIPTION: This is an example of a TypeScript class with JSDoc comments for the class itself and its constructor parameters. This input demonstrates the structure expected by the documentation generator script.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_15
+
+LANGUAGE: typescript
+CODE:
+```
+/**
+ * Documentation for C
+ */
+class C {
+    /**
+     * constructor documentation
+     * @param a my parameter documentation
+     * @param b another parameter documentation
+     */
+    constructor(a: string, b: C) { }
+}
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Example with Correct Source Map Configuration
+DESCRIPTION: This example demonstrates a valid TypeScript configuration where 'sourceMap' is enabled, allowing the use of 'mapRoot'. This setup is typical for projects that generate source maps for debugging purposes.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/project/mapRootWithNoSourceMapOption/node/mapRootWithNoSourceMapOption.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+/* tsconfig.json example */
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "mapRoot": "./maps"
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript typeof on Classes and Instances
+DESCRIPTION: Illustrates how 'typeof' can be applied to classes to get their constructor type and to instances to get their object type. This helps in typing variables that hold class constructors or instances.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/typeofAnExportedType.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+export class C {
+    foo: string;
+}
+export var c: C;
+var c2: C;
+
+export var r3: typeof C;
+export var r4: typeof c;
+export var r4b: typeof c2;
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript Files (No Errors)
+DESCRIPTION: These are example TypeScript files demonstrating a valid setup that does not produce the TS5102 error. The files include type definitions, class exports, and module imports, showcasing a clean project structure.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/preserveUnusedImports.errors.txt#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+==== a.ts (0 errors) ====
+    export type A = {};
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== b.ts (0 errors) ====
+    export class B {}
+```
+
+LANGUAGE: typescript
+CODE:
+```
+==== c.ts (0 errors) ====
+    import { A } from './a';
+    import { B } from './b';
+    
+    let b: B;
+```
+
+----------------------------------------
+
+TITLE: Example TypeScript Class for Documentation
+DESCRIPTION: A sample TypeScript class with JSDoc comments for the class and its constructor parameters. This input is used to demonstrate the output of the documentation generation script.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API.md#_snippet_13
+
+LANGUAGE: ts
+CODE:
+```
+/**
+ * Documentation for C
+ */
+class C {
+    /**
+     * constructor documentation
+     * @param a my parameter documentation
+     * @param b another parameter documentation
+     */
+    constructor(a: string, b: C) { }
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Module Configuration Example
+DESCRIPTION: Example of a tsconfig.json file correctly configured to resolve the TS5110 error. This setup is suitable for modern Node.js projects using ES Modules.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/allowImportingTypesDtsExtension(allowimportingtsextensions=true,moduleresolution=nodenext).errors.txt#_snippet_1
+
+LANGUAGE: json
+CODE:
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}
+```
+
+----------------------------------------
+
+TITLE: Install and Use pprof-it Locally
+DESCRIPTION: Instructions for installing pprof-it as a local dependency and using it with npm scripts to profile TypeScript builds. This method allows integration with existing build workflows.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Performance.md#_snippet_33
+
+LANGUAGE: sh
+CODE:
+```
+npm install --no-save pprof-it
+```
+
+LANGUAGE: sh
+CODE:
+```
+npm --node-option="--require pprof-it" run <your-script-name>
+```
+
+----------------------------------------
+
+TITLE: Converting JavaScript to TypeScript
+DESCRIPTION: A step-by-step guide on how to convert an existing JavaScript file to TypeScript, including common challenges and solutions.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Blog-Post-Ideas.md#_snippet_20
+
+LANGUAGE: TypeScript
+CODE:
+```
+// Example conversion: JS to TS
+// Original JS:
+// function add(a, b) { return a + b; }
+
+// Converted TS:
+function add(a: number, b: number): number { return a + b; }
+```
+
+----------------------------------------
+
+TITLE: TypeScript Module Configuration Example
+DESCRIPTION: Example of a tsconfig.json file correctly configured to resolve the TS5110 error. This setup is suitable for modern Node.js projects using ES Modules.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/allowImportingTypesDtsExtension(allowimportingtsextensions=false,moduleresolution=nodenext).errors.txt#_snippet_1
+
+LANGUAGE: json
+CODE:
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}
+```
+
+----------------------------------------
+
+TITLE: Docker Build Command Usage
+DESCRIPTION: Explains the usage of the `docker build` command with a Dockerfile to create custom images, including installing OS packages and setting default configurations.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Docker-Quickstart.md#_snippet_9
+
+LANGUAGE: bash
+CODE:
+```
+# Example Dockerfile content (not shown, but implied)
+# docker build -t my-node-image .
+
+```
+
+----------------------------------------
+
+TITLE: TypeScript Private Static Setter Decorators
+DESCRIPTION: Illustrates the application of decorators to private static setters in TypeScript. The example shows the setup for a private static setter `#x` with decorators.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/tests/baselines/reference/esDecorators-classDeclaration-sourceMap(target=es2015).sourcemap.txt#_snippet_7
+
+LANGUAGE: typescript
+CODE:
+```
+class C {
+    static set #x(value: number) { }
+
+    @dec
+    static #x;
+}
+```
+
+LANGUAGE: javascript
+CODE:
+```
+class C {
+    static set #x(value: number) { }
+
+    @dec
+    static #x;
+}
+```
+
+----------------------------------------
+
+TITLE: TypeScript Incremental Build Server
+DESCRIPTION: This TypeScript code demonstrates how to create an incremental build server. It utilizes the TypeScript Language Service to watch files, detect changes, and re-emit outputs, optimizing the build process by only recompiling modified files.
+
+SOURCE: https://github.com/microsoft/typescript/blob/main/__wiki__/Using-the-Compiler-API-(TypeScript-1.4).md#_snippet_5
+
+LANGUAGE: TypeScript
+CODE:
+```
+/// <reference path="typings/node/node.d.ts" />
+/// <reference path="typings/typescript/typescript.d.ts" />
+
+import fs = require("fs");
+import ts = require("typescript");
+import path = require("path");
+
+
+function watch(filenames: string[], options: ts.CompilerOptions) {
+    var files: ts.Map<{ version: number; text: string; }> = {};
+    
+    // Add the default library file
+    filenames.unshift(path.join(path.dirname(require.resolve('typescript')), 'lib.d.ts'));
+
+    // initialize the list of files
+    filenames.forEach(filename => {
+        files[filename] = { version: 0, text: fs.readFileSync(filename).toString() };
+    });
+
+    // Create the language service host to allow the LS to communicate with the host
+    var servicesHost: ts.LanguageServiceHost = {
+        getScriptFileNames: () => filenames,
+        getScriptVersion: (filename) => files[filename] && files[filename].version.toString(),
+        getScriptSnapshot: (filename) => {
+            var file = files[filename];
+            return {
+                getText: (start, end) => file.text.substring(start, end),
+                getLength: () => file.text.length,
+                getLineStartPositions: () => [],
+                getChangeRange: (oldSnapshot) => undefined
+            };
+        },
+        getCurrentDirectory: () => process.cwd(),
+        getScriptIsOpen: () => true,
+        getCompilationSettings: () => options,
+        getDefaultLibFilename:(options) => 'lib.d.ts',
+        log: (message) => console.log(message)
+    };
+
+    // Create the language service files
+    var services = ts.createLanguageService(servicesHost, ts.createDocumentRegistry())
+
+    // Now let's watch the files
+    filenames.forEach(filename => {
+        // First time around, emit all files
+        emitFile(filename);
+
+        // Add a watch on the file to handle next change
+        fs.watchFile(filename, 
+            { persistent: true, interval: 250 }, 
+            (curr, prev) => {
+                // Check timestamp
+                if (+curr.mtime <= +prev.mtime) {
+                    return;
+                }
+
+                var file = files[filename];
+
+                // Update the version to signal a change in the file
+                file.version++;
+
+                // Clear the text to force a new read
+                file.text = fs.readFileSync(filename).toString();
+
+                // write the changes to disk
+                emitFile(filename);
+            });
+    });
+
+
+    function emitFile(filename: string) {
+        var output = services.getEmitOutput(filename);
+
+        if (output.emitOutputStatus === ts.EmitReturnStatus.Succeeded) {
+            console.log(`Emitting ${filename}`);
+        }
+        else {
+            console.log(`Emitting ${filename} failed`);
+            var allDiagnostics = services.getCompilerOptionsDiagnostics()
+                .concat(services.getSyntacticDiagnostics(filename))
+                .concat(services.getSemanticDiagnostics(filename));
+
+            allDiagnostics.forEach(diagnostic => {
+                var lineChar = diagnostic.file.getLineAndCharacterFromPosition(diagnostic.start);
+                console.log(`  ${diagnostic.file && diagnostic.file.filename} (${lineChar.line},${lineChar.character}): ${diagnostic.messageText}`);
+            });
+        }
+
+        output.outputFiles.forEach(o => {
+            fs.writeFileSync(o.name, o.text, "utf8");
+        });
+    }
+}
+
+// Initialize files constituting the program as all .ts files in the current directory
+var currentDirectoryFiles = fs.readdirSync(process.cwd()).
+    filter(filename=> filename.length >= 3 && filename.substr(filename.length - 3, 3) === ".ts");
+    //map(filename => path.join(process.cwd(), filename));
+
+// Start the watcher
+watch(currentDirectoryFiles, { target: ts.ScriptTarget.ES5, module: ts.ModuleKind.CommonJS });
+
+```

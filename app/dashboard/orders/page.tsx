@@ -1,0 +1,692 @@
+"use client";
+
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  FilterOutlined,
+  MoreOutlined,
+  SearchOutlined,
+  ShoppingCartOutlined,
+  TruckOutlined,
+} from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  Dropdown,
+  Input,
+  Modal,
+  Row,
+  Select,
+  Space,
+  Table,
+  Tag,
+  message,
+} from "antd";
+import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+const { Option } = Select;
+const { RangePicker } = DatePicker;
+
+export default function OrdersPage() {
+  const [loading, setLoading] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [dateRange, setDateRange] = useState<any>(null);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const router = useRouter();
+
+  // Mock orders data
+  const [orders, setOrders] = useState([
+    {
+      key: "1",
+      id: "ORD-001",
+      customer: "John Smith",
+      email: "john.smith@email.com",
+      phone: "+1 (555) 123-4567",
+      products: [
+        { name: "Wireless Bluetooth Headphones", quantity: 2, price: 89.99 },
+        { name: "Smartphone Case", quantity: 1, price: 24.99 },
+      ],
+      total: 204.97,
+      status: "delivered",
+      paymentStatus: "paid",
+      paymentMethod: "Credit Card",
+      shippingAddress: "123 Main St, New York, NY 10001",
+      billingAddress: "123 Main St, New York, NY 10001",
+      orderDate: "2024-01-15T10:30:00Z",
+      deliveryDate: "2024-01-18T14:20:00Z",
+      trackingNumber: "TRK123456789",
+      vendor: "TechCorp",
+      notes: "Customer requested signature confirmation",
+    },
+    {
+      key: "2",
+      id: "ORD-002",
+      customer: "Sarah Johnson",
+      email: "sarah.j@email.com",
+      phone: "+1 (555) 987-6543",
+      products: [
+        { name: "Running Shoes", quantity: 1, price: 129.99 },
+        { name: "Sports Socks", quantity: 3, price: 12.99 },
+      ],
+      total: 168.96,
+      status: "shipped",
+      paymentStatus: "paid",
+      paymentMethod: "PayPal",
+      shippingAddress: "456 Oak Ave, Los Angeles, CA 90210",
+      billingAddress: "456 Oak Ave, Los Angeles, CA 90210",
+      orderDate: "2024-01-16T09:15:00Z",
+      deliveryDate: null,
+      trackingNumber: "TRK987654321",
+      vendor: "SportMax",
+      notes: "Standard shipping requested",
+    },
+    {
+      key: "3",
+      id: "ORD-003",
+      customer: "Mike Wilson",
+      email: "mike.w@email.com",
+      phone: "+1 (555) 456-7890",
+      products: [
+        { name: "Coffee Maker", quantity: 1, price: 199.99 },
+        { name: "Coffee Beans", quantity: 2, price: 15.99 },
+      ],
+      total: 231.97,
+      status: "processing",
+      paymentStatus: "pending",
+      paymentMethod: "Bank Transfer",
+      shippingAddress: "789 Pine St, Chicago, IL 60601",
+      billingAddress: "789 Pine St, Chicago, IL 60601",
+      orderDate: "2024-01-17T14:45:00Z",
+      deliveryDate: null,
+      trackingNumber: null,
+      vendor: "HomeStyle",
+      notes: "Customer prefers morning delivery",
+    },
+    {
+      key: "4",
+      id: "ORD-004",
+      customer: "Emily Davis",
+      email: "emily.d@email.com",
+      phone: "+1 (555) 321-0987",
+      products: [
+        { name: "Designer Handbag", quantity: 1, price: 299.99 },
+        { name: "Wallet", quantity: 1, price: 89.99 },
+      ],
+      total: 389.98,
+      status: "cancelled",
+      paymentStatus: "refunded",
+      paymentMethod: "Credit Card",
+      shippingAddress: "321 Elm St, Miami, FL 33101",
+      billingAddress: "321 Elm St, Miami, FL 33101",
+      orderDate: "2024-01-18T11:20:00Z",
+      deliveryDate: null,
+      trackingNumber: null,
+      vendor: "FashionHub",
+      notes: "Customer cancelled due to size issue",
+    },
+    {
+      key: "5",
+      id: "ORD-005",
+      customer: "David Brown",
+      email: "david.b@email.com",
+      phone: "+1 (555) 654-3210",
+      products: [
+        { name: "Gaming Laptop", quantity: 1, price: 1299.99 },
+        { name: "Gaming Mouse", quantity: 1, price: 79.99 },
+        { name: "Gaming Headset", quantity: 1, price: 149.99 },
+      ],
+      total: 1529.97,
+      status: "pending",
+      paymentStatus: "pending",
+      paymentMethod: "Credit Card",
+      shippingAddress: "654 Maple Dr, Seattle, WA 98101",
+      billingAddress: "654 Maple Dr, Seattle, WA 98101",
+      orderDate: "2024-01-19T16:30:00Z",
+      deliveryDate: null,
+      trackingNumber: null,
+      vendor: "TechCorp",
+      notes: "High-value order - requires insurance",
+    },
+  ]);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "pending":
+        return "orange";
+      case "processing":
+        return "blue";
+      case "shipped":
+        return "cyan";
+      case "delivered":
+        return "green";
+      case "cancelled":
+        return "red";
+      default:
+        return "default";
+    }
+  };
+
+  const getPaymentStatusColor = (status: string) => {
+    switch (status) {
+      case "paid":
+        return "green";
+      case "pending":
+        return "orange";
+      case "failed":
+        return "red";
+      case "refunded":
+        return "purple";
+      default:
+        return "default";
+    }
+  };
+
+  const handleViewOrder = (order: any) => {
+    setSelectedOrder(order);
+    setIsModalVisible(true);
+  };
+
+  const handleEditOrder = (order: any) => {
+    message.info("Edit functionality would be implemented here");
+  };
+
+  const handleDeleteOrder = (order: any) => {
+    Modal.confirm({
+      title: "Delete Order",
+      content: `Are you sure you want to delete order ${order.id}? This action cannot be undone.`,
+      okText: "Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: () => {
+        setOrders(orders.filter((o) => o.key !== order.key));
+        message.success("Order deleted successfully");
+      },
+    });
+  };
+
+  const handleStatusChange = (orderId: string, newStatus: string) => {
+    setOrders(
+      orders.map((order) =>
+        order.key === orderId ? { ...order, status: newStatus } : order
+      )
+    );
+    message.success(`Order status updated to ${newStatus}`);
+  };
+
+  const filteredOrders = orders.filter((order) => {
+    const matchesSearch =
+      order.id.toLowerCase().includes(searchText.toLowerCase()) ||
+      order.customer.toLowerCase().includes(searchText.toLowerCase()) ||
+      order.email.toLowerCase().includes(searchText.toLowerCase()) ||
+      order.vendor.toLowerCase().includes(searchText.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "all" || order.status === statusFilter;
+
+    const matchesDate =
+      !dateRange ||
+      (dayjs(order.orderDate).isAfter(dateRange[0], "day") &&
+        dayjs(order.orderDate).isBefore(dateRange[1], "day"));
+
+    return matchesSearch && matchesStatus && matchesDate;
+  });
+
+  const columns = [
+    {
+      title: "Order ID",
+      dataIndex: "id",
+      key: "id",
+      render: (text: string) => (
+        <span className="font-mono font-semibold text-blue-600">{text}</span>
+      ),
+    },
+    {
+      title: "Customer",
+      dataIndex: "customer",
+      key: "customer",
+      render: (text: string, record: any) => (
+        <div>
+          <div className="font-medium">{text}</div>
+          <div className="text-xs text-gray-500">{record.email}</div>
+        </div>
+      ),
+    },
+    {
+      title: "Products",
+      dataIndex: "products",
+      key: "products",
+      render: (products: any[]) => (
+        <div className="max-w-xs">
+          {products.map((product, index) => (
+            <div key={index} className="text-sm">
+              {product.quantity}x {product.name}
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
+      render: (total: number) => (
+        <span className="font-semibold text-green-600">
+          ${total.toFixed(2)}
+        </span>
+      ),
+      sorter: (a: any, b: any) => a.total - b.total,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status: string) => (
+        <Tag color={getStatusColor(status)} className="capitalize">
+          {status}
+        </Tag>
+      ),
+      filters: [
+        { text: "Pending", value: "pending" },
+        { text: "Processing", value: "processing" },
+        { text: "Shipped", value: "shipped" },
+        { text: "Delivered", value: "delivered" },
+        { text: "Cancelled", value: "cancelled" },
+      ],
+      onFilter: (value: string, record: any) => record.status === value,
+    },
+    {
+      title: "Payment",
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
+      render: (status: string, record: any) => (
+        <div>
+          <Tag color={getPaymentStatusColor(status)} className="capitalize">
+            {status}
+          </Tag>
+          <div className="text-xs text-gray-500 mt-1">
+            {record.paymentMethod}
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Vendor",
+      dataIndex: "vendor",
+      key: "vendor",
+      render: (vendor: string) => (
+        <Tag color="blue" className="font-medium">
+          {vendor}
+        </Tag>
+      ),
+    },
+    {
+      title: "Order Date",
+      dataIndex: "orderDate",
+      key: "orderDate",
+      render: (date: string) => (
+        <div className="text-sm">
+          {dayjs(date).format("MMM DD, YYYY")}
+          <div className="text-xs text-gray-500">
+            {dayjs(date).format("HH:mm")}
+          </div>
+        </div>
+      ),
+      sorter: (a: any, b: any) =>
+        dayjs(a.orderDate).unix() - dayjs(b.orderDate).unix(),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_: any, record: any) => (
+        <Dropdown
+          menu={{
+            items: [
+              {
+                key: "view",
+                icon: <EyeOutlined />,
+                label: "View Details",
+                onClick: () => handleViewOrder(record),
+              },
+              {
+                key: "edit",
+                icon: <EditOutlined />,
+                label: "Edit Order",
+                onClick: () => handleEditOrder(record),
+              },
+              {
+                type: "divider",
+              },
+              {
+                key: "delete",
+                icon: <DeleteOutlined />,
+                label: "Delete Order",
+                danger: true,
+                onClick: () => handleDeleteOrder(record),
+              },
+            ],
+          }}
+          trigger={["click"]}
+        >
+          <Button type="text" icon={<MoreOutlined />} />
+        </Dropdown>
+      ),
+    },
+  ];
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
+          <p className="text-gray-600">Manage and track customer orders</p>
+        </div>
+        <Button
+          type="primary"
+          icon={<ShoppingCartOutlined />}
+          className="bg-blue-600 hover:bg-blue-700 border-blue-600"
+        >
+          Create Order
+        </Button>
+      </div>
+
+      {/* Filters */}
+      <Card className="shadow-sm">
+        <Row gutter={[16, 16]} align="middle">
+          <Col xs={24} sm={12} md={6}>
+            <Input
+              placeholder="Search orders..."
+              prefix={<SearchOutlined />}
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              allowClear
+            />
+          </Col>
+          <Col xs={24} sm={12} md={4}>
+            <Select
+              placeholder="Status"
+              value={statusFilter}
+              onChange={setStatusFilter}
+              className="w-full"
+              allowClear
+            >
+              <Option value="all">All Statuses</Option>
+              <Option value="pending">Pending</Option>
+              <Option value="processing">Processing</Option>
+              <Option value="shipped">Shipped</Option>
+              <Option value="delivered">Delivered</Option>
+              <Option value="cancelled">Cancelled</Option>
+            </Select>
+          </Col>
+          <Col xs={24} sm={12} md={6}>
+            <RangePicker
+              placeholder={["Start Date", "End Date"]}
+              value={dateRange}
+              onChange={setDateRange}
+              className="w-full"
+            />
+          </Col>
+          <Col xs={24} sm={12} md={4}>
+            <Button
+              icon={<FilterOutlined />}
+              onClick={() => {
+                setSearchText("");
+                setStatusFilter("all");
+                setDateRange(null);
+              }}
+              className="w-full"
+            >
+              Clear Filters
+            </Button>
+          </Col>
+        </Row>
+      </Card>
+
+      {/* Orders Table */}
+      <Card title={`Orders (${filteredOrders.length})`} className="shadow-sm">
+        <Table
+          columns={columns}
+          dataSource={filteredOrders}
+          loading={loading}
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            showQuickJumper: true,
+            showTotal: (total, range) =>
+              `${range[0]}-${range[1]} of ${total} orders`,
+          }}
+          size="middle"
+          scroll={{ x: 1200 }}
+        />
+      </Card>
+
+      {/* Order Details Modal */}
+      <Modal
+        title={
+          <div className="flex items-center gap-2">
+            <ShoppingCartOutlined className="text-blue-600" />
+            <span>Order Details - {selectedOrder?.id}</span>
+          </div>
+        }
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setIsModalVisible(false)}>
+            Close
+          </Button>,
+          <Button
+            key="edit"
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => {
+              setIsModalVisible(false);
+              handleEditOrder(selectedOrder);
+            }}
+          >
+            Edit Order
+          </Button>,
+        ]}
+        width={900}
+        destroyOnClose
+        centered
+      >
+        {selectedOrder && (
+          <div className="space-y-6">
+            {/* Order Header */}
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <div className="text-sm text-gray-500">Order Status</div>
+                <Tag color={getStatusColor(selectedOrder.status)} size="large">
+                  {selectedOrder.status.toUpperCase()}
+                </Tag>
+              </div>
+              <div>
+                <div className="text-sm text-gray-500">Payment Status</div>
+                <Tag
+                  color={getPaymentStatusColor(selectedOrder.paymentStatus)}
+                  size="large"
+                >
+                  {selectedOrder.paymentStatus.toUpperCase()}
+                </Tag>
+              </div>
+              <div className="text-right">
+                <div className="text-sm text-gray-500">Total Amount</div>
+                <div className="text-2xl font-bold text-green-600">
+                  ${selectedOrder.total.toFixed(2)}
+                </div>
+              </div>
+            </div>
+
+            {/* Customer Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Customer Information
+                </h3>
+                <div className="space-y-2">
+                  <div>
+                    <span className="text-gray-500">Name:</span>
+                    <span className="ml-2 font-medium">
+                      {selectedOrder.customer}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Email:</span>
+                    <span className="ml-2">{selectedOrder.email}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Phone:</span>
+                    <span className="ml-2">{selectedOrder.phone}</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Order Information
+                </h3>
+                <div className="space-y-2">
+                  <div>
+                    <span className="text-gray-500">Order ID:</span>
+                    <span className="ml-2 font-mono">{selectedOrder.id}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Order Date:</span>
+                    <span className="ml-2">
+                      {dayjs(selectedOrder.orderDate).format(
+                        "MMM DD, YYYY HH:mm"
+                      )}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Vendor:</span>
+                    <span className="ml-2">
+                      <Tag color="blue">{selectedOrder.vendor}</Tag>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Products */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Products
+              </h3>
+              <div className="border border-gray-200 rounded-lg">
+                {selectedOrder.products.map((product: any, index: number) => (
+                  <div
+                    key={index}
+                    className={`p-4 ${
+                      index !== selectedOrder.products.length - 1
+                        ? "border-b border-gray-200"
+                        : ""
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-medium">{product.name}</div>
+                        <div className="text-sm text-gray-500">
+                          Quantity: {product.quantity}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold text-green-600">
+                          ${(product.price * product.quantity).toFixed(2)}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          ${product.price.toFixed(2)} each
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Shipping & Billing */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Shipping Address
+                </h3>
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  {selectedOrder.shippingAddress}
+                </div>
+                {selectedOrder.trackingNumber && (
+                  <div className="mt-3">
+                    <span className="text-gray-500">Tracking:</span>
+                    <span className="ml-2 font-mono text-blue-600">
+                      {selectedOrder.trackingNumber}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Billing Address
+                </h3>
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  {selectedOrder.billingAddress}
+                </div>
+                <div className="mt-3">
+                  <span className="text-gray-500">Payment Method:</span>
+                  <span className="ml-2 font-medium">
+                    {selectedOrder.paymentMethod}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Information */}
+            {selectedOrder.notes && (
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Notes
+                </h3>
+                <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  {selectedOrder.notes}
+                </div>
+              </div>
+            )}
+
+            {/* Status Update */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Update Order Status
+              </h3>
+              <Space>
+                <Select
+                  value={selectedOrder.status}
+                  onChange={(value) =>
+                    handleStatusChange(selectedOrder.key, value)
+                  }
+                  style={{ width: 150 }}
+                >
+                  <Option value="pending">Pending</Option>
+                  <Option value="processing">Processing</Option>
+                  <Option value="shipped">Shipped</Option>
+                  <Option value="delivered">Delivered</Option>
+                  <Option value="cancelled">Cancelled</Option>
+                </Select>
+                <Button
+                  type="primary"
+                  icon={<TruckOutlined />}
+                  className="bg-blue-600 hover:bg-blue-700 border-blue-600"
+                >
+                  Update Status
+                </Button>
+              </Space>
+            </div>
+          </div>
+        )}
+      </Modal>
+    </div>
+  );
+}

@@ -1,0 +1,3703 @@
+---
+alwaysApply: true
+---
+
+========================
+CODE SNIPPETS
+========================
+TITLE: Installing Redux Toolkit (npm)
+DESCRIPTION: Install the core Redux Toolkit package using npm for an existing application.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install @reduxjs/toolkit
+```
+
+----------------------------------------
+
+TITLE: Installing Redux Toolkit (yarn)
+DESCRIPTION: Install the core Redux Toolkit package using yarn for an existing application.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_3
+
+LANGUAGE: bash
+CODE:
+```
+yarn add @reduxjs/toolkit
+```
+
+----------------------------------------
+
+TITLE: Installing React-Redux Bindings (npm)
+DESCRIPTION: Install the official React bindings for Redux using npm, required for connecting Redux to React components.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+npm install react-redux
+```
+
+----------------------------------------
+
+TITLE: Installing React-Redux Bindings (yarn)
+DESCRIPTION: Install the official React bindings for Redux using yarn, required for connecting Redux to React components.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+yarn add react-redux
+```
+
+----------------------------------------
+
+TITLE: Installing Redux Toolkit and React-Redux (Shell)
+DESCRIPTION: This command installs the necessary packages for using Redux Toolkit and integrating it with React applications. It adds `@reduxjs/toolkit` and `react-redux` as dependencies to your project. Run this in your project's terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_0
+
+LANGUAGE: sh
+CODE:
+```
+npm install @reduxjs/toolkit react-redux
+```
+
+----------------------------------------
+
+TITLE: Starting React Native Metro Server (Bash)
+DESCRIPTION: Commands to start the Metro bundler, which is the JavaScript bundler for React Native. This server must be running before you can launch the application on a device or simulator.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/react-native/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm start
+```
+
+LANGUAGE: bash
+CODE:
+```
+yarn start
+```
+
+----------------------------------------
+
+TITLE: Creating New React Redux App
+DESCRIPTION: Use npx with degit or create-next-app to scaffold a new React application pre-configured with Redux Toolkit and React-Redux using official templates.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+# Vite with our Redux+TS template
+# (using the `degit` tool to clone and extract the template)
+npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
+
+# Next.js using the `with-redux` template
+npx create-next-app --example with-redux my-app
+```
+
+----------------------------------------
+
+TITLE: Starting Development Server with Create React App (shell)
+DESCRIPTION: Runs the application in development mode. Opens the app in the browser at http://localhost:3000. The page reloads on edits, and lint errors are shown in the console.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm start
+```
+
+----------------------------------------
+
+TITLE: Running React App in Development (npm)
+DESCRIPTION: Starts the development server for the React application. Opens the app in the browser at http://localhost:3000. The page reloads on edits, and lint errors are shown in the console.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm start
+```
+
+----------------------------------------
+
+TITLE: Starting React Native iOS App (Bash)
+DESCRIPTION: Commands to run the React Native application on an iOS simulator or device. This command requires the Metro server to be running in a separate terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/react-native/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm run ios
+```
+
+LANGUAGE: bash
+CODE:
+```
+yarn ios
+```
+
+----------------------------------------
+
+TITLE: Running React App Tests (npm)
+DESCRIPTION: Launches the test runner in interactive watch mode. Provides feedback on test results as files are changed.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_1
+
+LANGUAGE: Shell
+CODE:
+```
+npm test
+```
+
+----------------------------------------
+
+TITLE: Building React App for Production (npm)
+DESCRIPTION: Builds the application for production into the 'build' folder. Bundles React in production mode, optimizes performance, minifies code, and includes hashes in filenames.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_2
+
+LANGUAGE: Shell
+CODE:
+```
+npm run build
+```
+
+----------------------------------------
+
+TITLE: Importing createApi from RTK Query (TypeScript)
+DESCRIPTION: Demonstrates the two main import paths for the `createApi` function from RTK Query: the core path and the React-specific path which includes auto-generated hooks.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_5
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { createApi } from '@reduxjs/toolkit/query'
+
+/* React-specific entry point that automatically generates
+   hooks corresponding to the defined endpoints */
+import { createApi } from '@reduxjs/toolkit/query/react'
+```
+
+----------------------------------------
+
+TITLE: Basic configureStore Setup (TypeScript)
+DESCRIPTION: Provides a minimal example of configuring a Redux store using `configureStore` with a single reducer. It shows how the function simplifies setup by automatically including default middleware (like thunk) and enabling the Redux DevTools Extension.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/configureStore.mdx#_snippet_4
+
+LANGUAGE: typescript
+CODE:
+```
+// file: reducers.ts noEmit
+import type { Reducer } from '@reduxjs/toolkit'
+declare const rootReducer: Reducer<{}>
+export default rootReducer
+
+// file: store.ts
+import { configureStore } from '@reduxjs/toolkit'
+
+import rootReducer from './reducers'
+
+const store = configureStore({ reducer: rootReducer })
+// The store now has redux-thunk added and the Redux DevTools Extension is turned on
+```
+
+----------------------------------------
+
+TITLE: Custom Redux Toolkit Store Setup with configureStore, Persistence, and Middleware
+DESCRIPTION: Provides a detailed example of customizing the store setup with `configureStore`. It demonstrates combining reducers separately, adding custom middleware, passing extra arguments to thunk, integrating Redux-Persist, and configuring DevTools options.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_2
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import { PersistGate } from 'redux-persist/integration/react'
+import logger from 'redux-logger'
+
+import postsReducer from '../features/posts/postsSlice'
+import usersReducer from '../features/users/usersSlice'
+import { api } from '../features/api/apiSlice'
+import { serviceLayer } from '../features/api/serviceLayer'
+
+import stateSanitizerForDevtools from './devtools'
+import customMiddleware from './someCustomMiddleware'
+
+// Can call `combineReducers` yourself if needed
+const rootReducer = combineReducers({
+  posts: postsReducer,
+  users: usersReducer,
+  [api.reducerPath]: api.reducer,
+})
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = configureStore({
+  // Can create a root reducer separately and pass that in
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    const middleware = getDefaultMiddleware({
+      // Pass in a custom `extra` argument to the thunk middleware
+      thunk: {
+        extraArgument: { serviceLayer },
+      },
+      // Customize the built-in serializability dev check
+      serializableCheck: {
+
+```
+
+----------------------------------------
+
+TITLE: Building for Production with Create React App (shell)
+DESCRIPTION: Builds the app for production into the 'build' folder. It bundles React in production mode, optimizes performance, minifies code, and includes hashes in filenames. The output is ready for deployment.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_2
+
+LANGUAGE: shell
+CODE:
+```
+npm run build
+```
+
+----------------------------------------
+
+TITLE: Starting the Metro server (bash)
+DESCRIPTION: Commands to start the Metro bundler, which is required to serve the JavaScript code to the device or emulator. Use either npm or yarn.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+# using npm
+npm start
+```
+
+LANGUAGE: bash
+CODE:
+```
+# OR using Yarn
+yarn start
+```
+
+----------------------------------------
+
+TITLE: Running Tests with Create React App (shell)
+DESCRIPTION: Launches the test runner in interactive watch mode. Refer to the Create React App documentation for more details on running tests.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_1
+
+LANGUAGE: shell
+CODE:
+```
+npm test
+```
+
+----------------------------------------
+
+TITLE: Manual Redux Store Setup
+DESCRIPTION: This snippet demonstrates the traditional, manual process for configuring a Redux store using the core `createStore` function. It shows how to apply middleware (like `redux-thunk` and a custom logger), compose enhancers (including the Redux DevTools Extension), and handle hot module replacement for reducers, illustrating the steps Redux Toolkit aims to simplify.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_0
+
+LANGUAGE: javascript
+CODE:
+```
+import { applyMiddleware, createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunkMiddleware from 'redux-thunk'
+
+import monitorReducersEnhancer from './enhancers/monitorReducers'
+import loggerMiddleware from './middleware/logger'
+import rootReducer from './reducers'
+
+export default function configureStore(preloadedState) {
+  const middlewares = [loggerMiddleware, thunkMiddleware]
+  const middlewareEnhancer = applyMiddleware(...middlewares)
+
+  const enhancers = [middlewareEnhancer, monitorReducersEnhancer]
+  const composedEnhancers = composeWithDevTools(...enhancers)
+
+  const store = createStore(rootReducer, preloadedState, composedEnhancers)
+
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer))
+  }
+
+  return store
+}
+```
+
+----------------------------------------
+
+TITLE: Redux Toolkit createReducer Example
+DESCRIPTION: An example of the same todo list reducer implemented using Redux Toolkit's `createReducer`. It shows how Immer allows writing 'mutative' logic (like `push` or direct field assignment) which is then translated into immutable updates.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_5
+
+LANGUAGE: js
+CODE:
+```
+const todosReducer = createReducer([], (builder) => {
+  builder
+    .addCase('ADD_TODO', (state, action) => {
+      // "mutate" the array by calling push()
+      state.push(action.payload)
+    })
+    .addCase('TOGGLE_TODO', (state, action) => {
+      const todo = state[action.payload.index]
+      // "mutate" the object by overwriting a field
+      todo.completed = !todo.completed
+    })
+    .addCase('REMOVE_TODO', (state, action) => {
+      // Can still return an immutably-updated value if we want to
+      return state.filter((todo, i) => i !== action.payload.index)
+    })
+})
+```
+
+----------------------------------------
+
+TITLE: Simplest configureStore Setup with Root Reducer (JS)
+DESCRIPTION: Demonstrates the most basic usage of Redux Toolkit's `configureStore` function, passing a single root reducer function directly to the `reducer` option. This sets up the Redux store with default middleware and enhancers.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_1
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+import rootReducer from './reducers'
+
+const store = configureStore({
+  reducer: rootReducer,
+})
+
+export default store
+```
+
+----------------------------------------
+
+TITLE: Ejecting from Create React App Configuration (npm)
+DESCRIPTION: Removes the single build dependency and copies configuration files (webpack, Babel, ESLint, etc.) into the project. This is a one-way operation, giving full control but requiring manual management of configurations.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_3
+
+LANGUAGE: Shell
+CODE:
+```
+npm run eject
+```
+
+----------------------------------------
+
+TITLE: Starting the iOS application (bash)
+DESCRIPTION: Commands to build and run the application on an iOS simulator or connected device. Ensure the Metro server is already running in a separate terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_3
+
+LANGUAGE: bash
+CODE:
+```
+# using npm
+npm run ios
+```
+
+LANGUAGE: bash
+CODE:
+```
+# OR using Yarn
+yarn ios
+```
+
+----------------------------------------
+
+TITLE: Simple connect TS example
+DESCRIPTION: Shows a basic way to type components connected with `react-redux`'s `connect` using `mapState` and `mapDispatch` objects. It highlights the verbosity and potential issues when including thunks in `mapDispatch` typed this way.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_32
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { connect } from 'react-redux'
+import { RootState } from '../../app/store'
+import {
+  todoToggled,
+  todoDeleted,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+interface TodoListItemOwnProps {
+  todoId: string
+}
+
+const mapStateToProps = (state: RootState, ownProps) => {
+  return {
+    todo: selectTodoById(state, ownProps.todoId),
+    activeTodoId: selectActiveTodoId(state),
+  }
+}
+
+const mapDispatchToProps = {
+  todoDeleted,
+  todoToggled,
+}
+
+type TodoListItemProps = TodoListItemOwnProps &
+  ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps
+
+function TodoListItem({
+  todo,
+  activeTodoId,
+  todoDeleted,
+  todoToggled,
+}: TodoListItemProps) {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoListItem)
+```
+
+----------------------------------------
+
+TITLE: Legacy Redux Store Setup with createStore
+DESCRIPTION: Demonstrates the traditional steps required to set up a Redux store using `createStore`, including manually combining reducers, applying middleware like thunk, and composing enhancers for DevTools.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_0
+
+LANGUAGE: js
+CODE:
+```
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
+import thunk from 'redux-thunk'
+
+import postsReducer from '../reducers/postsReducer'
+import usersReducer from '../reducers/usersReducer'
+
+const rootReducer = combineReducers({
+  posts: postsReducer,
+  users: usersReducer,
+})
+
+const middlewareEnhancer = applyMiddleware(thunk)
+
+const composeWithDevTools =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+const composedEnhancers = composeWithDevTools(middlewareEnhancer)
+
+const store = createStore(rootReducer, composedEnhancers)
+```
+
+----------------------------------------
+
+TITLE: Starting the Android application (bash)
+DESCRIPTION: Commands to build and run the application on an Android emulator or connected device. Ensure the Metro server is already running in a separate terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+# using npm
+npm run android
+```
+
+LANGUAGE: bash
+CODE:
+```
+# OR using Yarn
+yarn android
+```
+
+----------------------------------------
+
+TITLE: Organizing Redux Listeners: Middleware Calls Slice Setup Function (Option 3 - Part 2)
+DESCRIPTION: Shows the middleware setup file importing and calling the listener setup function exported by a slice file, passing the `listenerMiddleware.startListening` utility to it. This completes the third organization pattern.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createListenerMiddleware.mdx#_snippet_28
+
+LANGUAGE: ts
+CODE:
+```
+import { addFeature1Listeners } from '../features/feature1/feature1Slice'
+
+addFeature1Listeners(listenerMiddleware.startListening)
+```
+
+----------------------------------------
+
+TITLE: Legacy Redux TS Actions and Types
+DESCRIPTION: Demonstrates the legacy pattern of manually defining TypeScript interfaces for each action type and creating a union type for all possible actions. Includes example action creators using these types.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_25
+
+LANGUAGE: ts
+CODE:
+```
+import { ADD_TODO, TOGGLE_TODO } from '../constants/todos'
+
+// ❌ Common pattern: manually defining types for each action object
+interface AddTodoAction {
+  type: typeof ADD_TODO
+  text: string
+  id: string
+}
+
+interface ToggleTodoAction {
+  type: typeof TOGGLE_TODO
+  id: string
+}
+
+// ❌ Common pattern: an "action type union" of all possible actions
+export type TodoActions = AddTodoAction | ToggleTodoAction
+
+export const addTodo = (id: string, text: string): AddTodoAction => ({
+  type: ADD_TODO,
+  text,
+  id,
+})
+
+export const toggleTodo = (id: string): ToggleTodoAction => ({
+  type: TOGGLE_TODO,
+  id,
+})
+```
+
+----------------------------------------
+
+TITLE: Initializing RTK Query API Slice - JavaScript
+DESCRIPTION: Initializes an RTK Query API slice using `createApi` and `fetchBaseQuery`, setting up the base URL for API calls. This is the starting point for defining endpoints for data fetching with RTK Query.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_14
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
+export const api = createApi({
+  baseQuery: fetchBaseQuery({
+    // Fill in your own server starting URL here
+    baseUrl: '/',
+  }),
+  endpoints: (build) => ({}),
+})
+```
+
+----------------------------------------
+
+TITLE: Start Local Development Server with Yarn (Bash)
+DESCRIPTION: Executes the script to start a local development server for the website, typically opening it in a browser and providing live reloading.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/website/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+$ yarn start
+```
+
+----------------------------------------
+
+TITLE: Advanced configureStore Setup with Custom Middleware, Enhancers, and HMR (JS)
+DESCRIPTION: Illustrates a more advanced configuration of `configureStore`, including adding custom middleware and enhancers while retaining the defaults using the callback notation. It also demonstrates passing `preloadedState` and setting up hot module replacement for reducers.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_3
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+import monitorReducersEnhancer from './enhancers/monitorReducers'
+import loggerMiddleware from './middleware/logger'
+import rootReducer from './reducers'
+
+export default function configureAppStore(preloadedState) {
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(loggerMiddleware),
+    preloadedState,
+    enhancers: (getDefaultEnhancers) =>
+      getDefaultEnhancers().concat(monitorReducersEnhancer),
+  })
+
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer))
+  }
+
+  return store
+}
+```
+
+----------------------------------------
+
+TITLE: Organizing Redux Listeners: Slice Exports Setup Function (Option 3 - Part 1)
+DESCRIPTION: Illustrates a method where a slice file exports a function that accepts the `startListening` utility (typed as `AppStartListening`) and uses it to define the slice's listeners. This function is then called from the middleware setup file.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createListenerMiddleware.mdx#_snippet_27
+
+LANGUAGE: ts
+CODE:
+```
+import type { AppStartListening } from '../../app/listenerMiddleware'
+
+const feature1Slice = createSlice(/* */)
+const { action1 } = feature1Slice.actions
+
+export default feature1Slice.reducer
+
+export const addFeature1Listeners = (startListening: AppStartListening) => {
+  startListening({
+    actionCreator: action1,
+    effect: () => {},
+  })
+}
+```
+
+----------------------------------------
+
+TITLE: Basic Redux Toolkit Store Setup with configureStore
+DESCRIPTION: Shows the basic setup of a Redux store using Redux Toolkit's `configureStore`. This function automatically handles combining reducers, adding default middleware (like thunk and state immutability checks), and setting up the Redux DevTools extension.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_1
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+import postsReducer from '../reducers/postsReducer'
+import usersReducer from '../reducers/usersReducer'
+
+// highlight-start
+// Automatically adds the thunk middleware and the Redux DevTools extension
+const store = configureStore({
+  // Automatically calls `combineReducers`
+  reducer: {
+    posts: postsReducer,
+    users: usersReducer,
+  },
+})
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Ejecting from Create React App (shell)
+DESCRIPTION: This is a one-way operation that removes the single build dependency and copies configuration files (webpack, Babel, ESLint, etc.) into the project, giving full control over the build tool and configuration. Once ejected, you cannot go back.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_3
+
+LANGUAGE: shell
+CODE:
+```
+npm run eject
+```
+
+----------------------------------------
+
+TITLE: RTK Query onQueryStarted Query Example (TS)
+DESCRIPTION: This example demonstrates how to use the `onQueryStarted` callback within a query endpoint (`getPost`) to dispatch Redux actions at different stages of the query lifecycle (start, success, error) by awaiting the `queryFulfilled` promise.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/api/createApi.mdx#_snippet_14
+
+LANGUAGE: ts
+CODE:
+```
+// file: notificationsSlice.ts noEmit
+export const messageCreated = (msg: string) => ({
+  type: 'notifications/messageCreated',
+  payload: msg,
+})
+
+// file: api.ts
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query'
+import { messageCreated } from './notificationsSlice'
+
+export interface Post {
+  id: number
+  name: string
+}
+
+const api = createApi({
+  baseQuery: fetchBaseQuery({
+    baseUrl: '/',
+  }),
+  endpoints: (build) => ({
+    getPost: build.query<Post, number>({
+      query: (id) => `post/${id}`,
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        // `onStart` side-effect
+        dispatch(messageCreated('Fetching post...'))
+        try {
+          const { data } = await queryFulfilled
+          // `onSuccess` side-effect
+          dispatch(messageCreated('Post received!'))
+        } catch (err) {
+          // `onError` side-effect
+          dispatch(messageCreated('Error fetching post!'))
+        }
+      },
+    }),
+  }),
+})
+```
+
+----------------------------------------
+
+TITLE: Implementing Manual Redux Data Fetching Pattern - JavaScript
+DESCRIPTION: Demonstrates the traditional Redux pattern for handling async data fetching, involving separate action creators for the start, success, and failure states, and a thunk that dispatches these actions sequentially.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_19
+
+LANGUAGE: javascript
+CODE:
+```
+const getRepoDetailsStarted = () => ({
+  type: 'repoDetails/fetchStarted',
+})
+const getRepoDetailsSuccess = (repoDetails) => ({
+  type: 'repoDetails/fetchSucceeded',
+  payload: repoDetails,
+})
+const getRepoDetailsFailed = (error) => ({
+  type: 'repoDetails/fetchFailed',
+  error,
+})
+const fetchIssuesCount = (org, repo) => async (dispatch) => {
+  dispatch(getRepoDetailsStarted())
+  try {
+    const repoDetails = await getRepoDetails(org, repo)
+    dispatch(getRepoDetailsSuccess(repoDetails))
+  } catch (err) {
+    dispatch(getRepoDetailsFailed(err.toString()))
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Examples of startListening Options - Redux Toolkit
+DESCRIPTION: Provides JavaScript examples illustrating the four different methods for triggering a listener using `startListening`: by action type string, RTK action creator, RTK matcher function, or a custom predicate function.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createListenerMiddleware.mdx#_snippet_5
+
+LANGUAGE: JavaScript
+CODE:
+```
+// 1) Action type string
+listenerMiddleware.startListening({ type: 'todos/todoAdded', effect })
+// 2) RTK action creator
+listenerMiddleware.startListening({ actionCreator: todoAdded, effect })
+// 3) RTK matcher function
+listenerMiddleware.startListening({
+  matcher: isAnyOf(todoAdded, todoToggled),
+  effect,
+})
+// 4) Listener predicate
+listenerMiddleware.startListening({
+  predicate: (action, currentState, previousState) => {
+    // return true when the listener should run
+  },
+  effect,
+})
+```
+
+----------------------------------------
+
+TITLE: Install Dependencies with Yarn (Bash)
+DESCRIPTION: This command installs all necessary project dependencies listed in the package.json file using the Yarn package manager.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/website/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+$ yarn
+```
+
+----------------------------------------
+
+TITLE: ConnectedProps<T> TS example
+DESCRIPTION: Demonstrates using the `ConnectedProps<T>` utility type from `@types/react-redux` (v7.x+) to infer the combined props from `mapState` and `mapDispatch`. This method requires splitting the `connect` call into two parts for correct type inference.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_33
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { connect, ConnectedProps } from 'react-redux'
+import { RootState } from '../../app/store'
+import {
+  todoToggled,
+  todoDeleted,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+interface TodoListItemOwnProps {
+  todoId: string
+}
+
+const mapStateToProps = (state: RootState, ownProps) => {
+  return {
+    todo: selectTodoById(state, ownProps.todoId),
+    activeTodoId: selectActiveTodoId(state),
+  }
+}
+
+const mapDispatchToProps = {
+  todoDeleted,
+  todoToggled,
+}
+
+// Call the first part of `connect` to get the function that accepts the component.
+// This knows the types of the props returned by `mapState/mapDispatch`
+const connector = connect(mapStateToProps, mapDispatchToProps)
+// The `ConnectedProps<T> util type can extract "the type of all props from Redux"
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+// The final component props are "the props from Redux" + "props from the parent"
+type TodoListItemProps = PropsFromRedux & TodoListItemOwnProps
+
+// That type can then be used in the component
+function TodoListItem({
+  todo,
+  activeTodoId,
+  todoDeleted,
+  todoToggled,
+}: TodoListItemProps) {}
+
+// And the final wrapped component is generated and exported
+export default connector(TodoListItem)
+```
+
+----------------------------------------
+
+TITLE: Redux Toolkit TS Store Setup with Type Inference
+DESCRIPTION: Demonstrates the recommended Redux Toolkit approach for setting up the store, showing how to configure the store and infer the `RootState` and `AppDispatch` types directly from the store instance.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_28
+
+LANGUAGE: ts
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+// omit any other imports
+
+const store = configureStore({
+  reducer: {
+    todos: todosReducer,
+    counter: counterReducer,
+  },
+})
+
+// highlight-start
+// Infer the `RootState` and `AppDispatch` types from the store itself
+
+// Inferred state type: {todos: TodosState, counter: CounterState}
+export type RootState = ReturnType<typeof store.getState>
+
+// Inferred dispatch type: Dispatch & ThunkDispatch<RootState, undefined, UnknownAction>
+export type AppDispatch = typeof store.dispatch
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Defining Root State and Dispatch Types with Redux Toolkit and TypeScript
+DESCRIPTION: This snippet demonstrates how to set up the Redux store using `configureStore` and how to infer the `RootState` and `AppDispatch` types directly from the configured store instance. Inferring these types ensures they automatically update as the store's configuration changes, providing accurate type safety throughout the application. These types are typically exported from the store setup file for use elsewhere.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/typescript.md#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+// ...
+
+export const store = configureStore({
+  reducer: {
+    posts: postsReducer,
+    comments: commentsReducer,
+    users: usersReducer,
+  },
+})
+
+// highlight-start
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Configure Store with Enhancers (Correct Example) (TypeScript)
+DESCRIPTION: Shows the required callback form for the `enhancers` option in `configureStore`. This example demonstrates how to get the default enhancers (including the auto-batching enhancer and middleware enhancer) and concatenate a custom enhancer.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-rtk-2.md#_snippet_7
+
+LANGUAGE: TypeScript
+CODE:
+```
+const store = configureStore({
+  reducer,
+  enhancers: (getDefaultEnhancers) => {
+    return getDefaultEnhancers({
+      autoBatch: { type: 'tick' }
+    }).concat(myEnhancer)
+  }
+})
+```
+
+----------------------------------------
+
+TITLE: Redux Saga for Data Fetching - JavaScript
+DESCRIPTION: An example of using Redux Saga for data fetching, showing a worker saga (`fetchTodos`) that performs the async call and dispatches actions, and a watcher saga (`fetchTodosSaga`) that listens for a specific action (`FETCH_TODOS_BEGIN`) to trigger the worker.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_13
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { put, takeEvery, call } from 'redux-saga/effects'
+import {
+  FETCH_TODOS_BEGIN,
+  fetchTodosStarted,
+  fetchTodosSucceeded,
+  fetchTodosFailed,
+} from '../actions/todos'
+
+// Saga to actually fetch data
+export function* fetchTodos() {
+  yield put(fetchTodosStarted())
+
+  try {
+    const res = yield call(axios.get, '/todos')
+    yield put(fetchTodosSucceeded(res.data))
+  } catch (err) {
+    yield put(fetchTodosFailed(err))
+  }
+}
+
+// "Watcher" saga that waits for a "signal" action, which is
+// dispatched only to kick off logic, not to update state
+export function* fetchTodosSaga() {
+  yield takeEvery(FETCH_TODOS_BEGIN, fetchTodos)
+}
+```
+
+----------------------------------------
+
+TITLE: Initializing Redux Toolkit Listener Middleware
+DESCRIPTION: Initializes the `createListenerMiddleware` from Redux Toolkit. It exports the middleware instance and its `startListening` and `stopListening` methods for use elsewhere in the application, recommending definition in a separate file.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_22
+
+LANGUAGE: js
+CODE:
+```
+import { createListenerMiddleware } from '@reduxjs/toolkit'
+
+// Best to define this in a separate file, to avoid importing
+// from the store file into the rest of the codebase
+export const listenerMiddleware = createListenerMiddleware()
+
+export const { startListening, stopListening } = listenerMiddleware
+```
+
+----------------------------------------
+
+TITLE: Installing Dependencies (Bash)
+DESCRIPTION: Navigates into the cloned repository directory and installs project dependencies using Yarn. This command assumes Yarn is installed globally on your system.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/CONTRIBUTING.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+$ cd redux-toolkit
+$ yarn
+```
+
+----------------------------------------
+
+TITLE: configureStore Setup with Slice Reducers Object (JS)
+DESCRIPTION: Shows how to use `configureStore` by providing an object where keys are state slice names and values are the corresponding slice reducer functions. `configureStore` automatically calls `combineReducers` internally for this single level of nesting.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_2
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+// highlight-start
+import usersReducer from './usersReducer'
+import postsReducer from './postsReducer'
+
+const store = configureStore({
+  reducer: {
+    users: usersReducer,
+    posts: postsReducer,
+  },
+})
+// highlight-end
+
+export default store
+```
+
+----------------------------------------
+
+TITLE: Legacy Redux TS Store Setup and Root Types
+DESCRIPTION: Illustrates the legacy approach to setting up a Redux store with TypeScript, including manually defining root action and state types and explicitly typing the dispatch function.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_27
+
+LANGUAGE: ts
+CODE:
+```
+import { createStore, Dispatch } from 'redux'
+
+import { TodoActions } from '../actions/todos'
+import { CounterActions } from '../actions/counter'
+import { TodosState } from '../reducers/todos'
+import { CounterState } from '../reducers/counter'
+
+// omit reducer setup
+
+export const store = createStore(rootReducer)
+
+// ❌ Common pattern: an "action type union" of all possible actions
+export type RootAction = TodoActions | CounterActions
+// ❌ Common pattern: manually defining the root state type with each field
+export interface RootState {
+  todos: TodosState
+  counter: CounterState
+}
+
+// ❌ Common pattern: limiting what can be dispatched at the types level
+export type AppDispatch = Dispatch<RootAction>
+```
+
+----------------------------------------
+
+TITLE: Rendering React App with Redux Provider - React/Redux - TypeScript
+DESCRIPTION: Initializes the React application using `createRoot`. It wraps the main application component (`<Counter>`) with the `Provider` component from `react-redux`, passing the configured Redux store to make it available to all components in the tree.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_7
+
+LANGUAGE: TypeScript
+CODE:
+```
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { Counter } from './features/counter/Counter'
+import { store } from './app/store'
+import { Provider } from 'react-redux'
+
+const container = document.getElementById('root')
+
+if (container) {
+  const root = createRoot(container)
+
+  root.render(
+    <Provider store={store}>
+      <Counter />
+    </Provider>,
+  )
+} else {
+  throw new Error(
+    "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file.",
+  )
+}
+```
+
+----------------------------------------
+
+TITLE: Creating a Redux Store with configureStore (TypeScript)
+DESCRIPTION: This snippet demonstrates how to create a Redux store using Redux Toolkit's `configureStore` API. It sets up a basic store with an empty reducer and infers the `RootState` and `AppDispatch` types for TypeScript usage. This also automatically configures Redux DevTools.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_1
+
+LANGUAGE: ts
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+export const store = configureStore({
+  reducer: {},
+})
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+```
+
+----------------------------------------
+
+TITLE: Redux Action Creators and Thunk for Data Fetching - JavaScript
+DESCRIPTION: Contains Redux action creators for the different states of fetching todos (started, succeeded, failed) and a Redux Thunk that performs the asynchronous API call using Axios and dispatches the appropriate actions based on the result.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_9
+
+LANGUAGE: JavaScript
+CODE:
+```
+import axios from 'axios'
+import {
+  FETCH_TODOS_STARTED,
+  FETCH_TODOS_SUCCEEDED,
+  FETCH_TODOS_FAILED,
+} from '../constants/todos'
+
+export const fetchTodosStarted = () => ({
+  type: FETCH_TODOS_STARTED,
+})
+
+export const fetchTodosSucceeded = (todos) => ({
+  type: FETCH_TODOS_SUCCEEDED,
+  todos,
+})
+
+export const fetchTodosFailed = (error) => ({
+  type: FETCH_TODOS_FAILED,
+  error,
+})
+
+export const fetchTodos = () => {
+  return async (dispatch) => {
+    dispatch(fetchTodosStarted())
+
+    try {
+      // Axios is common, but also `fetch`, or your own "API service" layer
+      const res = await axios.get('/todos')
+      dispatch(fetchTodosSucceeded(res.data))
+    } catch (err) {
+      dispatch(fetchTodosFailed(err))
+    }
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Simple Redux Action Creator Function
+DESCRIPTION: A basic example of an action creator function in Redux. It takes parameters, constructs an action object with a `type` and a `payload` field following the Flux Standard Action convention, and returns the action object.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_8
+
+LANGUAGE: js
+CODE:
+```
+function addTodo(text) {
+  return {
+    type: 'ADD_TODO',
+    payload: { text },
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: React Component Using Traditional Redux Data Fetching - JavaScript
+DESCRIPTION: A React functional component that demonstrates how to use the Redux store in a traditional setup, dispatching the `fetchTodos` thunk on mount using `useEffect` and selecting state values using `useSelector`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_12
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchTodos } from '../actions/todos'
+import { selectTodosStatus, selectTodos } from '../selectors/todos'
+
+export function TodosList() {
+  const dispatch = useDispatch()
+  const status = useSelector(selectTodosStatus)
+  const todos = useSelector(selectTodos)
+
+  useEffect(() => {
+    dispatch(fetchTodos())
+  }, [dispatch])
+
+  // omit rendering logic here
+}
+```
+
+----------------------------------------
+
+TITLE: Installing Redux Toolkit in Existing App (Bash)
+DESCRIPTION: Add Redux Toolkit to an existing project using npm or yarn. This command installs the core Redux Toolkit package.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/packages/toolkit/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install @reduxjs/toolkit
+```
+
+LANGUAGE: bash
+CODE:
+```
+yarn add @reduxjs/toolkit
+```
+
+----------------------------------------
+
+TITLE: Full configureStore Example with Middleware and Enhancers (TypeScript)
+DESCRIPTION: A comprehensive example demonstrating advanced `configureStore` usage. It shows how to combine multiple reducers, add custom middleware (`redux-logger`) and enhancers (`redux-batched-subscribe`) alongside the defaults, set initial state, and conditionally enable DevTools based on the environment.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/configureStore.mdx#_snippet_5
+
+LANGUAGE: typescript
+CODE:
+```
+// file: todos/todosReducer.ts noEmit
+import type { Reducer } from '@reduxjs/toolkit'
+declare const reducer: Reducer<{}>
+export default reducer
+
+// file: visibility/visibilityReducer.ts noEmit
+import type { Reducer } from '@reduxjs/toolkit'
+declare const reducer: Reducer<{}>
+export default reducer
+
+// file: store.ts
+import { configureStore } from '@reduxjs/toolkit'
+
+// We'll use redux-logger just as an example of adding another middleware
+import logger from 'redux-logger'
+
+// And use redux-batched-subscribe as an example of adding enhancers
+import { batchedSubscribe } from 'redux-batched-subscribe'
+
+import todosReducer from './todos/todosReducer'
+import visibilityReducer from './visibility/visibilityReducer'
+
+const reducer = {
+  todos: todosReducer,
+  visibility: visibilityReducer,
+}
+
+const preloadedState = {
+  todos: [
+    {
+      text: 'Eat food',
+      completed: true,
+    },
+    {
+      text: 'Exercise',
+      completed: false,
+    },
+  ],
+  visibilityFilter: 'SHOW_COMPLETED',
+}
+
+const debounceNotify = _.debounce((notify) => notify())
+
+const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  devTools: process.env.NODE_ENV !== 'production',
+  preloadedState,
+  enhancers: (getDefaultEnhancers) =>
+    getDefaultEnhancers({
+      autoBatch: false,
+    }).concat(batchedSubscribe(debounceNotify)),
+})
+
+// The store has been created with these options:
+// - The slice reducers were automatically passed to combineReducers()
+// - redux-thunk and redux-logger were added as middleware
+// - The Redux DevTools Extension is disabled for production
+// - The middleware, batched subscribe, and devtools enhancers were composed together
+```
+
+----------------------------------------
+
+TITLE: Providing the Redux Store to React App (TypeScript)
+DESCRIPTION: This code shows how to wrap your main React application component (`<App>`) with the `react-redux` `<Provider>`. The `<Provider>` component makes the Redux store available to all nested components via the React context. Pass the created `store` object as the `store` prop.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_2
+
+LANGUAGE: ts
+CODE:
+```
+// file: App.tsx noEmit
+import React from 'react'
+export default function App() {
+  return <div>...</div>
+}
+
+// file: app/store.ts noEmit
+import { configureStore } from '@reduxjs/toolkit'
+
+export const store = configureStore({
+  reducer: {},
+})
+
+// file: index.tsx
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App'
+// highlight-start
+import { store } from './app/store'
+import { Provider } from 'react-redux'
+// highlight-end
+
+const container = document.getElementById('root')
+
+if (container) {
+  const root = createRoot(container)
+
+  root.render(
+    // highlight-next-line
+    <Provider store={store}>
+      <App />
+    </Provider>,
+  )
+} else {
+  throw new Error(
+    "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file."
+  )
+}
+```
+
+----------------------------------------
+
+TITLE: Install and Run createSliceBuilder Codemod (Global/npx)
+DESCRIPTION: Instructions for running the createSliceBuilder codemod using npx or a globally installed yarn package to transform files.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/packages/rtk-codemods/transforms/createSliceBuilder/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npx @reduxjs/rtk-codemods createSliceBuilder path/of/files/ or/some**/*glob.js
+
+# or
+
+yarn global add @reduxjs/rtk-codemods
+rtk-codemods createSliceBuilder path/of/files/ or/some**/*glob.js
+```
+
+----------------------------------------
+
+TITLE: Defining and Initializing a Custom RTK Query Module (TypeScript)
+DESCRIPTION: Provides a basic example of how to define a custom RTK Query module using a Symbol for its name, extend the `ApiModules` interface, and implement the `init` function to perform setup logic and potentially inject custom properties into endpoints.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/usage/customizing-create-api.mdx#_snippet_2
+
+LANGUAGE: TypeScript
+CODE:
+```
+import {
+  BaseQueryFn,
+  CoreModule,
+  EndpointDefinitions,
+  Api,
+  Module,
+  buildCreateApi,
+  coreModule,
+} from '@reduxjs/toolkit/query'
+
+export const customModuleName = Symbol()
+export type CustomModule = typeof customModuleName
+
+declare module '@reduxjs/toolkit/query' {
+  export interface ApiModules<
+    BaseQuery extends BaseQueryFn,
+    Definitions extends EndpointDefinitions,
+    ReducerPath extends string,
+    TagTypes extends string,
+  > {
+    [customModuleName]: {
+      endpoints: {
+        [K in keyof Definitions]: {
+          myEndpointProperty: string
+        }
+      }
+    }
+  }
+}
+
+export const myModule = (): Module<CustomModule> => ({
+  name: customModuleName,
+  init(api, options, context) {
+    // initialize stuff here if you need to
+
+    return {
+      injectEndpoint(endpoint, definition) {
+        const anyApi = api as any as Api<
+          any,
+          Record<string, any>,
+          string,
+          string,
+          CustomModule | CoreModule
+        >
+        anyApi.endpoints[endpoint].myEndpointProperty = 'test'
+      },
+    }
+  },
+})
+
+export const myCreateApi = buildCreateApi(coreModule(), myModule())
+```
+
+----------------------------------------
+
+TITLE: Defining Redux Action Types - JavaScript
+DESCRIPTION: Defines string constants used as action types for tracking the status of a todo fetching operation in a traditional Redux setup.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_8
+
+LANGUAGE: JavaScript
+CODE:
+```
+export const FETCH_TODOS_STARTED = 'FETCH_TODOS_STARTED'
+export const FETCH_TODOS_SUCCEEDED = 'FETCH_TODOS_SUCCEEDED'
+export const FETCH_TODOS_FAILED = 'FETCH_TODOS_FAILED'
+```
+
+----------------------------------------
+
+TITLE: Installing Dependencies
+DESCRIPTION: Command to install project dependencies after cloning the repository.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/packages/rtk-codemods/README.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+yarn
+```
+
+----------------------------------------
+
+TITLE: Initializing Dynamic Middleware with configureStore (TypeScript)
+DESCRIPTION: Demonstrates the basic setup of `createDynamicMiddleware` and how to integrate its `middleware` property into the Redux store's middleware chain using `configureStore` and `getDefaultMiddleware().prepend()`. This is the standard way to include the dynamic middleware wrapper in your store.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createDynamicMiddleware.mdx#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { createDynamicMiddleware, configureStore } from '@reduxjs/toolkit'
+
+const dynamicMiddleware = createDynamicMiddleware()
+
+const store = configureStore({
+  reducer: {
+    todos: todosReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(dynamicMiddleware.middleware),
+})
+```
+
+----------------------------------------
+
+TITLE: src/features/todos/TodoListItem.tsx
+DESCRIPTION: Demonstrates the usage of the pre-typed `useAppSelector` and `useAppDispatch` hooks within a React functional component. This approach is significantly simpler for TypeScript users compared to typing the `connect` HOC.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_35
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import {
+  todoToggled,
+  todoDeleted,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+interface TodoListItemProps {
+  todoId: string
+}
+
+function TodoListItem({ todoId }: TodoListItemProps) {
+  // highlight-start
+  // Use the pre-typed hooks in the component
+  const dispatch = useAppDispatch()
+```
+
+----------------------------------------
+
+TITLE: Simple baseQuery TypeScript Example
+DESCRIPTION: Provides a simple implementation example of a custom baseQuery function typed with BaseQueryFn. It demonstrates how to handle arguments, access the API object, use extra options, return data or error objects with meta information, and integrate it into createApi.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/usage-with-typescript.mdx#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { createApi } from '@reduxjs/toolkit/query'
+import type { BaseQueryFn } from '@reduxjs/toolkit/query'
+
+const simpleBaseQuery: BaseQueryFn<
+  string, // Args
+  unknown, // Result
+  { reason: string }, // Error
+  { shout?: boolean }, // DefinitionExtraOptions
+  { timestamp: number } // Meta
+> = (arg, api, extraOptions) => {
+  // `arg` has the type `string`
+  // `api` has the type `BaseQueryApi` (not configurable)
+  // `extraOptions` has the type `{ shout?: boolean }
+
+  const meta = { timestamp: Date.now() }
+
+  if (arg === 'forceFail') {
+    return {
+      error: {
+        reason: 'Intentionally requested to fail!',
+        meta,
+      },
+    }
+  }
+
+  if (extraOptions.shout) {
+    return { data: 'CONGRATULATIONS', meta }
+  }
+
+  return { data: 'congratulations', meta }
+}
+
+const api = createApi({
+  baseQuery: simpleBaseQuery,
+  endpoints: (build) => ({
+    getSupport: build.query({
+      query: () => 'support me',
+      extraOptions: {
+        shout: true,
+      },
+    }),
+  }),
+})
+```
+
+----------------------------------------
+
+TITLE: Defining Redux Action Type Constants (Legacy)
+DESCRIPTION: This snippet defines string constants used for Redux action types in a traditional setup. These constants help prevent typos when dispatching actions and handling them in reducers.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_4
+
+LANGUAGE: js
+CODE:
+```
+export const ADD_TODO = 'ADD_TODO'
+export const TOGGLE_TODO = 'TOGGLE_TODO'
+```
+
+----------------------------------------
+
+TITLE: Connecting React Component to Redux Store with Hooks (JavaScript)
+DESCRIPTION: Shows the same React functional component refactored to use `react-redux` hooks. It uses `useDispatch` to get the dispatch function and `useSelector` to select state values directly within the component, replacing the need for `connect`, `mapStateToProps`, and `mapDispatchToProps`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_31
+
+LANGUAGE: javascript
+CODE:
+```
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  todoAdded,
+  todoToggled,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+export function TodoListItem({ todoId }) {
+  // highlight-start
+  // Get the actual `dispatch` function with `useDispatch`
+  const dispatch = useDispatch()
+
+  // Select values from the state with `useSelector`
+  const activeTodoId = useSelector(selectActiveTodoId)
+  // Use prop in scope to select a specific value
+  const todo = useSelector((state) => selectTodoById(state, todoId))
+  // highlight-end
+
+  // Create callback functions that dispatch as needed, with arguments
+  const handleToggleClick = () => {
+    dispatch(todoToggled(todoId))
+  }
+
+  const handleDeleteClick = () => {
+    dispatch(todoDeleted(todoId))
+  }
+
+  // omit rendering logic
+}
+```
+
+----------------------------------------
+
+TITLE: Configuring Redux Store - Redux Toolkit - TypeScript
+DESCRIPTION: Sets up the Redux store using `configureStore`. It combines the counter reducer defined in `counterSlice`. It also defines a `RootState` type based on the store's state for type safety when accessing state.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_6
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from '../features/counter/counterSlice'
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+})
+export type RootState = ReturnType<typeof store.getState>
+```
+
+----------------------------------------
+
+TITLE: Using Listener Middleware startListening in a Slice
+DESCRIPTION: Demonstrates how to use the `startListening` function from the listener middleware within a Redux slice file. It sets up a listener that triggers when the `pong` action creator's action is dispatched, waits for a delay, and then dispatches the `pong` action again using the provided `listenerApi`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_23
+
+LANGUAGE: js
+CODE:
+```
+import { createSlice } from '@reduxjs/toolkit'
+import { startListening } from '../../app/listenerMiddleware'
+
+const pingSlice = createSlice({
+  name: 'ping',
+  initialState,
+  reducers: {
+    pong(state, action) {
+      // state update here
+    },
+  },
+})
+
+export const { pong } = pingSlice.actions
+export default pingSlice.reducer
+
+// highlight-start
+// The `startListening()` call could go in different files,
+// depending on your preferred app setup. Here, we just add
+// it directly in a slice file.
+startListening({
+  // Match this exact action type based on the action creator
+  actionCreator: pong,
+  // Run this effect callback whenever that action is dispatched
+  effect: async (action, listenerApi) => {
+    // Listener effect functions get a `listenerApi` object
+    // with many useful methods built in, including `delay`:
+    await listenerApi.delay(1000)
+    listenerApi.dispatch(pong())
+  },
+})
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Example of using RTK Query prefetch - TypeScript
+DESCRIPTION: This example shows how to dispatch the `api.util.prefetch` action creator to manually trigger a fetch for the 'getPosts' endpoint, forcing the request to run regardless of existing cache data.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/api/created-api/api-slice-utils.mdx#_snippet_10
+
+LANGUAGE: TypeScript
+CODE:
+```
+dispatch(api.util.prefetch('getPosts', undefined, { force: true }))
+```
+
+----------------------------------------
+
+TITLE: Configuring Redux Store with RTK Query Middleware
+DESCRIPTION: Demonstrates how to integrate the RTK Query API slice reducer and middleware into the Redux store configuration using `configureStore`. This setup is necessary for RTK Query's caching, invalidation, and subscription features to work correctly.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_15
+
+LANGUAGE: javascript
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+// Import the API object
+// highlight-next-line
+import { api } from '../features/api/apiSlice'
+// Import any other slice reducers as usual here
+import usersReducer from '../features/users/usersSlice'
+
+export const store = configureStore({
+  reducer: {
+    // Add the generated RTK Query "API slice" caching reducer
+    // highlight-next-line
+    [api.reducerPath]: api.reducer,
+    // Add any other reducers
+    users: usersReducer,
+  },
+  // Add the RTK Query API middleware
+  // highlight-start
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
+  // highlight-end
+})
+```
+
+----------------------------------------
+
+TITLE: Creating Redux Action Creators (Legacy)
+DESCRIPTION: This snippet shows action creator functions for a legacy Redux application. These functions return action objects with a 'type' property (using the defined constants) and relevant data fields.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_5
+
+LANGUAGE: js
+CODE:
+```
+import { ADD_TODO, TOGGLE_TODO } from '../constants/todos'
+
+export const addTodo = (id, text) => ({
+  type: ADD_TODO,
+  text,
+  id,
+})
+
+export const toggleTodo = (id) => ({
+  type: TOGGLE_TODO,
+  id,
+})
+```
+
+----------------------------------------
+
+TITLE: Sorting Entities with Redux Toolkit Entity Adapter (JS)
+DESCRIPTION: Shows how to use the `sortComparer` option in `createEntityAdapter` to define a custom sorting logic for the entity IDs. This example sorts entities based on the `first_name` field using `localeCompare`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_31
+
+LANGUAGE: javascript
+CODE:
+```
+// In this instance, our user data always has a primary key of `id`, so we do not need to provide `selectId`.
+const userData = {
+  users: [
+    { id: 1, first_name: 'Test' },
+    { id: 2, first_name: 'Banana' },
+  ],
+}
+
+// Sort by `first_name`. `state.ids` would be ordered as
+// `ids: [ 2, 1 ]`, since 'B' comes before 'T'.
+// When using the provided `selectAll` selector, the result would be sorted:
+// [{ id: 2, first_name: 'Banana' }, { id: 1, first_name: 'Test' }]
+export const usersAdapter = createEntityAdapter({
+  sortComparer: (a, b) => a.first_name.localeCompare(b.first_name),
+})
+```
+
+----------------------------------------
+
+TITLE: Creating a new Expo app with Redux/TS template (bash)
+DESCRIPTION: Command to initialize a new Expo project using the official Redux/TypeScript template. Requires the npx tool, which comes with Node.js.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npx create-expo my-app --template expo-template-redux-typescript
+```========================
+CODE SNIPPETS
+========================
+TITLE: Installing Redux Toolkit (npm)
+DESCRIPTION: Install the core Redux Toolkit package using npm for an existing application.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install @reduxjs/toolkit
+```
+
+----------------------------------------
+
+TITLE: Installing Redux Toolkit (yarn)
+DESCRIPTION: Install the core Redux Toolkit package using yarn for an existing application.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_3
+
+LANGUAGE: bash
+CODE:
+```
+yarn add @reduxjs/toolkit
+```
+
+----------------------------------------
+
+TITLE: Installing React-Redux Bindings (npm)
+DESCRIPTION: Install the official React bindings for Redux using npm, required for connecting Redux to React components.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+npm install react-redux
+```
+
+----------------------------------------
+
+TITLE: Installing React-Redux Bindings (yarn)
+DESCRIPTION: Install the official React bindings for Redux using yarn, required for connecting Redux to React components.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_4
+
+LANGUAGE: bash
+CODE:
+```
+yarn add react-redux
+```
+
+----------------------------------------
+
+TITLE: Installing Redux Toolkit and React-Redux (Shell)
+DESCRIPTION: This command installs the necessary packages for using Redux Toolkit and integrating it with React applications. It adds `@reduxjs/toolkit` and `react-redux` as dependencies to your project. Run this in your project's terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_0
+
+LANGUAGE: sh
+CODE:
+```
+npm install @reduxjs/toolkit react-redux
+```
+
+----------------------------------------
+
+TITLE: Starting React Native Metro Server (Bash)
+DESCRIPTION: Commands to start the Metro bundler, which is the JavaScript bundler for React Native. This server must be running before you can launch the application on a device or simulator.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/react-native/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npm start
+```
+
+LANGUAGE: bash
+CODE:
+```
+yarn start
+```
+
+----------------------------------------
+
+TITLE: Creating New React Redux App
+DESCRIPTION: Use npx with degit or create-next-app to scaffold a new React application pre-configured with Redux Toolkit and React-Redux using official templates.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+# Vite with our Redux+TS template
+# (using the `degit` tool to clone and extract the template)
+npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
+
+# Next.js using the `with-redux` template
+npx create-next-app --example with-redux my-app
+```
+
+----------------------------------------
+
+TITLE: Starting Development Server with Create React App (shell)
+DESCRIPTION: Runs the application in development mode. Opens the app in the browser at http://localhost:3000. The page reloads on edits, and lint errors are shown in the console.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_0
+
+LANGUAGE: shell
+CODE:
+```
+npm start
+```
+
+----------------------------------------
+
+TITLE: Running React App in Development (npm)
+DESCRIPTION: Starts the development server for the React application. Opens the app in the browser at http://localhost:3000. The page reloads on edits, and lint errors are shown in the console.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm start
+```
+
+----------------------------------------
+
+TITLE: Starting React Native iOS App (Bash)
+DESCRIPTION: Commands to run the React Native application on an iOS simulator or device. This command requires the Metro server to be running in a separate terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/react-native/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm run ios
+```
+
+LANGUAGE: bash
+CODE:
+```
+yarn ios
+```
+
+----------------------------------------
+
+TITLE: Running React App Tests (npm)
+DESCRIPTION: Launches the test runner in interactive watch mode. Provides feedback on test results as files are changed.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_1
+
+LANGUAGE: Shell
+CODE:
+```
+npm test
+```
+
+----------------------------------------
+
+TITLE: Building React App for Production (npm)
+DESCRIPTION: Builds the application for production into the 'build' folder. Bundles React in production mode, optimizes performance, minifies code, and includes hashes in filenames.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_2
+
+LANGUAGE: Shell
+CODE:
+```
+npm run build
+```
+
+----------------------------------------
+
+TITLE: Importing createApi from RTK Query (TypeScript)
+DESCRIPTION: Demonstrates the two main import paths for the `createApi` function from RTK Query: the core path and the React-specific path which includes auto-generated hooks.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/introduction/getting-started.md#_snippet_5
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { createApi } from '@reduxjs/toolkit/query'
+
+/* React-specific entry point that automatically generates
+   hooks corresponding to the defined endpoints */
+import { createApi } from '@reduxjs/toolkit/query/react'
+```
+
+----------------------------------------
+
+TITLE: Basic configureStore Setup (TypeScript)
+DESCRIPTION: Provides a minimal example of configuring a Redux store using `configureStore` with a single reducer. It shows how the function simplifies setup by automatically including default middleware (like thunk) and enabling the Redux DevTools Extension.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/configureStore.mdx#_snippet_4
+
+LANGUAGE: typescript
+CODE:
+```
+// file: reducers.ts noEmit
+import type { Reducer } from '@reduxjs/toolkit'
+declare const rootReducer: Reducer<{}>
+export default rootReducer
+
+// file: store.ts
+import { configureStore } from '@reduxjs/toolkit'
+
+import rootReducer from './reducers'
+
+const store = configureStore({ reducer: rootReducer })
+// The store now has redux-thunk added and the Redux DevTools Extension is turned on
+```
+
+----------------------------------------
+
+TITLE: Custom Redux Toolkit Store Setup with configureStore, Persistence, and Middleware
+DESCRIPTION: Provides a detailed example of customizing the store setup with `configureStore`. It demonstrates combining reducers separately, adding custom middleware, passing extra arguments to thunk, integrating Redux-Persist, and configuring DevTools options.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_2
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import { PersistGate } from 'redux-persist/integration/react'
+import logger from 'redux-logger'
+
+import postsReducer from '../features/posts/postsSlice'
+import usersReducer from '../features/users/usersSlice'
+import { api } from '../features/api/apiSlice'
+import { serviceLayer } from '../features/api/serviceLayer'
+
+import stateSanitizerForDevtools from './devtools'
+import customMiddleware from './someCustomMiddleware'
+
+// Can call `combineReducers` yourself if needed
+const rootReducer = combineReducers({
+  posts: postsReducer,
+  users: usersReducer,
+  [api.reducerPath]: api.reducer,
+})
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = configureStore({
+  // Can create a root reducer separately and pass that in
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    const middleware = getDefaultMiddleware({
+      // Pass in a custom `extra` argument to the thunk middleware
+      thunk: {
+        extraArgument: { serviceLayer },
+      },
+      // Customize the built-in serializability dev check
+      serializableCheck: {
+
+```
+
+----------------------------------------
+
+TITLE: Building for Production with Create React App (shell)
+DESCRIPTION: Builds the app for production into the 'build' folder. It bundles React in production mode, optimizes performance, minifies code, and includes hashes in filenames. The output is ready for deployment.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_2
+
+LANGUAGE: shell
+CODE:
+```
+npm run build
+```
+
+----------------------------------------
+
+TITLE: Starting the Metro server (bash)
+DESCRIPTION: Commands to start the Metro bundler, which is required to serve the JavaScript code to the device or emulator. Use either npm or yarn.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+# using npm
+npm start
+```
+
+LANGUAGE: bash
+CODE:
+```
+# OR using Yarn
+yarn start
+```
+
+----------------------------------------
+
+TITLE: Running Tests with Create React App (shell)
+DESCRIPTION: Launches the test runner in interactive watch mode. Refer to the Create React App documentation for more details on running tests.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_1
+
+LANGUAGE: shell
+CODE:
+```
+npm test
+```
+
+----------------------------------------
+
+TITLE: Manual Redux Store Setup
+DESCRIPTION: This snippet demonstrates the traditional, manual process for configuring a Redux store using the core `createStore` function. It shows how to apply middleware (like `redux-thunk` and a custom logger), compose enhancers (including the Redux DevTools Extension), and handle hot module replacement for reducers, illustrating the steps Redux Toolkit aims to simplify.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_0
+
+LANGUAGE: javascript
+CODE:
+```
+import { applyMiddleware, createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunkMiddleware from 'redux-thunk'
+
+import monitorReducersEnhancer from './enhancers/monitorReducers'
+import loggerMiddleware from './middleware/logger'
+import rootReducer from './reducers'
+
+export default function configureStore(preloadedState) {
+  const middlewares = [loggerMiddleware, thunkMiddleware]
+  const middlewareEnhancer = applyMiddleware(...middlewares)
+
+  const enhancers = [middlewareEnhancer, monitorReducersEnhancer]
+  const composedEnhancers = composeWithDevTools(...enhancers)
+
+  const store = createStore(rootReducer, preloadedState, composedEnhancers)
+
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer))
+  }
+
+  return store
+}
+```
+
+----------------------------------------
+
+TITLE: Redux Toolkit createReducer Example
+DESCRIPTION: An example of the same todo list reducer implemented using Redux Toolkit's `createReducer`. It shows how Immer allows writing 'mutative' logic (like `push` or direct field assignment) which is then translated into immutable updates.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_5
+
+LANGUAGE: js
+CODE:
+```
+const todosReducer = createReducer([], (builder) => {
+  builder
+    .addCase('ADD_TODO', (state, action) => {
+      // "mutate" the array by calling push()
+      state.push(action.payload)
+    })
+    .addCase('TOGGLE_TODO', (state, action) => {
+      const todo = state[action.payload.index]
+      // "mutate" the object by overwriting a field
+      todo.completed = !todo.completed
+    })
+    .addCase('REMOVE_TODO', (state, action) => {
+      // Can still return an immutably-updated value if we want to
+      return state.filter((todo, i) => i !== action.payload.index)
+    })
+})
+```
+
+----------------------------------------
+
+TITLE: Simplest configureStore Setup with Root Reducer (JS)
+DESCRIPTION: Demonstrates the most basic usage of Redux Toolkit's `configureStore` function, passing a single root reducer function directly to the `reducer` option. This sets up the Redux store with default middleware and enhancers.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_1
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+import rootReducer from './reducers'
+
+const store = configureStore({
+  reducer: rootReducer,
+})
+
+export default store
+```
+
+----------------------------------------
+
+TITLE: Ejecting from Create React App Configuration (npm)
+DESCRIPTION: Removes the single build dependency and copies configuration files (webpack, Babel, ESLint, etc.) into the project. This is a one-way operation, giving full control but requiring manual management of configurations.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra5/README.md#_snippet_3
+
+LANGUAGE: Shell
+CODE:
+```
+npm run eject
+```
+
+----------------------------------------
+
+TITLE: Starting the iOS application (bash)
+DESCRIPTION: Commands to build and run the application on an iOS simulator or connected device. Ensure the Metro server is already running in a separate terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_3
+
+LANGUAGE: bash
+CODE:
+```
+# using npm
+npm run ios
+```
+
+LANGUAGE: bash
+CODE:
+```
+# OR using Yarn
+yarn ios
+```
+
+----------------------------------------
+
+TITLE: Simple connect TS example
+DESCRIPTION: Shows a basic way to type components connected with `react-redux`'s `connect` using `mapState` and `mapDispatch` objects. It highlights the verbosity and potential issues when including thunks in `mapDispatch` typed this way.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_32
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { connect } from 'react-redux'
+import { RootState } from '../../app/store'
+import {
+  todoToggled,
+  todoDeleted,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+interface TodoListItemOwnProps {
+  todoId: string
+}
+
+const mapStateToProps = (state: RootState, ownProps) => {
+  return {
+    todo: selectTodoById(state, ownProps.todoId),
+    activeTodoId: selectActiveTodoId(state),
+  }
+}
+
+const mapDispatchToProps = {
+  todoDeleted,
+  todoToggled,
+}
+
+type TodoListItemProps = TodoListItemOwnProps &
+  ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps
+
+function TodoListItem({
+  todo,
+  activeTodoId,
+  todoDeleted,
+  todoToggled,
+}: TodoListItemProps) {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoListItem)
+```
+
+----------------------------------------
+
+TITLE: Legacy Redux Store Setup with createStore
+DESCRIPTION: Demonstrates the traditional steps required to set up a Redux store using `createStore`, including manually combining reducers, applying middleware like thunk, and composing enhancers for DevTools.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_0
+
+LANGUAGE: js
+CODE:
+```
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
+import thunk from 'redux-thunk'
+
+import postsReducer from '../reducers/postsReducer'
+import usersReducer from '../reducers/usersReducer'
+
+const rootReducer = combineReducers({
+  posts: postsReducer,
+  users: usersReducer,
+})
+
+const middlewareEnhancer = applyMiddleware(thunk)
+
+const composeWithDevTools =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+const composedEnhancers = composeWithDevTools(middlewareEnhancer)
+
+const store = createStore(rootReducer, composedEnhancers)
+```
+
+----------------------------------------
+
+TITLE: Starting the Android application (bash)
+DESCRIPTION: Commands to build and run the application on an Android emulator or connected device. Ensure the Metro server is already running in a separate terminal.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+# using npm
+npm run android
+```
+
+LANGUAGE: bash
+CODE:
+```
+# OR using Yarn
+yarn android
+```
+
+----------------------------------------
+
+TITLE: Organizing Redux Listeners: Middleware Calls Slice Setup Function (Option 3 - Part 2)
+DESCRIPTION: Shows the middleware setup file importing and calling the listener setup function exported by a slice file, passing the `listenerMiddleware.startListening` utility to it. This completes the third organization pattern.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createListenerMiddleware.mdx#_snippet_28
+
+LANGUAGE: ts
+CODE:
+```
+import { addFeature1Listeners } from '../features/feature1/feature1Slice'
+
+addFeature1Listeners(listenerMiddleware.startListening)
+```
+
+----------------------------------------
+
+TITLE: Legacy Redux TS Actions and Types
+DESCRIPTION: Demonstrates the legacy pattern of manually defining TypeScript interfaces for each action type and creating a union type for all possible actions. Includes example action creators using these types.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_25
+
+LANGUAGE: ts
+CODE:
+```
+import { ADD_TODO, TOGGLE_TODO } from '../constants/todos'
+
+// ❌ Common pattern: manually defining types for each action object
+interface AddTodoAction {
+  type: typeof ADD_TODO
+  text: string
+  id: string
+}
+
+interface ToggleTodoAction {
+  type: typeof TOGGLE_TODO
+  id: string
+}
+
+// ❌ Common pattern: an "action type union" of all possible actions
+export type TodoActions = AddTodoAction | ToggleTodoAction
+
+export const addTodo = (id: string, text: string): AddTodoAction => ({
+  type: ADD_TODO,
+  text,
+  id,
+})
+
+export const toggleTodo = (id: string): ToggleTodoAction => ({
+  type: TOGGLE_TODO,
+  id,
+})
+```
+
+----------------------------------------
+
+TITLE: Initializing RTK Query API Slice - JavaScript
+DESCRIPTION: Initializes an RTK Query API slice using `createApi` and `fetchBaseQuery`, setting up the base URL for API calls. This is the starting point for defining endpoints for data fetching with RTK Query.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_14
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
+export const api = createApi({
+  baseQuery: fetchBaseQuery({
+    // Fill in your own server starting URL here
+    baseUrl: '/',
+  }),
+  endpoints: (build) => ({}),
+})
+```
+
+----------------------------------------
+
+TITLE: Start Local Development Server with Yarn (Bash)
+DESCRIPTION: Executes the script to start a local development server for the website, typically opening it in a browser and providing live reloading.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/website/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+$ yarn start
+```
+
+----------------------------------------
+
+TITLE: Advanced configureStore Setup with Custom Middleware, Enhancers, and HMR (JS)
+DESCRIPTION: Illustrates a more advanced configuration of `configureStore`, including adding custom middleware and enhancers while retaining the defaults using the callback notation. It also demonstrates passing `preloadedState` and setting up hot module replacement for reducers.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_3
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+import monitorReducersEnhancer from './enhancers/monitorReducers'
+import loggerMiddleware from './middleware/logger'
+import rootReducer from './reducers'
+
+export default function configureAppStore(preloadedState) {
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(loggerMiddleware),
+    preloadedState,
+    enhancers: (getDefaultEnhancers) =>
+      getDefaultEnhancers().concat(monitorReducersEnhancer),
+  })
+
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer))
+  }
+
+  return store
+}
+```
+
+----------------------------------------
+
+TITLE: Organizing Redux Listeners: Slice Exports Setup Function (Option 3 - Part 1)
+DESCRIPTION: Illustrates a method where a slice file exports a function that accepts the `startListening` utility (typed as `AppStartListening`) and uses it to define the slice's listeners. This function is then called from the middleware setup file.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createListenerMiddleware.mdx#_snippet_27
+
+LANGUAGE: ts
+CODE:
+```
+import type { AppStartListening } from '../../app/listenerMiddleware'
+
+const feature1Slice = createSlice(/* */)
+const { action1 } = feature1Slice.actions
+
+export default feature1Slice.reducer
+
+export const addFeature1Listeners = (startListening: AppStartListening) => {
+  startListening({
+    actionCreator: action1,
+    effect: () => {},
+  })
+}
+```
+
+----------------------------------------
+
+TITLE: Basic Redux Toolkit Store Setup with configureStore
+DESCRIPTION: Shows the basic setup of a Redux store using Redux Toolkit's `configureStore`. This function automatically handles combining reducers, adding default middleware (like thunk and state immutability checks), and setting up the Redux DevTools extension.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_1
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+import postsReducer from '../reducers/postsReducer'
+import usersReducer from '../reducers/usersReducer'
+
+// highlight-start
+// Automatically adds the thunk middleware and the Redux DevTools extension
+const store = configureStore({
+  // Automatically calls `combineReducers`
+  reducer: {
+    posts: postsReducer,
+    users: usersReducer,
+  },
+})
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Ejecting from Create React App (shell)
+DESCRIPTION: This is a one-way operation that removes the single build dependency and copies configuration files (webpack, Babel, ESLint, etc.) into the project, giving full control over the build tool and configuration. Once ejected, you cannot go back.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/cra4/README.md#_snippet_3
+
+LANGUAGE: shell
+CODE:
+```
+npm run eject
+```
+
+----------------------------------------
+
+TITLE: RTK Query onQueryStarted Query Example (TS)
+DESCRIPTION: This example demonstrates how to use the `onQueryStarted` callback within a query endpoint (`getPost`) to dispatch Redux actions at different stages of the query lifecycle (start, success, error) by awaiting the `queryFulfilled` promise.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/api/createApi.mdx#_snippet_14
+
+LANGUAGE: ts
+CODE:
+```
+// file: notificationsSlice.ts noEmit
+export const messageCreated = (msg: string) => ({
+  type: 'notifications/messageCreated',
+  payload: msg,
+})
+
+// file: api.ts
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query'
+import { messageCreated } from './notificationsSlice'
+
+export interface Post {
+  id: number
+  name: string
+}
+
+const api = createApi({
+  baseQuery: fetchBaseQuery({
+    baseUrl: '/',
+  }),
+  endpoints: (build) => ({
+    getPost: build.query<Post, number>({
+      query: (id) => `post/${id}`,
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        // `onStart` side-effect
+        dispatch(messageCreated('Fetching post...'))
+        try {
+          const { data } = await queryFulfilled
+          // `onSuccess` side-effect
+          dispatch(messageCreated('Post received!'))
+        } catch (err) {
+          // `onError` side-effect
+          dispatch(messageCreated('Error fetching post!'))
+        }
+      },
+    }),
+  }),
+})
+```
+
+----------------------------------------
+
+TITLE: Implementing Manual Redux Data Fetching Pattern - JavaScript
+DESCRIPTION: Demonstrates the traditional Redux pattern for handling async data fetching, involving separate action creators for the start, success, and failure states, and a thunk that dispatches these actions sequentially.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_19
+
+LANGUAGE: javascript
+CODE:
+```
+const getRepoDetailsStarted = () => ({
+  type: 'repoDetails/fetchStarted',
+})
+const getRepoDetailsSuccess = (repoDetails) => ({
+  type: 'repoDetails/fetchSucceeded',
+  payload: repoDetails,
+})
+const getRepoDetailsFailed = (error) => ({
+  type: 'repoDetails/fetchFailed',
+  error,
+})
+const fetchIssuesCount = (org, repo) => async (dispatch) => {
+  dispatch(getRepoDetailsStarted())
+  try {
+    const repoDetails = await getRepoDetails(org, repo)
+    dispatch(getRepoDetailsSuccess(repoDetails))
+  } catch (err) {
+    dispatch(getRepoDetailsFailed(err.toString()))
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Examples of startListening Options - Redux Toolkit
+DESCRIPTION: Provides JavaScript examples illustrating the four different methods for triggering a listener using `startListening`: by action type string, RTK action creator, RTK matcher function, or a custom predicate function.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createListenerMiddleware.mdx#_snippet_5
+
+LANGUAGE: JavaScript
+CODE:
+```
+// 1) Action type string
+listenerMiddleware.startListening({ type: 'todos/todoAdded', effect })
+// 2) RTK action creator
+listenerMiddleware.startListening({ actionCreator: todoAdded, effect })
+// 3) RTK matcher function
+listenerMiddleware.startListening({
+  matcher: isAnyOf(todoAdded, todoToggled),
+  effect,
+})
+// 4) Listener predicate
+listenerMiddleware.startListening({
+  predicate: (action, currentState, previousState) => {
+    // return true when the listener should run
+  },
+  effect,
+})
+```
+
+----------------------------------------
+
+TITLE: Install Dependencies with Yarn (Bash)
+DESCRIPTION: This command installs all necessary project dependencies listed in the package.json file using the Yarn package manager.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/website/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+$ yarn
+```
+
+----------------------------------------
+
+TITLE: ConnectedProps<T> TS example
+DESCRIPTION: Demonstrates using the `ConnectedProps<T>` utility type from `@types/react-redux` (v7.x+) to infer the combined props from `mapState` and `mapDispatch`. This method requires splitting the `connect` call into two parts for correct type inference.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_33
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { connect, ConnectedProps } from 'react-redux'
+import { RootState } from '../../app/store'
+import {
+  todoToggled,
+  todoDeleted,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+interface TodoListItemOwnProps {
+  todoId: string
+}
+
+const mapStateToProps = (state: RootState, ownProps) => {
+  return {
+    todo: selectTodoById(state, ownProps.todoId),
+    activeTodoId: selectActiveTodoId(state),
+  }
+}
+
+const mapDispatchToProps = {
+  todoDeleted,
+  todoToggled,
+}
+
+// Call the first part of `connect` to get the function that accepts the component.
+// This knows the types of the props returned by `mapState/mapDispatch`
+const connector = connect(mapStateToProps, mapDispatchToProps)
+// The `ConnectedProps<T> util type can extract "the type of all props from Redux"
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+// The final component props are "the props from Redux" + "props from the parent"
+type TodoListItemProps = PropsFromRedux & TodoListItemOwnProps
+
+// That type can then be used in the component
+function TodoListItem({
+  todo,
+  activeTodoId,
+  todoDeleted,
+  todoToggled,
+}: TodoListItemProps) {}
+
+// And the final wrapped component is generated and exported
+export default connector(TodoListItem)
+```
+
+----------------------------------------
+
+TITLE: Redux Toolkit TS Store Setup with Type Inference
+DESCRIPTION: Demonstrates the recommended Redux Toolkit approach for setting up the store, showing how to configure the store and infer the `RootState` and `AppDispatch` types directly from the store instance.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_28
+
+LANGUAGE: ts
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+// omit any other imports
+
+const store = configureStore({
+  reducer: {
+    todos: todosReducer,
+    counter: counterReducer,
+  },
+})
+
+// highlight-start
+// Infer the `RootState` and `AppDispatch` types from the store itself
+
+// Inferred state type: {todos: TodosState, counter: CounterState}
+export type RootState = ReturnType<typeof store.getState>
+
+// Inferred dispatch type: Dispatch & ThunkDispatch<RootState, undefined, UnknownAction>
+export type AppDispatch = typeof store.dispatch
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Defining Root State and Dispatch Types with Redux Toolkit and TypeScript
+DESCRIPTION: This snippet demonstrates how to set up the Redux store using `configureStore` and how to infer the `RootState` and `AppDispatch` types directly from the configured store instance. Inferring these types ensures they automatically update as the store's configuration changes, providing accurate type safety throughout the application. These types are typically exported from the store setup file for use elsewhere.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/typescript.md#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+// ...
+
+export const store = configureStore({
+  reducer: {
+    posts: postsReducer,
+    comments: commentsReducer,
+    users: usersReducer,
+  },
+})
+
+// highlight-start
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Configure Store with Enhancers (Correct Example) (TypeScript)
+DESCRIPTION: Shows the required callback form for the `enhancers` option in `configureStore`. This example demonstrates how to get the default enhancers (including the auto-batching enhancer and middleware enhancer) and concatenate a custom enhancer.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-rtk-2.md#_snippet_7
+
+LANGUAGE: TypeScript
+CODE:
+```
+const store = configureStore({
+  reducer,
+  enhancers: (getDefaultEnhancers) => {
+    return getDefaultEnhancers({
+      autoBatch: { type: 'tick' }
+    }).concat(myEnhancer)
+  }
+})
+```
+
+----------------------------------------
+
+TITLE: Redux Saga for Data Fetching - JavaScript
+DESCRIPTION: An example of using Redux Saga for data fetching, showing a worker saga (`fetchTodos`) that performs the async call and dispatches actions, and a watcher saga (`fetchTodosSaga`) that listens for a specific action (`FETCH_TODOS_BEGIN`) to trigger the worker.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_13
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { put, takeEvery, call } from 'redux-saga/effects'
+import {
+  FETCH_TODOS_BEGIN,
+  fetchTodosStarted,
+  fetchTodosSucceeded,
+  fetchTodosFailed,
+} from '../actions/todos'
+
+// Saga to actually fetch data
+export function* fetchTodos() {
+  yield put(fetchTodosStarted())
+
+  try {
+    const res = yield call(axios.get, '/todos')
+    yield put(fetchTodosSucceeded(res.data))
+  } catch (err) {
+    yield put(fetchTodosFailed(err))
+  }
+}
+
+// "Watcher" saga that waits for a "signal" action, which is
+// dispatched only to kick off logic, not to update state
+export function* fetchTodosSaga() {
+  yield takeEvery(FETCH_TODOS_BEGIN, fetchTodos)
+}
+```
+
+----------------------------------------
+
+TITLE: Initializing Redux Toolkit Listener Middleware
+DESCRIPTION: Initializes the `createListenerMiddleware` from Redux Toolkit. It exports the middleware instance and its `startListening` and `stopListening` methods for use elsewhere in the application, recommending definition in a separate file.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_22
+
+LANGUAGE: js
+CODE:
+```
+import { createListenerMiddleware } from '@reduxjs/toolkit'
+
+// Best to define this in a separate file, to avoid importing
+// from the store file into the rest of the codebase
+export const listenerMiddleware = createListenerMiddleware()
+
+export const { startListening, stopListening } = listenerMiddleware
+```
+
+----------------------------------------
+
+TITLE: Installing Dependencies (Bash)
+DESCRIPTION: Navigates into the cloned repository directory and installs project dependencies using Yarn. This command assumes Yarn is installed globally on your system.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/CONTRIBUTING.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+$ cd redux-toolkit
+$ yarn
+```
+
+----------------------------------------
+
+TITLE: configureStore Setup with Slice Reducers Object (JS)
+DESCRIPTION: Shows how to use `configureStore` by providing an object where keys are state slice names and values are the corresponding slice reducer functions. `configureStore` automatically calls `combineReducers` internally for this single level of nesting.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_2
+
+LANGUAGE: js
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+// highlight-start
+import usersReducer from './usersReducer'
+import postsReducer from './postsReducer'
+
+const store = configureStore({
+  reducer: {
+    users: usersReducer,
+    posts: postsReducer,
+  },
+})
+// highlight-end
+
+export default store
+```
+
+----------------------------------------
+
+TITLE: Legacy Redux TS Store Setup and Root Types
+DESCRIPTION: Illustrates the legacy approach to setting up a Redux store with TypeScript, including manually defining root action and state types and explicitly typing the dispatch function.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_27
+
+LANGUAGE: ts
+CODE:
+```
+import { createStore, Dispatch } from 'redux'
+
+import { TodoActions } from '../actions/todos'
+import { CounterActions } from '../actions/counter'
+import { TodosState } from '../reducers/todos'
+import { CounterState } from '../reducers/counter'
+
+// omit reducer setup
+
+export const store = createStore(rootReducer)
+
+// ❌ Common pattern: an "action type union" of all possible actions
+export type RootAction = TodoActions | CounterActions
+// ❌ Common pattern: manually defining the root state type with each field
+export interface RootState {
+  todos: TodosState
+  counter: CounterState
+}
+
+// ❌ Common pattern: limiting what can be dispatched at the types level
+export type AppDispatch = Dispatch<RootAction>
+```
+
+----------------------------------------
+
+TITLE: Rendering React App with Redux Provider - React/Redux - TypeScript
+DESCRIPTION: Initializes the React application using `createRoot`. It wraps the main application component (`<Counter>`) with the `Provider` component from `react-redux`, passing the configured Redux store to make it available to all components in the tree.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_7
+
+LANGUAGE: TypeScript
+CODE:
+```
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { Counter } from './features/counter/Counter'
+import { store } from './app/store'
+import { Provider } from 'react-redux'
+
+const container = document.getElementById('root')
+
+if (container) {
+  const root = createRoot(container)
+
+  root.render(
+    <Provider store={store}>
+      <Counter />
+    </Provider>,
+  )
+} else {
+  throw new Error(
+    "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file.",
+  )
+}
+```
+
+----------------------------------------
+
+TITLE: Creating a Redux Store with configureStore (TypeScript)
+DESCRIPTION: This snippet demonstrates how to create a Redux store using Redux Toolkit's `configureStore` API. It sets up a basic store with an empty reducer and infers the `RootState` and `AppDispatch` types for TypeScript usage. This also automatically configures Redux DevTools.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_1
+
+LANGUAGE: ts
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+export const store = configureStore({
+  reducer: {},
+})
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+```
+
+----------------------------------------
+
+TITLE: Redux Action Creators and Thunk for Data Fetching - JavaScript
+DESCRIPTION: Contains Redux action creators for the different states of fetching todos (started, succeeded, failed) and a Redux Thunk that performs the asynchronous API call using Axios and dispatches the appropriate actions based on the result.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_9
+
+LANGUAGE: JavaScript
+CODE:
+```
+import axios from 'axios'
+import {
+  FETCH_TODOS_STARTED,
+  FETCH_TODOS_SUCCEEDED,
+  FETCH_TODOS_FAILED,
+} from '../constants/todos'
+
+export const fetchTodosStarted = () => ({
+  type: FETCH_TODOS_STARTED,
+})
+
+export const fetchTodosSucceeded = (todos) => ({
+  type: FETCH_TODOS_SUCCEEDED,
+  todos,
+})
+
+export const fetchTodosFailed = (error) => ({
+  type: FETCH_TODOS_FAILED,
+  error,
+})
+
+export const fetchTodos = () => {
+  return async (dispatch) => {
+    dispatch(fetchTodosStarted())
+
+    try {
+      // Axios is common, but also `fetch`, or your own "API service" layer
+      const res = await axios.get('/todos')
+      dispatch(fetchTodosSucceeded(res.data))
+    } catch (err) {
+      dispatch(fetchTodosFailed(err))
+    }
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Simple Redux Action Creator Function
+DESCRIPTION: A basic example of an action creator function in Redux. It takes parameters, constructs an action object with a `type` and a `payload` field following the Flux Standard Action convention, and returns the action object.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_8
+
+LANGUAGE: js
+CODE:
+```
+function addTodo(text) {
+  return {
+    type: 'ADD_TODO',
+    payload: { text },
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: React Component Using Traditional Redux Data Fetching - JavaScript
+DESCRIPTION: A React functional component that demonstrates how to use the Redux store in a traditional setup, dispatching the `fetchTodos` thunk on mount using `useEffect` and selecting state values using `useSelector`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_12
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchTodos } from '../actions/todos'
+import { selectTodosStatus, selectTodos } from '../selectors/todos'
+
+export function TodosList() {
+  const dispatch = useDispatch()
+  const status = useSelector(selectTodosStatus)
+  const todos = useSelector(selectTodos)
+
+  useEffect(() => {
+    dispatch(fetchTodos())
+  }, [dispatch])
+
+  // omit rendering logic here
+}
+```
+
+----------------------------------------
+
+TITLE: Installing Redux Toolkit in Existing App (Bash)
+DESCRIPTION: Add Redux Toolkit to an existing project using npm or yarn. This command installs the core Redux Toolkit package.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/packages/toolkit/README.md#_snippet_1
+
+LANGUAGE: bash
+CODE:
+```
+npm install @reduxjs/toolkit
+```
+
+LANGUAGE: bash
+CODE:
+```
+yarn add @reduxjs/toolkit
+```
+
+----------------------------------------
+
+TITLE: Full configureStore Example with Middleware and Enhancers (TypeScript)
+DESCRIPTION: A comprehensive example demonstrating advanced `configureStore` usage. It shows how to combine multiple reducers, add custom middleware (`redux-logger`) and enhancers (`redux-batched-subscribe`) alongside the defaults, set initial state, and conditionally enable DevTools based on the environment.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/configureStore.mdx#_snippet_5
+
+LANGUAGE: typescript
+CODE:
+```
+// file: todos/todosReducer.ts noEmit
+import type { Reducer } from '@reduxjs/toolkit'
+declare const reducer: Reducer<{}>
+export default reducer
+
+// file: visibility/visibilityReducer.ts noEmit
+import type { Reducer } from '@reduxjs/toolkit'
+declare const reducer: Reducer<{}>
+export default reducer
+
+// file: store.ts
+import { configureStore } from '@reduxjs/toolkit'
+
+// We'll use redux-logger just as an example of adding another middleware
+import logger from 'redux-logger'
+
+// And use redux-batched-subscribe as an example of adding enhancers
+import { batchedSubscribe } from 'redux-batched-subscribe'
+
+import todosReducer from './todos/todosReducer'
+import visibilityReducer from './visibility/visibilityReducer'
+
+const reducer = {
+  todos: todosReducer,
+  visibility: visibilityReducer,
+}
+
+const preloadedState = {
+  todos: [
+    {
+      text: 'Eat food',
+      completed: true,
+    },
+    {
+      text: 'Exercise',
+      completed: false,
+    },
+  ],
+  visibilityFilter: 'SHOW_COMPLETED',
+}
+
+const debounceNotify = _.debounce((notify) => notify())
+
+const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  devTools: process.env.NODE_ENV !== 'production',
+  preloadedState,
+  enhancers: (getDefaultEnhancers) =>
+    getDefaultEnhancers({
+      autoBatch: false,
+    }).concat(batchedSubscribe(debounceNotify)),
+})
+
+// The store has been created with these options:
+// - The slice reducers were automatically passed to combineReducers()
+// - redux-thunk and redux-logger were added as middleware
+// - The Redux DevTools Extension is disabled for production
+// - The middleware, batched subscribe, and devtools enhancers were composed together
+```
+
+----------------------------------------
+
+TITLE: Providing the Redux Store to React App (TypeScript)
+DESCRIPTION: This code shows how to wrap your main React application component (`<App>`) with the `react-redux` `<Provider>`. The `<Provider>` component makes the Redux store available to all nested components via the React context. Pass the created `store` object as the `store` prop.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_2
+
+LANGUAGE: ts
+CODE:
+```
+// file: App.tsx noEmit
+import React from 'react'
+export default function App() {
+  return <div>...</div>
+}
+
+// file: app/store.ts noEmit
+import { configureStore } from '@reduxjs/toolkit'
+
+export const store = configureStore({
+  reducer: {},
+})
+
+// file: index.tsx
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App'
+// highlight-start
+import { store } from './app/store'
+import { Provider } from 'react-redux'
+// highlight-end
+
+const container = document.getElementById('root')
+
+if (container) {
+  const root = createRoot(container)
+
+  root.render(
+    // highlight-next-line
+    <Provider store={store}>
+      <App />
+    </Provider>,
+  )
+} else {
+  throw new Error(
+    "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file."
+  )
+}
+```
+
+----------------------------------------
+
+TITLE: Install and Run createSliceBuilder Codemod (Global/npx)
+DESCRIPTION: Instructions for running the createSliceBuilder codemod using npx or a globally installed yarn package to transform files.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/packages/rtk-codemods/transforms/createSliceBuilder/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npx @reduxjs/rtk-codemods createSliceBuilder path/of/files/ or/some**/*glob.js
+
+# or
+
+yarn global add @reduxjs/rtk-codemods
+rtk-codemods createSliceBuilder path/of/files/ or/some**/*glob.js
+```
+
+----------------------------------------
+
+TITLE: Defining and Initializing a Custom RTK Query Module (TypeScript)
+DESCRIPTION: Provides a basic example of how to define a custom RTK Query module using a Symbol for its name, extend the `ApiModules` interface, and implement the `init` function to perform setup logic and potentially inject custom properties into endpoints.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/usage/customizing-create-api.mdx#_snippet_2
+
+LANGUAGE: TypeScript
+CODE:
+```
+import {
+  BaseQueryFn,
+  CoreModule,
+  EndpointDefinitions,
+  Api,
+  Module,
+  buildCreateApi,
+  coreModule,
+} from '@reduxjs/toolkit/query'
+
+export const customModuleName = Symbol()
+export type CustomModule = typeof customModuleName
+
+declare module '@reduxjs/toolkit/query' {
+  export interface ApiModules<
+    BaseQuery extends BaseQueryFn,
+    Definitions extends EndpointDefinitions,
+    ReducerPath extends string,
+    TagTypes extends string,
+  > {
+    [customModuleName]: {
+      endpoints: {
+        [K in keyof Definitions]: {
+          myEndpointProperty: string
+        }
+      }
+    }
+  }
+}
+
+export const myModule = (): Module<CustomModule> => ({
+  name: customModuleName,
+  init(api, options, context) {
+    // initialize stuff here if you need to
+
+    return {
+      injectEndpoint(endpoint, definition) {
+        const anyApi = api as any as Api<
+          any,
+          Record<string, any>,
+          string,
+          string,
+          CustomModule | CoreModule
+        >
+        anyApi.endpoints[endpoint].myEndpointProperty = 'test'
+      },
+    }
+  },
+})
+
+export const myCreateApi = buildCreateApi(coreModule(), myModule())
+```
+
+----------------------------------------
+
+TITLE: Defining Redux Action Types - JavaScript
+DESCRIPTION: Defines string constants used as action types for tracking the status of a todo fetching operation in a traditional Redux setup.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_8
+
+LANGUAGE: JavaScript
+CODE:
+```
+export const FETCH_TODOS_STARTED = 'FETCH_TODOS_STARTED'
+export const FETCH_TODOS_SUCCEEDED = 'FETCH_TODOS_SUCCEEDED'
+export const FETCH_TODOS_FAILED = 'FETCH_TODOS_FAILED'
+```
+
+----------------------------------------
+
+TITLE: Installing Dependencies
+DESCRIPTION: Command to install project dependencies after cloning the repository.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/packages/rtk-codemods/README.md#_snippet_2
+
+LANGUAGE: bash
+CODE:
+```
+yarn
+```
+
+----------------------------------------
+
+TITLE: Initializing Dynamic Middleware with configureStore (TypeScript)
+DESCRIPTION: Demonstrates the basic setup of `createDynamicMiddleware` and how to integrate its `middleware` property into the Redux store's middleware chain using `configureStore` and `getDefaultMiddleware().prepend()`. This is the standard way to include the dynamic middleware wrapper in your store.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/api/createDynamicMiddleware.mdx#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { createDynamicMiddleware, configureStore } from '@reduxjs/toolkit'
+
+const dynamicMiddleware = createDynamicMiddleware()
+
+const store = configureStore({
+  reducer: {
+    todos: todosReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(dynamicMiddleware.middleware),
+})
+```
+
+----------------------------------------
+
+TITLE: src/features/todos/TodoListItem.tsx
+DESCRIPTION: Demonstrates the usage of the pre-typed `useAppSelector` and `useAppDispatch` hooks within a React functional component. This approach is significantly simpler for TypeScript users compared to typing the `connect` HOC.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_35
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import {
+  todoToggled,
+  todoDeleted,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+interface TodoListItemProps {
+  todoId: string
+}
+
+function TodoListItem({ todoId }: TodoListItemProps) {
+  // highlight-start
+  // Use the pre-typed hooks in the component
+  const dispatch = useAppDispatch()
+```
+
+----------------------------------------
+
+TITLE: Simple baseQuery TypeScript Example
+DESCRIPTION: Provides a simple implementation example of a custom baseQuery function typed with BaseQueryFn. It demonstrates how to handle arguments, access the API object, use extra options, return data or error objects with meta information, and integrate it into createApi.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/usage-with-typescript.mdx#_snippet_3
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { createApi } from '@reduxjs/toolkit/query'
+import type { BaseQueryFn } from '@reduxjs/toolkit/query'
+
+const simpleBaseQuery: BaseQueryFn<
+  string, // Args
+  unknown, // Result
+  { reason: string }, // Error
+  { shout?: boolean }, // DefinitionExtraOptions
+  { timestamp: number } // Meta
+> = (arg, api, extraOptions) => {
+  // `arg` has the type `string`
+  // `api` has the type `BaseQueryApi` (not configurable)
+  // `extraOptions` has the type `{ shout?: boolean }
+
+  const meta = { timestamp: Date.now() }
+
+  if (arg === 'forceFail') {
+    return {
+      error: {
+        reason: 'Intentionally requested to fail!',
+        meta,
+      },
+    }
+  }
+
+  if (extraOptions.shout) {
+    return { data: 'CONGRATULATIONS', meta }
+  }
+
+  return { data: 'congratulations', meta }
+}
+
+const api = createApi({
+  baseQuery: simpleBaseQuery,
+  endpoints: (build) => ({
+    getSupport: build.query({
+      query: () => 'support me',
+      extraOptions: {
+        shout: true,
+      },
+    }),
+  }),
+})
+```
+
+----------------------------------------
+
+TITLE: Defining Redux Action Type Constants (Legacy)
+DESCRIPTION: This snippet defines string constants used for Redux action types in a traditional setup. These constants help prevent typos when dispatching actions and handling them in reducers.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_4
+
+LANGUAGE: js
+CODE:
+```
+export const ADD_TODO = 'ADD_TODO'
+export const TOGGLE_TODO = 'TOGGLE_TODO'
+```
+
+----------------------------------------
+
+TITLE: Connecting React Component to Redux Store with Hooks (JavaScript)
+DESCRIPTION: Shows the same React functional component refactored to use `react-redux` hooks. It uses `useDispatch` to get the dispatch function and `useSelector` to select state values directly within the component, replacing the need for `connect`, `mapStateToProps`, and `mapDispatchToProps`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_31
+
+LANGUAGE: javascript
+CODE:
+```
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  todoAdded,
+  todoToggled,
+  selectTodoById,
+  selectActiveTodoId,
+} from './todosSlice'
+
+export function TodoListItem({ todoId }) {
+  // highlight-start
+  // Get the actual `dispatch` function with `useDispatch`
+  const dispatch = useDispatch()
+
+  // Select values from the state with `useSelector`
+  const activeTodoId = useSelector(selectActiveTodoId)
+  // Use prop in scope to select a specific value
+  const todo = useSelector((state) => selectTodoById(state, todoId))
+  // highlight-end
+
+  // Create callback functions that dispatch as needed, with arguments
+  const handleToggleClick = () => {
+    dispatch(todoToggled(todoId))
+  }
+
+  const handleDeleteClick = () => {
+    dispatch(todoDeleted(todoId))
+  }
+
+  // omit rendering logic
+}
+```
+
+----------------------------------------
+
+TITLE: Configuring Redux Store - Redux Toolkit - TypeScript
+DESCRIPTION: Sets up the Redux store using `configureStore`. It combines the counter reducer defined in `counterSlice`. It also defines a `RootState` type based on the store's state for type safety when accessing state.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/tutorials/quick-start.mdx#_snippet_6
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from '../features/counter/counterSlice'
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+})
+export type RootState = ReturnType<typeof store.getState>
+```
+
+----------------------------------------
+
+TITLE: Using Listener Middleware startListening in a Slice
+DESCRIPTION: Demonstrates how to use the `startListening` function from the listener middleware within a Redux slice file. It sets up a listener that triggers when the `pong` action creator's action is dispatched, waits for a delay, and then dispatches the `pong` action again using the provided `listenerApi`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_23
+
+LANGUAGE: js
+CODE:
+```
+import { createSlice } from '@reduxjs/toolkit'
+import { startListening } from '../../app/listenerMiddleware'
+
+const pingSlice = createSlice({
+  name: 'ping',
+  initialState,
+  reducers: {
+    pong(state, action) {
+      // state update here
+    },
+  },
+})
+
+export const { pong } = pingSlice.actions
+export default pingSlice.reducer
+
+// highlight-start
+// The `startListening()` call could go in different files,
+// depending on your preferred app setup. Here, we just add
+// it directly in a slice file.
+startListening({
+  // Match this exact action type based on the action creator
+  actionCreator: pong,
+  // Run this effect callback whenever that action is dispatched
+  effect: async (action, listenerApi) => {
+    // Listener effect functions get a `listenerApi` object
+    // with many useful methods built in, including `delay`:
+    await listenerApi.delay(1000)
+    listenerApi.dispatch(pong())
+  },
+})
+// highlight-end
+```
+
+----------------------------------------
+
+TITLE: Example of using RTK Query prefetch - TypeScript
+DESCRIPTION: This example shows how to dispatch the `api.util.prefetch` action creator to manually trigger a fetch for the 'getPosts' endpoint, forcing the request to run regardless of existing cache data.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/rtk-query/api/created-api/api-slice-utils.mdx#_snippet_10
+
+LANGUAGE: TypeScript
+CODE:
+```
+dispatch(api.util.prefetch('getPosts', undefined, { force: true }))
+```
+
+----------------------------------------
+
+TITLE: Configuring Redux Store with RTK Query Middleware
+DESCRIPTION: Demonstrates how to integrate the RTK Query API slice reducer and middleware into the Redux store configuration using `configureStore`. This setup is necessary for RTK Query's caching, invalidation, and subscription features to work correctly.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_15
+
+LANGUAGE: javascript
+CODE:
+```
+import { configureStore } from '@reduxjs/toolkit'
+
+// Import the API object
+// highlight-next-line
+import { api } from '../features/api/apiSlice'
+// Import any other slice reducers as usual here
+import usersReducer from '../features/users/usersSlice'
+
+export const store = configureStore({
+  reducer: {
+    // Add the generated RTK Query "API slice" caching reducer
+    // highlight-next-line
+    [api.reducerPath]: api.reducer,
+    // Add any other reducers
+    users: usersReducer,
+  },
+  // Add the RTK Query API middleware
+  // highlight-start
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
+  // highlight-end
+})
+```
+
+----------------------------------------
+
+TITLE: Creating Redux Action Creators (Legacy)
+DESCRIPTION: This snippet shows action creator functions for a legacy Redux application. These functions return action objects with a 'type' property (using the defined constants) and relevant data fields.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/migrating-to-modern-redux.mdx#_snippet_5
+
+LANGUAGE: js
+CODE:
+```
+import { ADD_TODO, TOGGLE_TODO } from '../constants/todos'
+
+export const addTodo = (id, text) => ({
+  type: ADD_TODO,
+  text,
+  id,
+})
+
+export const toggleTodo = (id) => ({
+  type: TOGGLE_TODO,
+  id,
+})
+```
+
+----------------------------------------
+
+TITLE: Sorting Entities with Redux Toolkit Entity Adapter (JS)
+DESCRIPTION: Shows how to use the `sortComparer` option in `createEntityAdapter` to define a custom sorting logic for the entity IDs. This example sorts entities based on the `first_name` field using `localeCompare`.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/docs/usage/usage-guide.md#_snippet_31
+
+LANGUAGE: javascript
+CODE:
+```
+// In this instance, our user data always has a primary key of `id`, so we do not need to provide `selectId`.
+const userData = {
+  users: [
+    { id: 1, first_name: 'Test' },
+    { id: 2, first_name: 'Banana' },
+  ],
+}
+
+// Sort by `first_name`. `state.ids` would be ordered as
+// `ids: [ 2, 1 ]`, since 'B' comes before 'T'.
+// When using the provided `selectAll` selector, the result would be sorted:
+// [{ id: 2, first_name: 'Banana' }, { id: 1, first_name: 'Test' }]
+export const usersAdapter = createEntityAdapter({
+  sortComparer: (a, b) => a.first_name.localeCompare(b.first_name),
+})
+```
+
+----------------------------------------
+
+TITLE: Creating a new Expo app with Redux/TS template (bash)
+DESCRIPTION: Command to initialize a new Expo project using the official Redux/TypeScript template. Requires the npx tool, which comes with Node.js.
+
+SOURCE: https://github.com/reduxjs/redux-toolkit/blob/master/examples/publish-ci/expo/README.md#_snippet_0
+
+LANGUAGE: bash
+CODE:
+```
+npx create-expo my-app --template expo-template-redux-typescript
+```
