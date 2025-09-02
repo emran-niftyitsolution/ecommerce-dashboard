@@ -275,7 +275,7 @@ export default function OrdersPage() {
       title: "Customer",
       dataIndex: "customer",
       key: "customer",
-      render: (text: string, record: any) => (
+      render: (text: string, record: Order) => (
         <div>
           <div className="font-medium">{text}</div>
           <div className="text-xs text-gray-500">{record.email}</div>
@@ -286,7 +286,7 @@ export default function OrdersPage() {
       title: "Products",
       dataIndex: "products",
       key: "products",
-      render: (products: any[]) => (
+      render: (products: Order["products"]) => (
         <div className="max-w-xs">
           {products.map((product, index) => (
             <div key={index} className="text-sm">
@@ -305,7 +305,7 @@ export default function OrdersPage() {
           ${total.toFixed(2)}
         </span>
       ),
-      sorter: (a: any, b: any) => a.total - b.total,
+      sorter: (a: Order, b: Order) => a.total - b.total,
     },
     {
       title: "Status",
@@ -323,7 +323,8 @@ export default function OrdersPage() {
         { text: "Delivered", value: "delivered" },
         { text: "Cancelled", value: "cancelled" },
       ],
-      onFilter: (value: string, record: any) => record.status === value,
+      onFilter: (value: string | number | boolean, record: Order) =>
+        record.status === value,
     },
     {
       title: "Payment",
