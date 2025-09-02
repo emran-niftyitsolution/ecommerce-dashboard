@@ -60,7 +60,9 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [dateRange, setDateRange] = useState<any>(null);
+  const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs] | null>(
+    null
+  );
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const router = useRouter();
@@ -330,7 +332,7 @@ export default function OrdersPage() {
       title: "Payment",
       dataIndex: "paymentStatus",
       key: "paymentStatus",
-      render: (status: string, record: any) => (
+      render: (status: string, record: Order) => (
         <div>
           <Tag color={getPaymentStatusColor(status)} className="capitalize">
             {status}
@@ -369,7 +371,7 @@ export default function OrdersPage() {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: any) => (
+      render: (_: unknown, record: Order) => (
         <Dropdown
           menu={{
             items: [
