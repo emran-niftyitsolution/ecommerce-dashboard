@@ -556,7 +556,7 @@ export default function ProductsPage() {
           </Button>,
         ]}
         width={900}
-        destroyOnClose
+        destroyOnHidden
         centered
       >
         {selectedProduct && (

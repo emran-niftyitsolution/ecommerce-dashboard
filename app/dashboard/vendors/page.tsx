@@ -548,7 +548,7 @@ export default function VendorsPage() {
           </Button>,
         ]}
         width={900}
-        destroyOnClose
+        destroyOnHidden
         centered
       >
         {selectedVendor && (

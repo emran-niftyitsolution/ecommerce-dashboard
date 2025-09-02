@@ -27,11 +27,11 @@ export default function DashboardPage() {
   ];
 
   const categoryData = [
-    { category: "Electronics", sales: 35, revenue: 108500 },
-    { category: "Fashion", sales: 28, revenue: 86800 },
-    { category: "Home & Garden", sales: 18, revenue: 55800 },
-    { category: "Sports", sales: 12, revenue: 37200 },
-    { category: "Beauty", sales: 7, revenue: 21700 },
+    { category: "Electronics", sales: 35, revenue: 108500, percentage: 35 },
+    { category: "Fashion", sales: 28, revenue: 86800, percentage: 28 },
+    { category: "Home & Garden", sales: 18, revenue: 55800, percentage: 18 },
+    { category: "Sports", sales: 12, revenue: 37200, percentage: 12 },
+    { category: "Beauty", sales: 7, revenue: 21700, percentage: 7 },
   ];
 
   const vendorPerformance = [

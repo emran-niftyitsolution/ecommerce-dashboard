@@ -29,6 +29,30 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+interface Order {
+  key: string;
+  id: string;
+  customer: string;
+  email: string;
+  phone: string;
+  products: Array<{
+    name: string;
+    quantity: number;
+    price: number;
+  }>;
+  total: number;
+  status: string;
+  paymentStatus: string;
+  paymentMethod: string;
+  shippingAddress: string;
+  billingAddress: string;
+  orderDate: string;
+  deliveryDate: string | null;
+  trackingNumber: string | null;
+  vendor: string;
+  notes: string;
+}
+
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -37,12 +61,12 @@ export default function OrdersPage() {
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [dateRange, setDateRange] = useState<any>(null);
-  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const router = useRouter();
 
   // Mock orders data
-  const [orders, setOrders] = useState([
+  const [orders, setOrders] = useState<Order[]>([
     {
       key: "1",
       id: "ORD-001",
@@ -494,7 +518,7 @@ export default function OrdersPage() {
           </Button>,
         ]}
         width={900}
-        destroyOnClose
+        destroyOnHidden
         centered
       >
         {selectedOrder && (

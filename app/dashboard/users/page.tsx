@@ -506,6 +506,7 @@ export default function UsersPage() {
           </Button>,
         ]}
         width={600}
+        destroyOnHidden
         centered
       >
         {selectedUser && (

@@ -49,11 +49,31 @@ export default function ReportsPage() {
   ];
 
   const regionData = [
-    { region: "North America", revenue: 350000, color: "#3b82f6" },
-    { region: "Europe", revenue: 280000, color: "#10b981" },
-    { region: "Asia Pacific", revenue: 420000, color: "#f59e0b" },
-    { region: "Latin America", revenue: 190000, color: "#8b5cf6" },
-    { region: "Middle East", revenue: 140000, color: "#ef4444" },
+    {
+      region: "North America",
+      revenue: 350000,
+      color: "#3b82f6",
+      percentage: 25.2,
+    },
+    { region: "Europe", revenue: 280000, color: "#10b981", percentage: 20.1 },
+    {
+      region: "Asia Pacific",
+      revenue: 420000,
+      color: "#f59e0b",
+      percentage: 30.2,
+    },
+    {
+      region: "Latin America",
+      revenue: 190000,
+      color: "#8b5cf6",
+      percentage: 13.7,
+    },
+    {
+      region: "Middle East",
+      revenue: 140000,
+      color: "#ef4444",
+      percentage: 10.1,
+    },
   ];
 
   const performanceData = [

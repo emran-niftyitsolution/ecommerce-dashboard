@@ -34,9 +34,9 @@ export default function AnalyticsPage() {
   ];
 
   const deviceData = [
-    { device: "Desktop", users: 45, color: "#3b82f6" },
-    { device: "Mobile", users: 35, color: "#10b981" },
-    { device: "Tablet", users: 20, color: "#f59e0b" },
+    { device: "Desktop", users: 45, color: "#3b82f6", percentage: 45 },
+    { device: "Mobile", users: 35, color: "#10b981", percentage: 35 },
+    { device: "Tablet", users: 20, color: "#f59e0b", percentage: 20 },
   ];
 
   const channelData = [

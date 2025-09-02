@@ -558,7 +558,7 @@ export default function CustomersPage() {
           </Button>,
         ]}
         width={900}
-        destroyOnClose
+        destroyOnHidden
         centered
       >
         {selectedCustomer && (

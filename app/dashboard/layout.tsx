@@ -77,22 +77,29 @@ export default function DashboardLayout({
       onClick: () => router.push("/dashboard"),
     },
     {
-      key: "/dashboard/analytics",
-      icon: <BarChartOutlined />,
-      label: "Analytics",
-      onClick: () => router.push("/dashboard/analytics"),
-    },
-    {
-      key: "/dashboard/profile",
-      icon: <UserOutlined />,
-      label: "Profile",
-      onClick: () => router.push("/dashboard/profile"),
-    },
-    {
-      key: "/dashboard/users",
+      key: "people",
       icon: <TeamOutlined />,
-      label: "Users",
-      onClick: () => router.push("/dashboard/users"),
+      label: "People",
+      children: [
+        {
+          key: "/dashboard/users",
+          icon: <TeamOutlined />,
+          label: "Users",
+          onClick: () => router.push("/dashboard/users"),
+        },
+        {
+          key: "/dashboard/customers",
+          icon: <UserOutlined />,
+          label: "Customers",
+          onClick: () => router.push("/dashboard/customers"),
+        },
+        {
+          key: "/dashboard/vendors",
+          icon: <ShopOutlined />,
+          label: "Vendors",
+          onClick: () => router.push("/dashboard/vendors"),
+        },
+      ],
     },
     {
       key: "/dashboard/products",
@@ -107,22 +114,23 @@ export default function DashboardLayout({
       onClick: () => router.push("/dashboard/orders"),
     },
     {
-      key: "/dashboard/vendors",
-      icon: <ShopOutlined />,
-      label: "Vendors",
-      onClick: () => router.push("/dashboard/vendors"),
-    },
-    {
-      key: "/dashboard/customers",
-      icon: <UserOutlined />,
-      label: "Customers",
-      onClick: () => router.push("/dashboard/customers"),
-    },
-    {
-      key: "/dashboard/reports",
+      key: "reports",
       icon: <FileTextOutlined />,
       label: "Reports",
-      onClick: () => router.push("/dashboard/reports"),
+      children: [
+        {
+          key: "/dashboard/reports",
+          icon: <FileTextOutlined />,
+          label: "General Reports",
+          onClick: () => router.push("/dashboard/reports"),
+        },
+        {
+          key: "/dashboard/analytics",
+          icon: <BarChartOutlined />,
+          label: "Analytics",
+          onClick: () => router.push("/dashboard/analytics"),
+        },
+      ],
     },
     {
       key: "/dashboard/settings",
@@ -398,7 +406,7 @@ export default function DashboardLayout({
           }}
           footer={null}
           width={600}
-          destroyOnClose
+          destroyOnHidden
           centered
         >
           <div className="space-y-4">
