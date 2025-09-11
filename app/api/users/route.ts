@@ -3,7 +3,7 @@ import { UserService } from "@/lib/db-utils";
 import { ApiResponse, CreateUserRequest } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/users - List all users (admin only)
+// GET /api/users - List all users (authenticated users)
 export const GET = withAuth(
   async (request: NextRequest) => {
     try {
@@ -23,7 +23,7 @@ export const GET = withAuth(
         };
       }
 
-      const result = await UserService.list(page, limit);
+      const result = await UserService.list(page, limit, filter);
 
       return NextResponse.json({
         success: true,
@@ -41,7 +41,7 @@ export const GET = withAuth(
       );
     }
   },
-  ["admin", "manager"]
+  [] // Allow all authenticated users to view users list
 );
 
 // POST /api/users - Create new user (admin only)

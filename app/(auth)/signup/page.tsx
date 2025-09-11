@@ -6,7 +6,16 @@ import {
   GoogleOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
-import { Alert, Button, Checkbox, Divider, Form, Input, message } from "antd";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Divider,
+  Form,
+  Input,
+  message,
+  Select,
+} from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -26,6 +35,7 @@ export default function SignUpPage() {
     email: string;
     password: string;
     confirmPassword: string;
+    role: string;
     agree?: boolean;
   }) => {
     try {
@@ -42,13 +52,13 @@ export default function SignUpPage() {
         password: values.password,
         firstName,
         lastName,
-        role: "user",
+        role: values.role,
       });
 
       if (response.success) {
         message.success("Account created successfully!");
         // Set the token and redirect to dashboard
-        apiClient.setToken(response.data.token);
+        apiClient.setToken((response.data as any).token);
         router.push("/dashboard");
       } else {
         setError(response.error || "Registration failed");
@@ -446,6 +456,48 @@ export default function SignUpPage() {
                     className="h-12"
                   />
                 </Form.Item>
+              </div>
+
+              {/* Role Selection Field */}
+              <div className="space-y-2">
+                <label className="text-gray-700 dark:text-gray-300 font-medium text-sm">
+                  Account Type
+                </label>
+                <Form.Item
+                  name="role"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select your account type!",
+                    },
+                  ]}
+                  className="mb-0"
+                  initialValue="user"
+                >
+                  <Select
+                    size="large"
+                    className="h-12"
+                    placeholder="Select account type"
+                    options={[
+                      {
+                        value: "user",
+                        label: "User - Basic access to view data",
+                      },
+                      {
+                        value: "manager",
+                        label: "Manager - Manage users and content",
+                      },
+                      {
+                        value: "admin",
+                        label: "Admin - Full system access",
+                      },
+                    ]}
+                  />
+                </Form.Item>
+                <div className="text-xs text-gray-500 mt-1">
+                  Choose the account type that best fits your needs. You can
+                  request role changes later.
+                </div>
               </div>
 
               {/* Terms Agreement */}

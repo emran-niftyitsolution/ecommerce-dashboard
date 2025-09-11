@@ -1,15 +1,15 @@
 "use client";
 
+import { apiClient } from "@/lib/api-client";
 import {
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
-  FilterOutlined,
+  LoadingOutlined,
   PlusOutlined,
   SearchOutlined,
   TeamOutlined,
   UserAddOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -22,16 +22,28 @@ import {
   Row,
   Select,
   Space,
+  Spin,
   Table,
   Tag,
   Tooltip,
   message,
 } from "antd";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const { Search } = Input;
 const { Option } = Select;
+
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function UsersPage() {
   const router = useRouter();
@@ -40,127 +52,67 @@ export default function UsersPage() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [roleFilter, setRoleFilter] = useState("all");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(null);
-  const [users, setUsers] = useState([
-    {
-      key: "1",
-      id: "USR-001",
-      name: "John Doe",
-      email: "john.doe@example.com",
-      role: "Admin",
-      status: "active",
-      department: "Engineering",
-      lastActive: "2 hours ago",
-      avatar: "JD",
-      joinDate: "2023-01-15",
-      phone: "+1-555-0123",
-      location: "San Francisco, CA",
-      timezone: "UTC-8",
-      bio: "Senior Software Engineer with 5+ years of experience",
-      jobTitle: "Senior Software Engineer",
-      employeeId: "EMP001",
-      username: "johndoe",
-      notes: "Team lead for backend development",
-    },
-    {
-      key: "2",
-      id: "USR-002",
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      role: "Manager",
-      status: "active",
-      department: "Marketing",
-      lastActive: "1 day ago",
-      avatar: "JS",
-      joinDate: "2023-02-20",
-      phone: "+1-555-0124",
-      location: "New York, NY",
-      timezone: "UTC-5",
-      bio: "Marketing Manager with expertise in digital campaigns",
-      jobTitle: "Marketing Manager",
-      employeeId: "EMP002",
-      username: "janesmith",
-      notes: "Leads all marketing initiatives",
-    },
-    {
-      key: "3",
-      id: "USR-003",
-      name: "Mike Johnson",
-      email: "mike.johnson@example.com",
-      role: "Developer",
-      status: "inactive",
-      department: "Engineering",
-      lastActive: "1 week ago",
-      avatar: "MJ",
-      joinDate: "2023-03-10",
-      phone: "+1-555-0125",
-      location: "Austin, TX",
-      timezone: "UTC-6",
-      bio: "Full-stack developer specializing in React and Node.js",
-      jobTitle: "Full Stack Developer",
-      employeeId: "EMP003",
-      username: "mikejohnson",
-      notes: "On leave until further notice",
-    },
-    {
-      key: "4",
-      id: "USR-004",
-      name: "Sarah Wilson",
-      email: "sarah.wilson@example.com",
-      role: "Designer",
-      status: "active",
-      department: "Design",
-      lastActive: "3 hours ago",
-      avatar: "SW",
-      joinDate: "2023-04-05",
-      phone: "+1-555-0126",
-      location: "Seattle, WA",
-      timezone: "UTC-8",
-      bio: "UI/UX Designer with focus on user-centered design",
-      jobTitle: "Senior UI/UX Designer",
-      employeeId: "EMP004",
-      username: "sarahwilson",
-      notes: "Leads design system development",
-    },
-    {
-      key: "5",
-      id: "USR-005",
-      name: "David Brown",
-      email: "david.brown@example.com",
-      role: "Developer",
-      status: "active",
-      department: "Engineering",
-      lastActive: "5 hours ago",
-      avatar: "DB",
-      joinDate: "2023-05-15",
-      phone: "+1-555-0127",
-      location: "Boston, MA",
-      timezone: "UTC-5",
-      bio: "Backend developer with expertise in Python and Django",
-      jobTitle: "Backend Developer",
-      employeeId: "EMP005",
-      username: "davidbrown",
-      notes: "Specializes in API development",
-    },
-  ]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+
+  // Fetch users from API
+  const fetchUsers = async (page = 1, search = "") => {
+    try {
+      setLoading(true);
+      const response = await apiClient.getUsers(
+        page,
+        pagination.pageSize,
+        search
+      );
+
+      if (response.success) {
+        setUsers(response.data);
+        setPagination((prev) => ({
+          ...prev,
+          current: page,
+          total: response.pagination?.total || 0,
+        }));
+      } else {
+        message.error(response.error || "Failed to fetch users");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      message.error("Failed to fetch users");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const columns = [
     {
       title: "User",
-      dataIndex: "name",
-      key: "name",
-      render: (text: string, record: any) => (
+      dataIndex: "firstName",
+      key: "user",
+      render: (firstName: string, record: User) => (
         <div className="flex items-center gap-3">
           <Avatar
             size={40}
+            className="rounded-full"
             style={{
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
             }}
           >
-            {record.avatar}
+            {firstName.charAt(0).toUpperCase()}
+            {record.lastName.charAt(0).toUpperCase()}
           </Avatar>
           <div>
-            <div className="font-medium text-gray-900">{text}</div>
+            <div className="font-medium text-gray-900">
+              {firstName} {record.lastName}
+            </div>
             <div className="text-sm text-gray-500">{record.email}</div>
           </div>
         </div>
@@ -171,47 +123,43 @@ export default function UsersPage() {
       dataIndex: "role",
       key: "role",
       render: (role: string) => {
-        const colorMap: { [key: string]: string } = {
-          Admin: "red",
-          Manager: "blue",
-          Developer: "green",
-          Designer: "purple",
-          Sales: "orange",
+        const colors = {
+          admin: "red",
+          manager: "blue",
+          user: "green",
         };
-        return <Tag color={colorMap[role]}>{role}</Tag>;
+        return (
+          <Tag color={colors[role as keyof typeof colors] || "default"}>
+            {role.charAt(0).toUpperCase() + role.slice(1)}
+          </Tag>
+        );
       },
     },
     {
-      title: "Department",
-      dataIndex: "department",
-      key: "department",
-      render: (department: string) => (
-        <span className="text-gray-700">{department}</span>
-      ),
-    },
-    {
       title: "Status",
-      dataIndex: "status",
+      dataIndex: "isActive",
       key: "status",
-      render: (status: string) => (
+      render: (isActive: boolean) => (
         <Badge
-          status={status === "active" ? "success" : "default"}
-          text={<span className="capitalize text-gray-700">{status}</span>}
+          status={isActive ? "success" : "error"}
+          text={isActive ? "Active" : "Inactive"}
         />
       ),
     },
     {
-      title: "Last Active",
-      dataIndex: "lastActive",
-      key: "lastActive",
-      render: (lastActive: string) => (
-        <span className="text-gray-500 text-sm">{lastActive}</span>
+      title: "Created",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (date: string) => (
+        <span className="text-gray-500 text-sm">
+          {new Date(date).toLocaleDateString()}
+        </span>
       ),
     },
     {
       title: "Actions",
       key: "actions",
-      render: (_, record: any) => (
+      render: (_, record: User) => (
         <Space size="small">
           <Tooltip title="View Details">
             <Button
@@ -229,25 +177,6 @@ export default function UsersPage() {
               onClick={() => handleEditUser(record)}
             />
           </Tooltip>
-          <Tooltip
-            title={`Toggle ${
-              record.status === "active" ? "Inactive" : "Active"
-            }`}
-          >
-            <Button
-              type="text"
-              icon={
-                record.status === "active" ? <UserOutlined /> : <TeamOutlined />
-              }
-              size="small"
-              onClick={() => handleStatusToggle(record)}
-              className={
-                record.status === "active"
-                  ? "text-orange-600"
-                  : "text-green-600"
-              }
-            />
-          </Tooltip>
           <Tooltip title="Delete User">
             <Button
               type="text"
@@ -262,68 +191,83 @@ export default function UsersPage() {
     },
   ];
 
-  const handleViewUser = (user: any) => {
+  const handleViewUser = (user: User) => {
     setSelectedUser(user);
     setIsModalVisible(true);
   };
 
-  const handleEditUser = (user: any) => {
-    // Navigate to edit page with user data
-    router.push(`/dashboard/users/edit/${user.id}`);
+  const handleEditUser = (user: User) => {
+    router.push(`/dashboard/users/edit/${user._id}`);
   };
 
-  const handleDeleteUser = (user: any) => {
+  const handleDeleteUser = async (user: User) => {
     Modal.confirm({
       title: "Delete User",
-      content: `Are you sure you want to delete ${user.name}? This action cannot be undone.`,
+      content: `Are you sure you want to delete ${user.firstName} ${user.lastName}? This action cannot be undone.`,
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
-      onOk() {
-        // Remove user from the list
-        setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
-        message.success(`User ${user.name} deleted successfully`);
+      async onOk() {
+        try {
+          const response = await apiClient.deleteUser(user._id);
+          if (response.success) {
+            message.success(
+              `User ${user.firstName} ${user.lastName} deleted successfully`
+            );
+            fetchUsers(pagination.current, searchText);
+          } else {
+            message.error(response.error || "Failed to delete user");
+          }
+        } catch (error) {
+          console.error("Error deleting user:", error);
+          message.error("Failed to delete user");
+        }
       },
     });
   };
 
-  const handleStatusToggle = (user: any) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((u) =>
-        u.id === user.id
-          ? { ...u, status: u.status === "active" ? "inactive" : "active" }
-          : u
-      )
-    );
-    message.success(
-      `User ${user.name} status updated to ${
-        user.status === "active" ? "inactive" : "active"
-      }`
-    );
+  const handleStatusToggle = async (user: User) => {
+    try {
+      const response = await apiClient.updateUser(user._id, {
+        isActive: !user.isActive,
+      });
+
+      if (response.success) {
+        message.success(
+          `User ${user.firstName} ${user.lastName} status updated to ${
+            !user.isActive ? "active" : "inactive"
+          }`
+        );
+        fetchUsers(pagination.current, searchText);
+      } else {
+        message.error(response.error || "Failed to update user status");
+      }
+    } catch (error) {
+      console.error("Error updating user status:", error);
+      message.error("Failed to update user status");
+    }
   };
 
-  const addNewUser = (userData: any) => {
-    const newUser = {
-      ...userData,
-      key: (users.length + 1).toString(),
-      id: `USR-${String(users.length + 1).padStart(3, "0")}`,
-      lastActive: "Just now",
-      avatar:
-        userData.avatar ||
-        userData.firstName?.charAt(0) + userData.lastName?.charAt(0),
-    };
-    setUsers((prevUsers) => [newUser, ...prevUsers]);
-    message.success(
-      `User ${userData.firstName} ${userData.lastName} added successfully!`
-    );
+  const handleSearch = (value: string) => {
+    setSearchText(value);
+    fetchUsers(1, value);
+  };
+
+  const handleTableChange = (pagination: any) => {
+    fetchUsers(pagination.current, searchText);
   };
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
-      user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
       user.email.toLowerCase().includes(searchText.toLowerCase());
+
     const matchesStatus =
-      statusFilter === "all" || user.status === statusFilter;
+      statusFilter === "all" ||
+      (statusFilter === "active" && user.isActive) ||
+      (statusFilter === "inactive" && !user.isActive);
+
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
 
     return matchesSearch && matchesStatus && matchesRole;
@@ -338,17 +282,31 @@ export default function UsersPage() {
     },
     {
       title: "Active Users",
-      value: users.filter((u) => u.status === "active").length,
+      value: users.filter((u) => u.isActive).length,
       icon: <UserAddOutlined />,
       color: "green",
     },
     {
       title: "Inactive Users",
-      value: users.filter((u) => u.status === "inactive").length,
+      value: users.filter((u) => !u.isActive).length,
       icon: <TeamOutlined />,
       color: "orange",
     },
   ];
+
+  if (loading && users.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-96">
+        <div className="text-center">
+          <Spin
+            size="large"
+            indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+          />
+          <div className="mt-4 text-gray-600">Loading users...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -376,29 +334,28 @@ export default function UsersPage() {
       {/* Stats Cards */}
       <Row gutter={[24, 24]} className="mb-6">
         {stats.map((stat, index) => (
-          <Col xs={24} sm={8} key={index}>
+          <Col xs={24} sm={12} lg={8} key={index}>
             <Card className="text-center hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-center mb-3">
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center"
-                  style={{
-                    backgroundColor: `${
-                      stat.color === "blue"
-                        ? "#3b82f6"
-                        : stat.color === "green"
-                        ? "#10b981"
-                        : "#f59e0b"
-                    }20`,
-                    color:
-                      stat.color === "blue"
-                        ? "#3b82f6"
-                        : stat.color === "green"
-                        ? "#10b981"
-                        : "#f59e0b",
-                  }}
+              <div
+                className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 ${
+                  stat.color === "blue"
+                    ? "bg-blue-100"
+                    : stat.color === "green"
+                    ? "bg-green-100"
+                    : "bg-orange-100"
+                }`}
+              >
+                <span
+                  className={`text-xl ${
+                    stat.color === "blue"
+                      ? "text-blue-600"
+                      : stat.color === "green"
+                      ? "text-green-600"
+                      : "text-orange-600"
+                  }`}
                 >
                   {stat.icon}
-                </div>
+                </span>
               </div>
               <div className="text-2xl font-bold text-gray-900 mb-1">
                 {stat.value}
@@ -410,77 +367,62 @@ export default function UsersPage() {
       </Row>
 
       {/* Filters and Search */}
-      <Card className="mb-6">
-        <Row gutter={[16, 16]} align="middle">
-          <Col xs={24} sm={8}>
+      <Card>
+        <div className="flex flex-col sm:flex-row gap-4 mb-4">
+          <div className="flex-1">
             <Search
-              placeholder="Search users..."
+              placeholder="Search users by name or email..."
               allowClear
-              value={searchText}
+              enterButton={<SearchOutlined />}
+              size="large"
+              onSearch={handleSearch}
               onChange={(e) => setSearchText(e.target.value)}
-              prefix={<SearchOutlined />}
             />
-          </Col>
-          <Col xs={24} sm={4}>
+          </div>
+          <div className="flex gap-2">
             <Select
               placeholder="Status"
+              size="large"
+              style={{ width: 120 }}
               value={statusFilter}
               onChange={setStatusFilter}
-              className="w-full"
             >
               <Option value="all">All Status</Option>
               <Option value="active">Active</Option>
               <Option value="inactive">Inactive</Option>
             </Select>
-          </Col>
-          <Col xs={24} sm={4}>
             <Select
               placeholder="Role"
+              size="large"
+              style={{ width: 120 }}
               value={roleFilter}
               onChange={setRoleFilter}
-              className="w-full"
             >
               <Option value="all">All Roles</Option>
-              <Option value="Admin">Admin</Option>
-              <Option value="Manager">Manager</Option>
-              <Option value="Developer">Developer</Option>
-              <Option value="Designer">Designer</Option>
-              <Option value="Sales">Sales</Option>
+              <Option value="admin">Admin</Option>
+              <Option value="manager">Manager</Option>
+              <Option value="user">User</Option>
             </Select>
-          </Col>
-          <Col xs={24} sm={8} className="text-right">
-            <Space>
-              <Button
-                icon={<FilterOutlined />}
-                onClick={() => {
-                  setSearchText("");
-                  setStatusFilter("all");
-                  setRoleFilter("all");
-                }}
-              >
-                Clear Filters
-              </Button>
-              <Button type="primary">Export</Button>
-            </Space>
-          </Col>
-        </Row>
-      </Card>
+          </div>
+        </div>
 
-      {/* Users Table */}
-      <Card title={`Users (${filteredUsers.length})`}>
+        {/* Users Table */}
         <Table
           columns={columns}
           dataSource={filteredUsers}
+          rowKey="_id"
           loading={loading}
           pagination={{
-            pageSize: 10,
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: pagination.total,
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total, range) =>
               `${range[0]}-${range[1]} of ${total} users`,
           }}
-          size="middle"
-          className="hover:shadow-sm"
+          onChange={handleTableChange}
+          scroll={{ x: 800 }}
         />
       </Card>
 
@@ -493,139 +435,50 @@ export default function UsersPage() {
           <Button key="close" onClick={() => setIsModalVisible(false)}>
             Close
           </Button>,
-          <Button
-            key="edit"
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => {
-              setIsModalVisible(false);
-              handleEditUser(selectedUser);
-            }}
-          >
-            Edit User
-          </Button>,
         ]}
         width={600}
-        destroyOnHidden
-        centered
       >
         {selectedUser && (
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <Avatar
-                size={80}
+                size={64}
+                className="rounded-full"
                 style={{
                   background:
-                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
                 }}
               >
-                {selectedUser.avatar}
+                {selectedUser.firstName.charAt(0).toUpperCase()}
+                {selectedUser.lastName.charAt(0).toUpperCase()}
               </Avatar>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">
-                  {selectedUser.name}
+                <h3 className="text-lg font-semibold">
+                  {selectedUser.firstName} {selectedUser.lastName}
                 </h3>
                 <p className="text-gray-600">{selectedUser.email}</p>
-                <div className="flex gap-2 mt-2">
-                  <Tag color="blue">{selectedUser.role}</Tag>
-                  <Badge
-                    status={
-                      selectedUser.status === "active" ? "success" : "default"
-                    }
-                    text={selectedUser.status}
-                  />
-                </div>
+                <Tag color={selectedUser.isActive ? "green" : "red"}>
+                  {selectedUser.isActive ? "Active" : "Inactive"}
+                </Tag>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-gray-500">
-                  User ID
+                  Role
                 </label>
-                <p className="text-gray-900">{selectedUser.id}</p>
+                <p className="text-gray-900 capitalize">{selectedUser.role}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-500">
-                  Employee ID
+                  Created
                 </label>
                 <p className="text-gray-900">
-                  {selectedUser.employeeId || "N/A"}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Department
-                </label>
-                <p className="text-gray-900">{selectedUser.department}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Job Title
-                </label>
-                <p className="text-gray-900">
-                  {selectedUser.jobTitle || "N/A"}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Join Date
-                </label>
-                <p className="text-gray-900">{selectedUser.joinDate}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Last Active
-                </label>
-                <p className="text-gray-900">{selectedUser.lastActive}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Phone
-                </label>
-                <p className="text-gray-900">{selectedUser.phone || "N/A"}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Location
-                </label>
-                <p className="text-gray-900">
-                  {selectedUser.location || "N/A"}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Timezone
-                </label>
-                <p className="text-gray-900">
-                  {selectedUser.timezone || "N/A"}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Username
-                </label>
-                <p className="text-gray-900">
-                  {selectedUser.username || "N/A"}
+                  {new Date(selectedUser.createdAt).toLocaleDateString()}
                 </p>
               </div>
             </div>
-
-            {selectedUser.bio && (
-              <div>
-                <label className="text-sm font-medium text-gray-500">Bio</label>
-                <p className="text-gray-900 mt-1">{selectedUser.bio}</p>
-              </div>
-            )}
-
-            {selectedUser.notes && (
-              <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Notes
-                </label>
-                <p className="text-gray-900 mt-1">{selectedUser.notes}</p>
-              </div>
-            )}
           </div>
         )}
       </Modal>

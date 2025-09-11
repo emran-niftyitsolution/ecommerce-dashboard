@@ -83,9 +83,10 @@ export class UserService {
 
   static async list(
     page: number = 1,
-    limit: number = 10
+    limit: number = 10,
+    filter: Record<string, unknown> = {}
   ): Promise<PaginatedResponse<User>> {
-    return paginate<User>("users", {}, page, limit);
+    return paginate<User>("users", filter, page, limit);
   }
 }
 
