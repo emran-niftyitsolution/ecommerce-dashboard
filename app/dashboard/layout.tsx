@@ -1,5 +1,6 @@
 "use client";
 
+import { apiClient } from "@/lib/api-client";
 import { StyleProvider } from "@ant-design/cssinjs";
 import {
   BarChartOutlined,
@@ -27,11 +28,21 @@ import {
   Layout,
   Menu,
   Modal,
+  Spin,
 } from "antd";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const { Header, Sider, Content } = Layout;
+
+interface User {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  isActive: boolean;
+}
 
 export default function DashboardLayout({
   children,
@@ -43,6 +54,8 @@ export default function DashboardLayout({
   const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
   const [isProfileDropdownVisible, setIsProfileDropdownVisible] =
     useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [userLoading, setUserLoading] = useState(true);
   const router = useRouter();
 
   const handleSearch = (value: string) => {
@@ -65,9 +78,36 @@ export default function DashboardLayout({
 
   const handleLogout = () => {
     setIsProfileDropdownVisible(false);
-    // Clear any auth tokens/storage here
+    // Clear auth token and user data
+    apiClient.clearToken();
+    setUser(null);
     router.push("/login");
   };
+
+  // Fetch current user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        setUserLoading(true);
+        const response = await apiClient.getCurrentUser();
+
+        if (response.success) {
+          setUser(response.data as User);
+        } else {
+          // If user fetch fails, redirect to login
+          router.push("/login");
+        }
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+        // If there's an error (e.g., token expired), redirect to login
+        router.push("/login");
+      } finally {
+        setUserLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [router]);
 
   const menuItems = [
     {
@@ -227,6 +267,18 @@ export default function DashboardLayout({
     };
   };
 
+  // Show loading spinner while fetching user data
+  if (userLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <Spin size="large" />
+          <div className="mt-4 text-gray-600">Loading dashboard...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <StyleProvider layer>
       <ConfigProvider>
@@ -358,12 +410,30 @@ export default function DashboardLayout({
                     >
                       <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
                         <div className="hidden md:block text-right">
-                          <div className="text-sm font-medium text-gray-900">
-                            John Doe
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            john.doe@example.com
-                          </div>
+                          {userLoading ? (
+                            <div className="flex items-center gap-2">
+                              <Spin size="small" />
+                              <span className="text-xs text-gray-500">
+                                Loading...
+                              </span>
+                            </div>
+                          ) : user ? (
+                            <>
+                              <div className="text-sm font-medium text-gray-900">
+                                {user.firstName} {user.lastName}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {user.email}
+                              </div>
+                              <div className="text-xs text-blue-600 font-medium capitalize">
+                                {user.role}
+                              </div>
+                            </>
+                          ) : (
+                            <div className="text-xs text-gray-500">
+                              User not found
+                            </div>
+                          )}
                         </div>
                         <Avatar
                           size={40}

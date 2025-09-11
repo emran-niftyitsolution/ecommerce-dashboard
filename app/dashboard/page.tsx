@@ -1,16 +1,116 @@
 "use client";
 
+import { apiClient } from "@/lib/api-client";
 import {
   DollarOutlined,
+  LoadingOutlined,
   ShopOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Column, Line, Pie } from "@ant-design/plots";
-import { Card, Col, Row, Statistic } from "antd";
+import { Line, Pie } from "@ant-design/plots";
+import { Alert, Card, Col, Row, Spin, Statistic } from "antd";
+import { useEffect, useState } from "react";
+
+interface DashboardStats {
+  totalRevenue: number;
+  totalOrders: number;
+  totalCustomers: number;
+  totalProducts: number;
+  recentOrders: any[];
+  topProducts: any[];
+}
 
 export default function DashboardPage() {
-  // Ecommerce-specific data
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        const response = await apiClient.getDashboardStats();
+
+        if (response.success) {
+          setStats(response.data);
+        } else {
+          setError(response.error || "Failed to fetch dashboard data");
+        }
+      } catch (err) {
+        setError(
+          "Failed to connect to the server. Please make sure MongoDB is running and the database is seeded."
+        );
+        console.error("Dashboard fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-96">
+        <Spin
+          size="large"
+          indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+        />
+        <span className="ml-3 text-lg">Loading dashboard data...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <Alert
+          message="Dashboard Error"
+          description={error}
+          type="error"
+          showIcon
+          action={
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Retry
+            </button>
+          }
+        />
+        <div className="text-center text-gray-500">
+          <p>Make sure you have:</p>
+          <ul className="list-disc list-inside mt-2">
+            <li>MongoDB running locally on port 27017</li>
+            <li>
+              Run{" "}
+              <code className="bg-gray-100 px-2 py-1 rounded">
+                bun run seed
+              </code>{" "}
+              to populate the database
+            </li>
+            <li>
+              Check your .env.local file for correct MongoDB connection string
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  }
+
+  if (!stats) {
+    return (
+      <Alert
+        message="No Data Available"
+        description="Dashboard data could not be loaded."
+        type="warning"
+        showIcon
+      />
+    );
+  }
+
+  // Sample data for charts (in a real app, you'd fetch this from the API too)
   const salesData = [
     { month: "Jan", revenue: 125000, orders: 1250, customers: 890 },
     { month: "Feb", revenue: 138000, orders: 1420, customers: 920 },
@@ -32,156 +132,6 @@ export default function DashboardPage() {
     { category: "Home & Garden", sales: 18, revenue: 55800, percentage: 18 },
     { category: "Sports", sales: 12, revenue: 37200, percentage: 12 },
     { category: "Beauty", sales: 7, revenue: 21700, percentage: 7 },
-  ];
-
-  const vendorPerformance = [
-    {
-      vendor: "TechCorp",
-      revenue: 125000,
-      orders: 1250,
-      rating: 4.8,
-      products: 89,
-    },
-    {
-      vendor: "FashionHub",
-      revenue: 98000,
-      orders: 980,
-      rating: 4.6,
-      products: 156,
-    },
-    {
-      vendor: "HomeStyle",
-      revenue: 87000,
-      orders: 870,
-      rating: 4.7,
-      products: 234,
-    },
-    {
-      vendor: "SportMax",
-      revenue: 72000,
-      orders: 720,
-      rating: 4.5,
-      products: 67,
-    },
-    {
-      vendor: "BeautyCare",
-      revenue: 58000,
-      orders: 580,
-      rating: 4.4,
-      products: 123,
-    },
-  ];
-
-  const recentOrders = [
-    {
-      id: "ORD-001",
-      customer: "John Smith",
-      amount: 299.99,
-      status: "delivered",
-      vendor: "TechCorp",
-      date: "2 hours ago",
-    },
-    {
-      id: "ORD-002",
-      customer: "Sarah Johnson",
-      amount: 189.5,
-      status: "shipped",
-      vendor: "FashionHub",
-      date: "4 hours ago",
-    },
-    {
-      id: "ORD-003",
-      customer: "Mike Wilson",
-      amount: 450.0,
-      status: "processing",
-      vendor: "HomeStyle",
-      date: "6 hours ago",
-    },
-    {
-      id: "ORD-004",
-      customer: "Emily Davis",
-      amount: 129.99,
-      status: "pending",
-      vendor: "SportMax",
-      date: "8 hours ago",
-    },
-    {
-      id: "ORD-005",
-      customer: "David Brown",
-      amount: 899.99,
-      status: "delivered",
-      vendor: "TechCorp",
-      date: "12 hours ago",
-    },
-  ];
-
-  const topProducts = [
-    {
-      name: "Wireless Bluetooth Headphones",
-      vendor: "TechCorp",
-      sales: 156,
-      revenue: 14038.44,
-      rating: 4.8,
-    },
-    {
-      name: "Smart Fitness Watch",
-      vendor: "TechCorp",
-      sales: 98,
-      revenue: 19599.02,
-      rating: 4.6,
-    },
-    {
-      name: "Professional Running Shoes",
-      vendor: "SportMax",
-      sales: 87,
-      revenue: 11309.13,
-      rating: 4.7,
-    },
-    {
-      name: "Premium Coffee Maker",
-      vendor: "HomeStyle",
-      sales: 76,
-      revenue: 22799.24,
-      rating: 4.9,
-    },
-    {
-      name: "Designer Handbag",
-      vendor: "FashionHub",
-      sales: 65,
-      revenue: 19499.35,
-      rating: 4.5,
-    },
-  ];
-
-  const ecommerceMetrics = [
-    {
-      title: "Conversion Rate",
-      value: "3.2%",
-      change: "+0.4%",
-      trend: "up",
-      color: "green",
-    },
-    {
-      title: "Average Order Value",
-      value: "$156.80",
-      change: "+$12.40",
-      trend: "up",
-      color: "blue",
-    },
-    {
-      title: "Customer Retention",
-      value: "78.5%",
-      change: "+2.1%",
-      trend: "up",
-      color: "purple",
-    },
-    {
-      title: "Vendor Satisfaction",
-      value: "4.6/5",
-      change: "+0.2",
-      trend: "up",
-      color: "orange",
-    },
   ];
 
   const salesConfig = {
@@ -225,27 +175,40 @@ export default function DashboardPage() {
     color: ["#3b82f6", "#8b5cf6", "#10b981", "#f59e0b", "#ef4444"],
   };
 
-  const vendorConfig = {
-    data: vendorPerformance,
-    xField: "vendor",
-    yField: "revenue",
-    seriesField: "vendor",
-    yAxis: {
-      label: {
-        formatter: (v: string) => `$${(Number(v) / 1000).toFixed(0)}k`,
-      },
+  const ecommerceMetrics = [
+    {
+      title: "Conversion Rate",
+      value: "3.2%",
+      change: "+0.4%",
+      trend: "up",
+      color: "green",
     },
-    tooltip: {
-      formatter: (datum: any) => ({
-        name: "Revenue",
-        value: `$${datum.revenue.toLocaleString()}`,
-      }),
+    {
+      title: "Average Order Value",
+      value: `$${
+        stats.totalOrders > 0
+          ? (stats.totalRevenue / stats.totalOrders).toFixed(2)
+          : "0.00"
+      }`,
+      change: "+$12.40",
+      trend: "up",
+      color: "blue",
     },
-    color: "#10b981",
-    columnStyle: {
-      radius: [4, 4, 0, 0],
+    {
+      title: "Customer Retention",
+      value: "78.5%",
+      change: "+2.1%",
+      trend: "up",
+      color: "purple",
     },
-  };
+    {
+      title: "Product Count",
+      value: stats.totalProducts.toString(),
+      change: "+5 new",
+      trend: "up",
+      color: "orange",
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -258,6 +221,9 @@ export default function DashboardPage() {
           Monitor your marketplace performance, vendor activities, and business
           metrics
         </p>
+        <div className="mt-2 text-sm text-green-600">
+          ✅ Connected to MongoDB - Real-time data
+        </div>
       </div>
 
       {/* Key Metrics */}
@@ -266,14 +232,14 @@ export default function DashboardPage() {
           <Card className="text-center hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
             <Statistic
               title="Total Revenue"
-              value={3100000}
-              precision={0}
+              value={stats.totalRevenue}
+              precision={2}
               valueStyle={{ color: "#3b82f6", fontSize: "24px" }}
               prefix={<DollarOutlined />}
               suffix=""
             />
             <div className="text-sm text-gray-500 mt-2">
-              +12.5% from last month
+              From {stats.totalOrders} orders
             </div>
           </Card>
         </Col>
@@ -281,40 +247,38 @@ export default function DashboardPage() {
           <Card className="text-center hover:shadow-lg transition-shadow border-l-4 border-l-green-500">
             <Statistic
               title="Total Orders"
-              value={31800}
+              value={stats.totalOrders}
               precision={0}
               valueStyle={{ color: "#10b981", fontSize: "24px" }}
               prefix={<ShoppingCartOutlined />}
             />
             <div className="text-sm text-gray-500 mt-2">
-              +8.3% from last month
+              Across {stats.totalCustomers} customers
             </div>
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
           <Card className="text-center hover:shadow-lg transition-shadow border-l-4 border-l-purple-500">
             <Statistic
-              title="Active Vendors"
-              value={156}
+              title="Total Products"
+              value={stats.totalProducts}
               precision={0}
               valueStyle={{ color: "#8b5cf6", fontSize: "24px" }}
               prefix={<ShopOutlined />}
             />
-            <div className="text-sm text-gray-500 mt-2">+5 new this month</div>
+            <div className="text-sm text-gray-500 mt-2">Active products</div>
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
           <Card className="text-center hover:shadow-lg transition-shadow border-l-4 border-l-orange-500">
             <Statistic
               title="Total Customers"
-              value={22800}
+              value={stats.totalCustomers}
               precision={0}
               valueStyle={{ color: "#f59e0b", fontSize: "24px" }}
               prefix={<UserOutlined />}
             />
-            <div className="text-sm text-gray-500 mt-2">
-              +15.2% from last month
-            </div>
+            <div className="text-sm text-gray-500 mt-2">Registered users</div>
           </Card>
         </Col>
       </Row>
@@ -333,13 +297,8 @@ export default function DashboardPage() {
         </Col>
       </Row>
 
-      {/* Vendor Performance */}
-      <Row gutter={[24, 24]} className="mb-8">
-        <Col xs={24} lg={12}>
-          <Card title="Top Vendor Performance" className="h-96">
-            <Column {...vendorConfig} height={300} />
-          </Card>
-        </Col>
+      {/* Metrics and Recent Orders */}
+      <Row gutter={[24, 24]}>
         <Col xs={24} lg={12}>
           <Card title="Ecommerce Metrics" className="h-96">
             <div className="grid grid-cols-2 gap-4 h-full">
@@ -366,75 +325,44 @@ export default function DashboardPage() {
             </div>
           </Card>
         </Col>
-      </Row>
-
-      {/* Recent Orders & Top Products */}
-      <Row gutter={[24, 24]}>
         <Col xs={24} lg={12}>
           <Card title="Recent Orders">
             <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
-              {recentOrders.map((order) => (
-                <div
-                  key={order.id}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <ShoppingCartOutlined className="text-blue-600" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-gray-900">
-                        {order.customer}
+              {stats.recentOrders.length > 0 ? (
+                stats.recentOrders.map((order: any, index: number) => (
+                  <div
+                    key={order._id || index}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <ShoppingCartOutlined className="text-blue-600" />
                       </div>
-                      <div className="text-sm text-gray-500">
-                        {order.vendor}
+                      <div>
+                        <div className="font-medium text-gray-900">
+                          Order #{order.orderNumber}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {order.status} •{" "}
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-semibold text-green-600">
+                        ${order.total.toFixed(2)}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {order.items?.length || 0} items
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-semibold text-green-600">
-                      ${order.amount}
-                    </div>
-                    <div className="text-xs text-gray-500">{order.date}</div>
-                  </div>
+                ))
+              ) : (
+                <div className="text-center text-gray-500 py-8">
+                  No recent orders found
                 </div>
-              ))}
-            </div>
-          </Card>
-        </Col>
-        <Col xs={24} lg={12}>
-          <Card title="Top Products">
-            <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
-              {topProducts.map((product, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 font-bold">
-                        {index + 1}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="font-medium text-gray-900">
-                        {product.name}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {product.vendor}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-semibold text-green-600">
-                      ${product.revenue.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {product.sales} sales • ⭐ {product.rating}
-                    </div>
-                  </div>
-                </div>
-              ))}
+              )}
             </div>
           </Card>
         </Col>

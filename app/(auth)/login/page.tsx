@@ -1,8 +1,15 @@
 "use client";
 
-import { GithubOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Divider, Form, Input } from "antd";
+import { apiClient } from "@/lib/api-client";
+import {
+  GithubOutlined,
+  GoogleOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import { Alert, Button, Checkbox, Divider, Form, Input, message } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { MdEmail, MdLock } from "react-icons/md";
 
 // Note: Metadata is handled in the layout or a parent server component
@@ -10,16 +17,37 @@ import { MdEmail, MdLock } from "react-icons/md";
 
 export default function LoginPage() {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-  const onFinish = (values: {
+  const onFinish = async (values: {
     email: string;
     password: string;
     remember?: boolean;
   }) => {
-    console.log("Success:", values);
-    // Handle login logic here
-    // Redirect to dashboard after successful login
-    window.location.href = "/dashboard";
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await apiClient.login(values.email, values.password);
+
+      if (response.success) {
+        message.success("Login successful!");
+        router.push("/dashboard");
+      } else {
+        setError(response.error || "Login failed");
+      }
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "Login failed. Please check your credentials.";
+      setError(errorMessage);
+      console.error("Login error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -340,6 +368,16 @@ export default function LoginPage() {
 
             {/* Login Form */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
+              {error && (
+                <Alert
+                  message="Login Error"
+                  description={error}
+                  type="error"
+                  showIcon
+                  className="mb-6"
+                />
+              )}
+
               <Form
                 form={form}
                 name="login"
@@ -413,9 +451,18 @@ export default function LoginPage() {
                   <Button
                     type="primary"
                     htmlType="submit"
+                    loading={loading}
+                    disabled={loading}
                     className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 border-0 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-200"
                   >
-                    Sign in to account
+                    {loading ? (
+                      <>
+                        <LoadingOutlined className="mr-2" />
+                        Signing in...
+                      </>
+                    ) : (
+                      "Sign in to account"
+                    )}
                   </Button>
                 </Form.Item>
               </Form>
@@ -441,6 +488,24 @@ export default function LoginPage() {
                 >
                   GitHub
                 </Button>
+              </div>
+            </div>
+
+            {/* Demo Credentials */}
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+              <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-2">
+                Demo Credentials
+              </h4>
+              <div className="space-y-1 text-xs text-blue-700 dark:text-blue-300">
+                <div>
+                  <strong>Admin:</strong> admin@dashboard.com / admin123
+                </div>
+                <div>
+                  <strong>Manager:</strong> manager@dashboard.com / manager123
+                </div>
+                <div>
+                  <strong>User:</strong> user@dashboard.com / user123
+                </div>
               </div>
             </div>
 

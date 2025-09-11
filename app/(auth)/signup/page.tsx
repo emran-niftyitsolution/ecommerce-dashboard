@@ -1,8 +1,15 @@
 "use client";
 
-import { GithubOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Divider, Form, Input } from "antd";
+import { apiClient } from "@/lib/api-client";
+import {
+  GithubOutlined,
+  GoogleOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import { Alert, Button, Checkbox, Divider, Form, Input, message } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { MdEmail, MdLock, MdPerson } from "react-icons/md";
 
 // Note: Metadata is handled in the layout or a parent server component
@@ -10,18 +17,52 @@ import { MdEmail, MdLock, MdPerson } from "react-icons/md";
 
 export default function SignUpPage() {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-  const onFinish = (values: {
+  const onFinish = async (values: {
     name: string;
     email: string;
     password: string;
     confirmPassword: string;
     agree?: boolean;
   }) => {
-    console.log("Success:", values);
-    // Handle sign up logic here
-    // Redirect to dashboard after successful signup
-    window.location.href = "/dashboard";
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Split name into firstName and lastName
+      const nameParts = values.name.trim().split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      const response = await apiClient.register({
+        email: values.email,
+        password: values.password,
+        firstName,
+        lastName,
+        role: "user",
+      });
+
+      if (response.success) {
+        message.success("Account created successfully!");
+        // Set the token and redirect to dashboard
+        apiClient.setToken(response.data.token);
+        router.push("/dashboard");
+      } else {
+        setError(response.error || "Registration failed");
+      }
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "Registration failed. Please try again.";
+      setError(errorMessage);
+      console.error("Registration error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -264,6 +305,17 @@ export default function SignUpPage() {
               </span>
             </Divider>
 
+            {/* Error Alert */}
+            {error && (
+              <Alert
+                message="Registration Error"
+                description={error}
+                type="error"
+                showIcon
+                className="mb-6"
+              />
+            )}
+
             {/* Sign Up Form */}
             <Form
               form={form}
@@ -436,9 +488,18 @@ export default function SignUpPage() {
                   type="primary"
                   htmlType="submit"
                   size="large"
+                  loading={loading}
+                  disabled={loading}
                   className="w-full h-12 bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 font-medium text-base shadow-lg hover:shadow-xl transition-all duration-200"
                 >
-                  Create Account
+                  {loading ? (
+                    <>
+                      <LoadingOutlined className="mr-2" />
+                      Creating Account...
+                    </>
+                  ) : (
+                    "Create Account"
+                  )}
                 </Button>
               </Form.Item>
             </Form>
