@@ -7,9 +7,11 @@ import {
   EyeOutlined,
   LoadingOutlined,
   PlusOutlined,
+  ReloadOutlined,
   SearchOutlined,
   TeamOutlined,
   UserAddOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -29,7 +31,7 @@ import {
   message,
 } from "antd";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -61,36 +63,52 @@ export default function UsersPage() {
   });
 
   // Fetch users from API
-  const fetchUsers = async (page = 1, search = "") => {
-    try {
-      setLoading(true);
-      const response = await apiClient.getUsers(
-        page,
-        pagination.pageSize,
-        search
-      );
+  const fetchUsers = useCallback(
+    async (page = 1, search = "") => {
+      try {
+        setLoading(true);
+        const response = await apiClient.getUsers(
+          page,
+          pagination.pageSize,
+          search
+        );
 
-      if (response.success) {
-        setUsers(response.data);
-        setPagination((prev) => ({
-          ...prev,
-          current: page,
-          total: response.pagination?.total || 0,
-        }));
-      } else {
-        message.error(response.error || "Failed to fetch users");
+        console.log("Users API Response:", response);
+
+        if (response.success) {
+          // Handle the response data - it could be an array directly or nested
+          const usersData = Array.isArray(response.data)
+            ? response.data
+            : response.data?.data || [];
+          console.log("Processed users data:", usersData);
+          setUsers(usersData);
+          setPagination((prev) => ({
+            ...prev,
+            current: page,
+            total: response.pagination?.total || response.data?.total || 0,
+          }));
+
+          if (usersData.length === 0 && page === 1) {
+            message.info(
+              "No users found. Try creating a new user or check if the database is seeded."
+            );
+          }
+        } else {
+          message.error(response.error || "Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        message.error("Failed to fetch users");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      message.error("Failed to fetch users");
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [pagination.pageSize]
+  );
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   const columns = [
     {
@@ -159,7 +177,7 @@ export default function UsersPage() {
     {
       title: "Actions",
       key: "actions",
-      render: (_, record: User) => (
+      render: (_: any, record: User) => (
         <Space size="small">
           <Tooltip title="View Details">
             <Button
@@ -175,6 +193,19 @@ export default function UsersPage() {
               icon={<EditOutlined />}
               size="small"
               onClick={() => handleEditUser(record)}
+            />
+          </Tooltip>
+          <Tooltip
+            title={record.isActive ? "Deactivate User" : "Activate User"}
+          >
+            <Button
+              type="text"
+              icon={<UserSwitchOutlined />}
+              size="small"
+              onClick={() => handleStatusToggle(record)}
+              style={{
+                color: record.isActive ? "#ff4d4f" : "#52c41a",
+              }}
             />
           </Tooltip>
           <Tooltip title="Delete User">
@@ -248,21 +279,29 @@ export default function UsersPage() {
     }
   };
 
+  const handleRefresh = () => {
+    fetchUsers(pagination.current, searchText);
+  };
+
   const handleSearch = (value: string) => {
     setSearchText(value);
     fetchUsers(1, value);
   };
 
-  const handleTableChange = (pagination: any) => {
+  const handleTableChange = (pagination: {
+    current: number;
+    pageSize: number;
+  }) => {
     fetchUsers(pagination.current, searchText);
   };
 
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      user.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
-      user.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchText.toLowerCase());
+  const handleFilterChange = () => {
+    // Refresh data when filters change
+    fetchUsers(1, searchText);
+  };
 
+  // Client-side filtering for status and role (since API doesn't support these filters yet)
+  const filteredUsers = users.filter((user) => {
     const matchesStatus =
       statusFilter === "all" ||
       (statusFilter === "active" && user.isActive) ||
@@ -270,7 +309,7 @@ export default function UsersPage() {
 
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
 
-    return matchesSearch && matchesStatus && matchesRole;
+    return matchesStatus && matchesRole;
   });
 
   const stats = [
@@ -308,6 +347,10 @@ export default function UsersPage() {
     );
   }
 
+  // Debug info
+  console.log("Current users state:", users);
+  console.log("Current pagination state:", pagination);
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -320,15 +363,26 @@ export default function UsersPage() {
             Manage your team members and user accounts
           </p>
         </div>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          size="large"
-          onClick={() => router.push("/dashboard/users/create")}
-          className="bg-blue-600 hover:bg-blue-700 border-blue-600"
-        >
-          Create New User
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            icon={<ReloadOutlined />}
+            size="large"
+            onClick={handleRefresh}
+            loading={loading}
+            className="border-gray-300"
+          >
+            Refresh
+          </Button>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            size="large"
+            onClick={() => router.push("/dashboard/users/create")}
+            className="bg-blue-600 hover:bg-blue-700 border-blue-600"
+          >
+            Create New User
+          </Button>
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -385,7 +439,10 @@ export default function UsersPage() {
               size="large"
               style={{ width: 120 }}
               value={statusFilter}
-              onChange={setStatusFilter}
+              onChange={(value) => {
+                setStatusFilter(value);
+                handleFilterChange();
+              }}
             >
               <Option value="all">All Status</Option>
               <Option value="active">Active</Option>
@@ -396,7 +453,10 @@ export default function UsersPage() {
               size="large"
               style={{ width: 120 }}
               value={roleFilter}
-              onChange={setRoleFilter}
+              onChange={(value) => {
+                setRoleFilter(value);
+                handleFilterChange();
+              }}
             >
               <Option value="all">All Roles</Option>
               <Option value="admin">Admin</Option>
@@ -423,15 +483,43 @@ export default function UsersPage() {
           }}
           onChange={handleTableChange}
           scroll={{ x: 800 }}
+          locale={{
+            emptyText: (
+              <div className="text-center py-8">
+                <TeamOutlined className="text-4xl text-gray-400 mb-4" />
+                <p className="text-gray-500 text-lg">No users found</p>
+                <p className="text-gray-400 text-sm">
+                  {searchText || statusFilter !== "all" || roleFilter !== "all"
+                    ? "Try adjusting your search or filters"
+                    : "Create your first user to get started"}
+                </p>
+              </div>
+            ),
+          }}
         />
       </Card>
 
       {/* User Details Modal */}
       <Modal
-        title="User Details"
+        title={
+          <div className="flex items-center gap-2">
+            <UserAddOutlined className="text-blue-600" />
+            <span>User Details</span>
+          </div>
+        }
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={[
+          <Button
+            key="edit"
+            type="primary"
+            onClick={() => {
+              setIsModalVisible(false);
+              handleEditUser(selectedUser!);
+            }}
+          >
+            Edit User
+          </Button>,
           <Button key="close" onClick={() => setIsModalVisible(false)}>
             Close
           </Button>,
@@ -439,10 +527,10 @@ export default function UsersPage() {
         width={600}
       >
         {selectedUser && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="flex items-center gap-4">
               <Avatar
-                size={64}
+                size={80}
                 className="rounded-full"
                 style={{
                   background:
@@ -452,31 +540,102 @@ export default function UsersPage() {
                 {selectedUser.firstName.charAt(0).toUpperCase()}
                 {selectedUser.lastName.charAt(0).toUpperCase()}
               </Avatar>
-              <div>
-                <h3 className="text-lg font-semibold">
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-gray-900">
                   {selectedUser.firstName} {selectedUser.lastName}
                 </h3>
-                <p className="text-gray-600">{selectedUser.email}</p>
-                <Tag color={selectedUser.isActive ? "green" : "red"}>
-                  {selectedUser.isActive ? "Active" : "Inactive"}
-                </Tag>
+                <p className="text-gray-600 mb-2">{selectedUser.email}</p>
+                <div className="flex gap-2">
+                  <Tag
+                    color={selectedUser.isActive ? "green" : "red"}
+                    className="text-sm"
+                  >
+                    {selectedUser.isActive ? "Active" : "Inactive"}
+                  </Tag>
+                  <Tag color="blue" className="text-sm capitalize">
+                    {selectedUser.role}
+                  </Tag>
+                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-6">
               <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Role
+                <label className="text-sm font-medium text-gray-500 block mb-1">
+                  User ID
                 </label>
-                <p className="text-gray-900 capitalize">{selectedUser.role}</p>
+                <p className="text-gray-900 font-mono text-sm">
+                  {selectedUser._id}
+                </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">
-                  Created
+                <label className="text-sm font-medium text-gray-500 block mb-1">
+                  Role
+                </label>
+                <p className="text-gray-900 capitalize font-medium">
+                  {selectedUser.role}
+                </p>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-500 block mb-1">
+                  Created Date
                 </label>
                 <p className="text-gray-900">
-                  {new Date(selectedUser.createdAt).toLocaleDateString()}
+                  {new Date(selectedUser.createdAt).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
                 </p>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-500 block mb-1">
+                  Last Updated
+                </label>
+                <p className="text-gray-900">
+                  {new Date(selectedUser.updatedAt).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-gray-200">
+              <div className="flex gap-2">
+                <Button
+                  icon={<EditOutlined />}
+                  onClick={() => {
+                    setIsModalVisible(false);
+                    handleEditUser(selectedUser);
+                  }}
+                >
+                  Edit User
+                </Button>
+                <Button
+                  icon={<UserSwitchOutlined />}
+                  onClick={() => {
+                    setIsModalVisible(false);
+                    handleStatusToggle(selectedUser);
+                  }}
+                  style={{
+                    color: selectedUser.isActive ? "#ff4d4f" : "#52c41a",
+                    borderColor: selectedUser.isActive ? "#ff4d4f" : "#52c41a",
+                  }}
+                >
+                  {selectedUser.isActive ? "Deactivate" : "Activate"}
+                </Button>
               </div>
             </div>
           </div>
