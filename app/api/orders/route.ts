@@ -1,5 +1,5 @@
 import { AuthService, withAuth } from "@/lib/auth";
-import { CustomerService, OrderService, ProductService } from "@/lib/db-utils";
+import { CustomerService, OrderService, ProductService } from "@/lib/db-utils-mongoose";
 import { ApiResponse, CreateOrderRequest } from "@/lib/types";
 import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";

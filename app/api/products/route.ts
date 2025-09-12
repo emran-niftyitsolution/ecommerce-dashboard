@@ -1,5 +1,5 @@
 import { withAuth } from "@/lib/auth";
-import { ProductService } from "@/lib/db-utils";
+import { ProductService } from "@/lib/db-utils-mongoose";
 import { ApiResponse, CreateProductRequest } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 

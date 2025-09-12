@@ -1,5 +1,5 @@
 import { AuthService, withAuth } from "@/lib/auth";
-import { UserService } from "@/lib/db-utils";
+import { UserService } from "@/lib/db-utils-mongoose";
 import { ApiResponse, CreateUserRequest } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 

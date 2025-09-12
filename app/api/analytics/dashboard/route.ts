@@ -1,5 +1,5 @@
 import { withAuth } from "@/lib/auth";
-import { AnalyticsService } from "@/lib/db-utils";
+import { AnalyticsService } from "@/lib/db-utils-mongoose";
 import { ApiResponse } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,13 +13,13 @@ export const GET = withAuth(async (request: NextRequest) => {
 
     switch (type) {
       case "overview":
-        data = await AnalyticsService.getDashboardStats();
+        data = await AnalyticsService.getDashboardAnalytics();
         break;
       case "revenue":
         data = await AnalyticsService.getRevenueByMonth();
         break;
       default:
-        data = await AnalyticsService.getDashboardStats();
+        data = await AnalyticsService.getDashboardAnalytics();
     }
 
     return NextResponse.json({

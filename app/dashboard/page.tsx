@@ -30,6 +30,16 @@ export default function DashboardPage() {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
+        setError(null);
+        
+        // Check if user is authenticated by trying to get current user first
+        const userResponse = await apiClient.getCurrentUser();
+        if (!userResponse.success) {
+          // User not authenticated, redirect will be handled by layout
+          setLoading(false);
+          return;
+        }
+
         const response = await apiClient.getDashboardStats();
 
         if (response.success) {
@@ -38,10 +48,15 @@ export default function DashboardPage() {
           setError(response.error || "Failed to fetch dashboard data");
         }
       } catch (err) {
-        setError(
-          "Failed to connect to the server. Please make sure MongoDB is running and the database is seeded."
-        );
         console.error("Dashboard fetch error:", err);
+        // Check if it's an authentication error
+        if (err instanceof Error && err.message.includes('Unauthorized')) {
+          setError("Please log in to view dashboard data");
+        } else {
+          setError(
+            "Failed to connect to the server. Please make sure MongoDB is running and the database is seeded."
+          );
+        }
       } finally {
         setLoading(false);
       }

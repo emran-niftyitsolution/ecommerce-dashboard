@@ -1,5 +1,5 @@
 import { withAuth } from "@/lib/auth";
-import { OrderService } from "@/lib/db-utils";
+import { OrderService } from "@/lib/db-utils-mongoose";
 import { ApiResponse, UpdateOrderRequest } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
