@@ -1,5 +1,7 @@
 "use client";
 
+import { apiClient } from "@/lib/api-client";
+import { Customer } from "@/lib/types";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -27,8 +29,8 @@ import {
   Tag,
   message,
 } from "antd";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+// import { useRouter } from "next/navigation"; // Unused for now
+import { useCallback, useEffect, useState } from "react";
 
 const { Option } = Select;
 
@@ -37,113 +39,55 @@ export default function CustomersPage() {
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [tierFilter, setTierFilter] = useState<string>("all");
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
+    null
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const router = useRouter();
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+  // const router = useRouter(); // Unused for now
 
-  // Mock customers data
-  const [customers, setCustomers] = useState([
-    {
-      key: "1",
-      id: "CUST-001",
-      name: "John Smith",
-      email: "john.smith@email.com",
-      phone: "+1 (555) 123-4567",
-      status: "active",
-      tier: "gold",
-      totalOrders: 45,
-      totalSpent: 12500.5,
-      lastOrder: "2024-01-15",
-      joinDate: "2022-03-15",
-      address: "123 Main St, New York, NY 10001",
-      favoriteCategories: ["Electronics", "Sports"],
-      avgOrderValue: 277.79,
-      lifetimeValue: 12500.5,
-      reviews: 12,
-      rating: 4.8,
-      tags: ["VIP", "Early Adopter"],
-    },
-    {
-      key: "2",
-      id: "CUST-002",
-      name: "Sarah Johnson",
-      email: "sarah.j@email.com",
-      phone: "+1 (555) 987-6543",
-      status: "active",
-      tier: "silver",
-      totalOrders: 28,
-      totalSpent: 8900.75,
-      lastOrder: "2024-01-18",
-      joinDate: "2022-06-20",
-      address: "456 Oak Ave, Los Angeles, CA 90210",
-      favoriteCategories: ["Fashion", "Beauty"],
-      avgOrderValue: 317.88,
-      lifetimeValue: 8900.75,
-      reviews: 8,
-      rating: 4.6,
-      tags: ["Fashionista"],
-    },
-    {
-      key: "3",
-      id: "CUST-003",
-      name: "Mike Wilson",
-      email: "mike.w@email.com",
-      phone: "+1 (555) 456-7890",
-      status: "active",
-      tier: "platinum",
-      totalOrders: 67,
-      totalSpent: 18900.25,
-      lastOrder: "2024-01-20",
-      joinDate: "2021-11-10",
-      address: "789 Pine St, Chicago, IL 60601",
-      favoriteCategories: ["Home & Garden", "Electronics"],
-      avgOrderValue: 282.09,
-      lifetimeValue: 18900.25,
-      reviews: 23,
-      rating: 4.9,
-      tags: ["VIP", "Power User", "Early Adopter"],
-    },
-    {
-      key: "4",
-      id: "CUST-004",
-      name: "Emily Davis",
-      email: "emily.d@email.com",
-      phone: "+1 (555) 321-0987",
-      status: "inactive",
-      tier: "bronze",
-      totalOrders: 8,
-      totalSpent: 1200.0,
-      lastOrder: "2023-08-15",
-      joinDate: "2023-01-15",
-      address: "321 Elm St, Miami, FL 33101",
-      favoriteCategories: ["Beauty"],
-      avgOrderValue: 150.0,
-      lifetimeValue: 1200.0,
-      reviews: 3,
-      rating: 4.3,
-      tags: ["New Customer"],
-    },
-    {
-      key: "5",
-      id: "CUST-005",
-      name: "David Brown",
-      email: "david.b@email.com",
-      phone: "+1 (555) 654-3210",
-      status: "active",
-      tier: "gold",
-      totalOrders: 52,
-      totalSpent: 15600.8,
-      lastOrder: "2024-01-22",
-      joinDate: "2022-01-20",
-      address: "654 Maple Dr, Seattle, WA 98101",
-      favoriteCategories: ["Electronics", "Gaming"],
-      avgOrderValue: 300.02,
-      lifetimeValue: 15600.8,
-      reviews: 18,
-      rating: 4.7,
-      tags: ["VIP", "Tech Enthusiast"],
-    },
+  // Fetch customers data from API
+  const fetchCustomers = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient.getCustomers(
+        pagination.current,
+        pagination.pageSize
+      );
+
+      if (response.success) {
+        setCustomers(response.data.data || []);
+        setPagination((prev) => ({
+          ...prev,
+          total: response.pagination?.total || 0,
+        }));
+      } else {
+        message.error(response.error || "Failed to fetch customers");
+      }
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+      message.error("Failed to fetch customers");
+    } finally {
+      setLoading(false);
+    }
+  }, [
+    pagination.current,
+    pagination.pageSize,
+    searchText,
+    statusFilter,
+    tierFilter,
   ]);
+
+  useEffect(() => {
+    fetchCustomers();
+  }, [fetchCustomers]);
+
+  // Helper functions for UI
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -173,45 +117,72 @@ export default function CustomersPage() {
     }
   };
 
-  const handleViewCustomer = (customer: any) => {
+  const handleViewCustomer = (customer: Customer) => {
     setSelectedCustomer(customer);
     setIsModalVisible(true);
   };
 
-  const handleEditCustomer = (customer: any) => {
+  const handleEditCustomer = (_customer: Customer) => {
     message.info("Edit functionality would be implemented here");
   };
 
-  const handleDeleteCustomer = (customer: any) => {
+  const handleDeleteCustomer = async (customer: Customer) => {
     Modal.confirm({
       title: "Delete Customer",
       content: `Are you sure you want to delete customer ${customer.name}? This action cannot be undone.`,
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
-      onOk: () => {
-        setCustomers(customers.filter((c) => c.key !== customer.key));
-        message.success("Customer deleted successfully");
+      onOk: async () => {
+        try {
+          const response = await apiClient.deleteCustomer(customer._id);
+          if (response.success) {
+            message.success("Customer deleted successfully");
+            fetchCustomers(); // Refresh the list
+          } else {
+            message.error(response.error || "Failed to delete customer");
+          }
+        } catch (error) {
+          console.error("Error deleting customer:", error);
+          message.error("Failed to delete customer");
+        }
       },
     });
   };
 
-  const handleStatusChange = (customerId: string, newStatus: string) => {
-    setCustomers(
-      customers.map((customer) =>
-        customer.key === customerId
-          ? { ...customer, status: newStatus }
-          : customer
-      )
-    );
-    message.success(`Customer status updated to ${newStatus}`);
+  const handleStatusChange = async (customerId: string, newStatus: string) => {
+    try {
+      const response = await apiClient.updateCustomer(customerId, {
+        status: newStatus,
+      });
+      if (response.success) {
+        message.success(`Customer status updated to ${newStatus}`);
+        fetchCustomers(); // Refresh the list
+      } else {
+        message.error(response.error || "Failed to update customer status");
+      }
+    } catch (error) {
+      console.error("Error updating customer status:", error);
+      message.error("Failed to update customer status");
+    }
+  };
+
+  const handleTableChange = (pagination: {
+    current: number;
+    pageSize: number;
+  }) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: pagination.current,
+      pageSize: pagination.pageSize,
+    }));
   };
 
   const filteredCustomers = customers.filter((customer) => {
     const matchesSearch =
-      customer.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      customer.email.toLowerCase().includes(searchText.toLowerCase()) ||
-      customer.id.toLowerCase().includes(searchText.toLowerCase());
+      customer.name?.toLowerCase().includes(searchText.toLowerCase()) ||
+      customer.email?.toLowerCase().includes(searchText.toLowerCase()) ||
+      customer._id?.toLowerCase().includes(searchText.toLowerCase());
 
     const matchesStatus =
       statusFilter === "all" || customer.status === statusFilter;
@@ -225,7 +196,7 @@ export default function CustomersPage() {
       title: "Customer",
       dataIndex: "name",
       key: "name",
-      render: (text: string, record: any) => (
+      render: (text: string, record: Customer) => (
         <div className="flex items-center gap-3">
           <Avatar
             size={40}
@@ -262,7 +233,7 @@ export default function CustomersPage() {
           <span className="font-medium">{orders}</span>
         </div>
       ),
-      sorter: (a: any, b: any) => a.totalOrders - b.totalOrders,
+      sorter: (a: Customer, b: Customer) => a.totalOrders - b.totalOrders,
     },
     {
       title: "Total Spent",
@@ -273,7 +244,7 @@ export default function CustomersPage() {
           ${amount.toLocaleString()}
         </span>
       ),
-      sorter: (a: any, b: any) => a.totalSpent - b.totalSpent,
+      sorter: (a: Customer, b: Customer) => a.totalSpent - b.totalSpent,
     },
     {
       title: "Avg Order",
@@ -293,7 +264,7 @@ export default function CustomersPage() {
           <span className="font-medium">{rating}</span>
         </div>
       ),
-      sorter: (a: any, b: any) => a.rating - b.rating,
+      sorter: (a: Customer, b: Customer) => a.rating - b.rating,
     },
     {
       title: "Status",
@@ -309,7 +280,7 @@ export default function CustomersPage() {
         { text: "Inactive", value: "inactive" },
         { text: "Suspended", value: "suspended" },
       ],
-      onFilter: (value: string, record: any) => record.status === value,
+      onFilter: (value: string, record: Customer) => record.status === value,
     },
     {
       title: "Last Order",
@@ -322,7 +293,7 @@ export default function CustomersPage() {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: any) => (
+      render: (_: unknown, record: Customer) => (
         <Dropdown
           menu={{
             items: [
@@ -361,7 +332,7 @@ export default function CustomersPage() {
   const stats = [
     {
       title: "Total Customers",
-      value: customers.length,
+      value: pagination.total,
       icon: <UserOutlined />,
       color: "blue",
     },
@@ -381,7 +352,7 @@ export default function CustomersPage() {
     {
       title: "Total Revenue",
       value: `$${customers
-        .reduce((sum, c) => sum + c.totalSpent, 0)
+        .reduce((sum, c) => sum + (c.totalSpent || 0), 0)
         .toLocaleString()}`,
       icon: <UserOutlined />,
       color: "orange",
@@ -520,12 +491,15 @@ export default function CustomersPage() {
           dataSource={filteredCustomers}
           loading={loading}
           pagination={{
-            pageSize: 10,
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: pagination.total,
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total, range) =>
               `${range[0]}-${range[1]} of ${total} customers`,
           }}
+          onChange={handleTableChange}
           size="middle"
           scroll={{ x: 1200 }}
         />

@@ -26,130 +26,47 @@ import {
   Tag,
   message,
 } from "antd";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+// import { useRouter } from "next/navigation"; // Unused for now
+import { useEffect, useState } from "react";
 
 const { Option } = Select;
 
 export default function VendorsPage() {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [selectedVendor, setSelectedVendor] = useState<any>(null);
+  const [selectedVendor, setSelectedVendor] = useState<{
+    name: string;
+    email: string;
+    phone: string;
+    status: string;
+  } | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const router = useRouter();
+  // const router = useRouter(); // Unused for now
 
-  // Mock vendors data
-  const [vendors, setVendors] = useState([
-    {
-      key: "1",
-      id: "VEND-001",
-      name: "TechCorp",
-      owner: "John Techman",
-      email: "john@techcorp.com",
-      phone: "+1 (555) 123-4567",
-      category: "Electronics",
-      status: "active",
-      rating: 4.8,
-      products: 89,
-      orders: 1250,
-      revenue: 125000,
-      joinDate: "2023-01-15",
-      address: "123 Tech Street, Silicon Valley, CA 94025",
-      description:
-        "Leading electronics manufacturer specializing in smart devices and IoT solutions.",
-      commission: "15%",
-      paymentMethod: "Bank Transfer",
-      documents: ["Business License", "Tax Certificate", "Insurance"],
-      featured: true,
-    },
-    {
-      key: "2",
-      id: "VEND-002",
-      name: "FashionHub",
-      owner: "Sarah Style",
-      email: "sarah@fashionhub.com",
-      phone: "+1 (555) 987-6543",
-      category: "Fashion",
-      status: "active",
-      rating: 4.6,
-      products: 156,
-      orders: 980,
-      revenue: 98000,
-      joinDate: "2023-02-20",
-      address: "456 Fashion Avenue, New York, NY 10001",
-      description:
-        "Premium fashion retailer offering designer clothing and accessories.",
-      commission: "18%",
-      paymentMethod: "PayPal",
-      documents: ["Business License", "Tax Certificate"],
-      featured: false,
-    },
-    {
-      key: "3",
-      id: "VEND-003",
-      name: "HomeStyle",
-      owner: "Mike Homemaker",
-      email: "mike@homestyle.com",
-      phone: "+1 (555) 456-7890",
-      category: "Home & Garden",
-      status: "active",
-      rating: 4.7,
-      products: 234,
-      orders: 870,
-      revenue: 87000,
-      joinDate: "2023-03-10",
-      address: "789 Home Road, Chicago, IL 60601",
-      description: "Home improvement and garden supplies for modern living.",
-      commission: "16%",
-      paymentMethod: "Bank Transfer",
-      documents: ["Business License", "Tax Certificate", "Insurance"],
-      featured: true,
-    },
-    {
-      key: "4",
-      id: "VEND-004",
-      name: "SportMax",
-      owner: "Emily Athlete",
-      email: "emily@sportmax.com",
-      phone: "+1 (555) 321-0987",
-      category: "Sports",
-      status: "active",
-      rating: 4.5,
-      products: 67,
-      orders: 720,
-      revenue: 72000,
-      joinDate: "2023-04-05",
-      address: "321 Sports Drive, Miami, FL 33101",
-      description: "Sports equipment and athletic wear for all levels.",
-      commission: "17%",
-      paymentMethod: "Credit Card",
-      documents: ["Business License", "Tax Certificate"],
-      featured: false,
-    },
-    {
-      key: "5",
-      id: "VEND-005",
-      name: "BeautyCare",
-      owner: "David Beauty",
-      email: "david@beautycare.com",
-      phone: "+1 (555) 654-3210",
-      category: "Beauty",
-      status: "pending",
-      rating: 0,
-      products: 0,
-      orders: 0,
-      revenue: 0,
-      joinDate: "2024-01-10",
-      address: "654 Beauty Lane, Los Angeles, CA 90210",
-      description: "Premium beauty and skincare products.",
-      commission: "20%",
-      paymentMethod: "PayPal",
-      documents: ["Business License"],
-      featured: false,
-    },
-  ]);
+  // Dynamic vendors data (will be populated from API when vendor endpoints are available)
+  const [vendors, setVendors] = useState<
+    Array<{
+      name: string;
+      email: string;
+      phone: string;
+      status: string;
+      category: string;
+      totalOrders: number;
+      totalRevenue: number;
+      rating: number;
+      lastOrder: string;
+    }>
+  >([]);
+
+  useEffect(() => {
+    // TODO: Implement vendor API integration when endpoints are available
+    // For now, we'll use empty array to ensure no static data
+    setVendors([]);
+  }, []);
+
+  // Helper functions for UI
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -180,16 +97,31 @@ export default function VendorsPage() {
     return colorMap[category] || "default";
   };
 
-  const handleViewVendor = (vendor: any) => {
+  const handleViewVendor = (vendor: {
+    name: string;
+    email: string;
+    phone: string;
+    status: string;
+  }) => {
     setSelectedVendor(vendor);
     setIsModalVisible(true);
   };
 
-  const handleEditVendor = (vendor: any) => {
+  const handleEditVendor = (_vendor: {
+    name: string;
+    email: string;
+    phone: string;
+    status: string;
+  }) => {
     message.info("Edit functionality would be implemented here");
   };
 
-  const handleDeleteVendor = (vendor: any) => {
+  const handleDeleteVendor = (vendor: {
+    name: string;
+    email: string;
+    phone: string;
+    status: string;
+  }) => {
     Modal.confirm({
       title: "Delete Vendor",
       content: `Are you sure you want to delete vendor ${vendor.name}? This action cannot be undone.`,
@@ -214,9 +146,9 @@ export default function VendorsPage() {
 
   const filteredVendors = vendors.filter((vendor) => {
     const matchesSearch =
-      vendor.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      vendor.owner.toLowerCase().includes(searchText.toLowerCase()) ||
-      vendor.email.toLowerCase().includes(searchText.toLowerCase());
+      vendor.name?.toLowerCase().includes(searchText.toLowerCase()) ||
+      vendor.owner?.toLowerCase().includes(searchText.toLowerCase()) ||
+      vendor.email?.toLowerCase().includes(searchText.toLowerCase());
 
     const matchesStatus =
       statusFilter === "all" || vendor.status === statusFilter;
@@ -231,7 +163,20 @@ export default function VendorsPage() {
       title: "Vendor",
       dataIndex: "name",
       key: "name",
-      render: (text: string, record: any) => (
+      render: (
+        text: string,
+        record: {
+          name: string;
+          email: string;
+          phone: string;
+          status: string;
+          category: string;
+          totalOrders: number;
+          totalRevenue: number;
+          rating: number;
+          lastOrder: string;
+        }
+      ) => (
         <div className="flex items-center gap-3">
           <Avatar
             size={40}
@@ -284,7 +229,8 @@ export default function VendorsPage() {
           ${revenue.toLocaleString()}
         </span>
       ),
-      sorter: (a: any, b: any) => a.revenue - b.revenue,
+      sorter: (a: { revenue: number }, b: { revenue: number }) =>
+        a.revenue - b.revenue,
     },
     {
       title: "Status",
@@ -301,7 +247,8 @@ export default function VendorsPage() {
         { text: "Suspended", value: "suspended" },
         { text: "Inactive", value: "inactive" },
       ],
-      onFilter: (value: string, record: any) => record.status === value,
+      onFilter: (value: string, record: { status: string }) =>
+        record.status === value,
     },
     {
       title: "Commission",
@@ -314,7 +261,10 @@ export default function VendorsPage() {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: any) => (
+      render: (
+        _: unknown,
+        record: { name: string; email: string; phone: string; status: string }
+      ) => (
         <Dropdown
           menu={{
             items: [

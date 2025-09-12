@@ -89,7 +89,7 @@ export const POST = withAuth(
       });
 
       // Return user data without password
-      const { password: _, ...userWithoutPassword } = user;
+      const { password: _password, ...userWithoutPassword } = user;
 
       return NextResponse.json(
         {

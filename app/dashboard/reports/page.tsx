@@ -36,91 +36,24 @@ export default function ReportsPage() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Sample data for various charts
-  const salesData = [
-    { month: "Jan", sales: 125000, target: 120000 },
-    { month: "Feb", sales: 132000, target: 125000 },
-    { month: "Mar", sales: 118000, target: 130000 },
-    { month: "Apr", sales: 145000, target: 135000 },
-    { month: "May", sales: 167000, target: 140000 },
-    { month: "Jun", sales: 189000, target: 150000 },
-    { month: "Jul", sales: 203000, target: 160000 },
-    { month: "Aug", sales: 198000, target: 170000 },
-  ];
-
-  const regionData = [
-    {
-      region: "North America",
-      revenue: 350000,
-      color: "#3b82f6",
-      percentage: 25.2,
-    },
-    { region: "Europe", revenue: 280000, color: "#10b981", percentage: 20.1 },
-    {
-      region: "Asia Pacific",
-      revenue: 420000,
-      color: "#f59e0b",
-      percentage: 30.2,
-    },
-    {
-      region: "Latin America",
-      revenue: 190000,
-      color: "#8b5cf6",
-      percentage: 13.7,
-    },
-    {
-      region: "Middle East",
-      revenue: 140000,
-      color: "#ef4444",
-      percentage: 10.1,
-    },
-  ];
-
-  const performanceData = [
-    { quarter: "Q1", revenue: 420000, profit: 89000, customers: 1250 },
-    { quarter: "Q2", revenue: 560000, profit: 125000, customers: 1680 },
-    { quarter: "Q3", revenue: 680000, profit: 156000, customers: 1950 },
-    { quarter: "Q4", revenue: 780000, profit: 198000, customers: 2340 },
-  ];
-
-  const reportData = [
-    {
-      key: "1",
-      name: "Q3 Financial Report",
-      type: "Financial",
-      status: "completed",
-      date: "2024-01-15",
-      size: "2.4 MB",
-      downloads: 45,
-    },
-    {
-      key: "2",
-      name: "Customer Analytics",
-      type: "Analytics",
-      status: "processing",
-      date: "2024-01-14",
-      size: "1.8 MB",
-      downloads: 23,
-    },
-    {
-      key: "3",
-      name: "Sales Performance",
-      type: "Sales",
-      status: "completed",
-      date: "2024-01-13",
-      size: "3.1 MB",
-      downloads: 67,
-    },
-    {
-      key: "4",
-      name: "Marketing ROI Analysis",
-      type: "Marketing",
-      status: "failed",
-      date: "2024-01-12",
-      size: "0 MB",
-      downloads: 0,
-    },
-  ];
+  // Dynamic reports data - will be populated from API when reports endpoints are available
+  const salesData: Array<{ date: string; sales: number; revenue: number }> = [];
+  const regionData: Array<{
+    region: string;
+    sales: number;
+    percentage: number;
+  }> = [];
+  const performanceData: Array<{
+    metric: string;
+    value: number;
+    change: number;
+  }> = [];
+  const reportData: Array<{
+    name: string;
+    type: string;
+    lastRun: string;
+    status: string;
+  }> = [];
 
   const columns = [
     {
@@ -183,7 +116,12 @@ export default function ReportsPage() {
     {
       title: "Actions",
       key: "actions",
-      render: (record: any) => (
+      render: (record: {
+        name: string;
+        type: string;
+        lastRun: string;
+        status: string;
+      }) => (
         <Space>
           <Button
             type="text"

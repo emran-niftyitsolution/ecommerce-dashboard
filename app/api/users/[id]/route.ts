@@ -24,7 +24,7 @@ export const GET = withAuth(
       }
 
       // Return user data without password
-      const { password: _, ...userWithoutPassword } = user;
+      const { password: _password, ...userWithoutPassword } = user;
 
       return NextResponse.json({
         success: true,
@@ -79,7 +79,7 @@ export const PUT = withAuth(
       }
 
       // Return user data without password
-      const { password: _, ...userWithoutPassword } = updatedUser;
+      const { password: _password, ...userWithoutPassword } = updatedUser;
 
       return NextResponse.json({
         success: true,

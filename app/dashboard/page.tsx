@@ -1,6 +1,7 @@
 "use client";
 
 import { apiClient } from "@/lib/api-client";
+import { Order, Product } from "@/lib/types";
 import {
   DollarOutlined,
   LoadingOutlined,
@@ -17,8 +18,8 @@ interface DashboardStats {
   totalOrders: number;
   totalCustomers: number;
   totalProducts: number;
-  recentOrders: any[];
-  topProducts: any[];
+  recentOrders: Order[];
+  topProducts: Product[];
 }
 
 export default function DashboardPage() {
@@ -31,7 +32,7 @@ export default function DashboardPage() {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Check if user is authenticated by trying to get current user first
         const userResponse = await apiClient.getCurrentUser();
         if (!userResponse.success) {
@@ -50,7 +51,7 @@ export default function DashboardPage() {
       } catch (err) {
         console.error("Dashboard fetch error:", err);
         // Check if it's an authentication error
-        if (err instanceof Error && err.message.includes('Unauthorized')) {
+        if (err instanceof Error && err.message.includes("Unauthorized")) {
           setError("Please log in to view dashboard data");
         } else {
           setError(
@@ -160,7 +161,7 @@ export default function DashboardPage() {
       },
     },
     tooltip: {
-      formatter: (datum: any) => ({
+      formatter: (datum: { revenue: number }) => ({
         name: "Revenue",
         value: `$${datum.revenue.toLocaleString()}`,
       }),
@@ -182,7 +183,11 @@ export default function DashboardPage() {
       content: "{name}: {percentage}",
     },
     tooltip: {
-      formatter: (datum: any) => ({
+      formatter: (datum: {
+        category: string;
+        sales: number;
+        revenue: number;
+      }) => ({
         name: datum.category,
         value: `${datum.sales}% ($${datum.revenue.toLocaleString()})`,
       }),
@@ -344,7 +349,7 @@ export default function DashboardPage() {
           <Card title="Recent Orders">
             <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
               {stats.recentOrders.length > 0 ? (
-                stats.recentOrders.map((order: any, index: number) => (
+                stats.recentOrders.map((order: Order, index: number) => (
                   <div
                     key={order._id || index}
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"

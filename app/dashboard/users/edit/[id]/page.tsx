@@ -1,32 +1,32 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { apiClient } from "@/lib/api-client";
 import {
-  Card,
-  Form,
-  Input,
-  Select,
-  Button,
-  Switch,
-  message,
-  Spin,
-  Row,
-  Col,
-  Space,
-  Typography,
-  Divider,
-} from "antd";
-import {
-  UserOutlined,
+  ArrowLeftOutlined,
+  HomeOutlined,
+  LoadingOutlined,
   MailOutlined,
   PhoneOutlined,
-  HomeOutlined,
   SaveOutlined,
-  ArrowLeftOutlined,
-  LoadingOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { apiClient } from "@/lib/api-client";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Input,
+  message,
+  Row,
+  Select,
+  Space,
+  Spin,
+  Switch,
+  Typography,
+} from "antd";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -91,17 +91,17 @@ export default function EditUserPage() {
     if (userId) {
       fetchUser();
     }
-  }, [userId]);
+  }, [userId, fetchUser]);
 
   const fetchUser = async () => {
     try {
       setLoading(true);
       const response = await apiClient.getUser(userId);
-      
+
       if (response.success && response.data) {
         const userData = response.data as User;
         setUser(userData);
-        
+
         // Set form values
         form.setFieldsValue({
           firstName: userData.firstName,
@@ -139,7 +139,7 @@ export default function EditUserPage() {
   const handleSave = async (values: FormValues) => {
     try {
       setSaving(true);
-      
+
       const updateData = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -147,13 +147,15 @@ export default function EditUserPage() {
         role: values.role,
         isActive: values.isActive,
         phone: values.phone || undefined,
-        address: values.address?.street ? {
-          street: values.address.street,
-          city: values.address.city,
-          state: values.address.state,
-          zipCode: values.address.zipCode,
-          country: values.address.country,
-        } : undefined,
+        address: values.address?.street
+          ? {
+              street: values.address.street,
+              city: values.address.city,
+              state: values.address.state,
+              zipCode: values.address.zipCode,
+              country: values.address.country,
+            }
+          : undefined,
         preferences: {
           theme: values.preferences?.theme || "light",
           language: values.preferences?.language || "en",
@@ -162,7 +164,7 @@ export default function EditUserPage() {
       };
 
       const response = await apiClient.updateUser(userId, updateData);
-      
+
       if (response.success) {
         message.success("User updated successfully");
         router.push("/dashboard/users");
@@ -220,9 +222,7 @@ export default function EditUserPage() {
           <UserOutlined className="mr-2" />
           Edit User: {user.firstName} {user.lastName}
         </Title>
-        <Text type="secondary">
-          Update user information and preferences
-        </Text>
+        <Text type="secondary">Update user information and preferences</Text>
       </div>
 
       <Form
@@ -239,7 +239,10 @@ export default function EditUserPage() {
                 name="firstName"
                 rules={[
                   { required: true, message: "Please enter first name" },
-                  { min: 2, message: "First name must be at least 2 characters" },
+                  {
+                    min: 2,
+                    message: "First name must be at least 2 characters",
+                  },
                 ]}
               >
                 <Input
@@ -254,7 +257,10 @@ export default function EditUserPage() {
                 name="lastName"
                 rules={[
                   { required: true, message: "Please enter last name" },
-                  { min: 2, message: "Last name must be at least 2 characters" },
+                  {
+                    min: 2,
+                    message: "Last name must be at least 2 characters",
+                  },
                 ]}
               >
                 <Input
@@ -286,7 +292,10 @@ export default function EditUserPage() {
                 label="Phone"
                 name="phone"
                 rules={[
-                  { pattern: /^[\+]?[1-9][\d]{0,15}$/, message: "Please enter a valid phone number" },
+                  {
+                    pattern: /^[\+]?[1-9][\d]{0,15}$/,
+                    message: "Please enter a valid phone number",
+                  },
                 ]}
               >
                 <Input
@@ -312,15 +321,8 @@ export default function EditUserPage() {
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item
-                label="Status"
-                name="isActive"
-                valuePropName="checked"
-              >
-                <Switch
-                  checkedChildren="Active"
-                  unCheckedChildren="Inactive"
-                />
+              <Form.Item label="Status" name="isActive" valuePropName="checked">
+                <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
               </Form.Item>
             </Col>
           </Row>
@@ -329,10 +331,7 @@ export default function EditUserPage() {
         <Card title="Address Information" className="mb-6">
           <Row gutter={16}>
             <Col xs={24}>
-              <Form.Item
-                label="Street Address"
-                name={["address", "street"]}
-              >
+              <Form.Item label="Street Address" name={["address", "street"]}>
                 <Input
                   prefix={<HomeOutlined />}
                   placeholder="Enter street address"
@@ -342,36 +341,24 @@ export default function EditUserPage() {
           </Row>
           <Row gutter={16}>
             <Col xs={24} sm={8}>
-              <Form.Item
-                label="City"
-                name={["address", "city"]}
-              >
+              <Form.Item label="City" name={["address", "city"]}>
                 <Input placeholder="Enter city" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={8}>
-              <Form.Item
-                label="State"
-                name={["address", "state"]}
-              >
+              <Form.Item label="State" name={["address", "state"]}>
                 <Input placeholder="Enter state" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={8}>
-              <Form.Item
-                label="ZIP Code"
-                name={["address", "zipCode"]}
-              >
+              <Form.Item label="ZIP Code" name={["address", "zipCode"]}>
                 <Input placeholder="Enter ZIP code" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
-              <Form.Item
-                label="Country"
-                name={["address", "country"]}
-              >
+              <Form.Item label="Country" name={["address", "country"]}>
                 <Input placeholder="Enter country" />
               </Form.Item>
             </Col>
@@ -381,10 +368,7 @@ export default function EditUserPage() {
         <Card title="Preferences" className="mb-6">
           <Row gutter={16}>
             <Col xs={24} sm={8}>
-              <Form.Item
-                label="Theme"
-                name={["preferences", "theme"]}
-              >
+              <Form.Item label="Theme" name={["preferences", "theme"]}>
                 <Select placeholder="Select theme">
                   <Option value="light">Light</Option>
                   <Option value="dark">Dark</Option>
@@ -392,10 +376,7 @@ export default function EditUserPage() {
               </Form.Item>
             </Col>
             <Col xs={24} sm={8}>
-              <Form.Item
-                label="Language"
-                name={["preferences", "language"]}
-              >
+              <Form.Item label="Language" name={["preferences", "language"]}>
                 <Select placeholder="Select language">
                   <Option value="en">English</Option>
                   <Option value="es">Spanish</Option>
@@ -410,10 +391,7 @@ export default function EditUserPage() {
                 name={["preferences", "notifications"]}
                 valuePropName="checked"
               >
-                <Switch
-                  checkedChildren="On"
-                  unCheckedChildren="Off"
-                />
+                <Switch checkedChildren="On" unCheckedChildren="Off" />
               </Form.Item>
             </Col>
           </Row>
@@ -423,11 +401,7 @@ export default function EditUserPage() {
 
         {/* Action Buttons */}
         <div className="flex justify-end space-x-4">
-          <Button
-            size="large"
-            onClick={handleCancel}
-            disabled={saving}
-          >
+          <Button size="large" onClick={handleCancel} disabled={saving}>
             Cancel
           </Button>
           <Button

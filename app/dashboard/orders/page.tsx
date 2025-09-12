@@ -1,5 +1,7 @@
 "use client";
 
+import { apiClient } from "@/lib/api-client";
+import { Order } from "@/lib/types";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -26,8 +28,7 @@ import {
   message,
 } from "antd";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface Order {
   key: string;
@@ -65,122 +66,45 @@ export default function OrdersPage() {
   );
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const router = useRouter();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+  // const router = useRouter(); // Unused for now
 
-  // Mock orders data
-  const [orders, setOrders] = useState<Order[]>([
-    {
-      key: "1",
-      id: "ORD-001",
-      customer: "John Smith",
-      email: "john.smith@email.com",
-      phone: "+1 (555) 123-4567",
-      products: [
-        { name: "Wireless Bluetooth Headphones", quantity: 2, price: 89.99 },
-        { name: "Smartphone Case", quantity: 1, price: 24.99 },
-      ],
-      total: 204.97,
-      status: "delivered",
-      paymentStatus: "paid",
-      paymentMethod: "Credit Card",
-      shippingAddress: "123 Main St, New York, NY 10001",
-      billingAddress: "123 Main St, New York, NY 10001",
-      orderDate: "2024-01-15T10:30:00Z",
-      deliveryDate: "2024-01-18T14:20:00Z",
-      trackingNumber: "TRK123456789",
-      vendor: "TechCorp",
-      notes: "Customer requested signature confirmation",
-    },
-    {
-      key: "2",
-      id: "ORD-002",
-      customer: "Sarah Johnson",
-      email: "sarah.j@email.com",
-      phone: "+1 (555) 987-6543",
-      products: [
-        { name: "Running Shoes", quantity: 1, price: 129.99 },
-        { name: "Sports Socks", quantity: 3, price: 12.99 },
-      ],
-      total: 168.96,
-      status: "shipped",
-      paymentStatus: "paid",
-      paymentMethod: "PayPal",
-      shippingAddress: "456 Oak Ave, Los Angeles, CA 90210",
-      billingAddress: "456 Oak Ave, Los Angeles, CA 90210",
-      orderDate: "2024-01-16T09:15:00Z",
-      deliveryDate: null,
-      trackingNumber: "TRK987654321",
-      vendor: "SportMax",
-      notes: "Standard shipping requested",
-    },
-    {
-      key: "3",
-      id: "ORD-003",
-      customer: "Mike Wilson",
-      email: "mike.w@email.com",
-      phone: "+1 (555) 456-7890",
-      products: [
-        { name: "Coffee Maker", quantity: 1, price: 199.99 },
-        { name: "Coffee Beans", quantity: 2, price: 15.99 },
-      ],
-      total: 231.97,
-      status: "processing",
-      paymentStatus: "pending",
-      paymentMethod: "Bank Transfer",
-      shippingAddress: "789 Pine St, Chicago, IL 60601",
-      billingAddress: "789 Pine St, Chicago, IL 60601",
-      orderDate: "2024-01-17T14:45:00Z",
-      deliveryDate: null,
-      trackingNumber: null,
-      vendor: "HomeStyle",
-      notes: "Customer prefers morning delivery",
-    },
-    {
-      key: "4",
-      id: "ORD-004",
-      customer: "Emily Davis",
-      email: "emily.d@email.com",
-      phone: "+1 (555) 321-0987",
-      products: [
-        { name: "Designer Handbag", quantity: 1, price: 299.99 },
-        { name: "Wallet", quantity: 1, price: 89.99 },
-      ],
-      total: 389.98,
-      status: "cancelled",
-      paymentStatus: "refunded",
-      paymentMethod: "Credit Card",
-      shippingAddress: "321 Elm St, Miami, FL 33101",
-      billingAddress: "321 Elm St, Miami, FL 33101",
-      orderDate: "2024-01-18T11:20:00Z",
-      deliveryDate: null,
-      trackingNumber: null,
-      vendor: "FashionHub",
-      notes: "Customer cancelled due to size issue",
-    },
-    {
-      key: "5",
-      id: "ORD-005",
-      customer: "David Brown",
-      email: "david.b@email.com",
-      phone: "+1 (555) 654-3210",
-      products: [
-        { name: "Gaming Laptop", quantity: 1, price: 1299.99 },
-        { name: "Gaming Mouse", quantity: 1, price: 79.99 },
-        { name: "Gaming Headset", quantity: 1, price: 149.99 },
-      ],
-      total: 1529.97,
-      status: "pending",
-      paymentStatus: "pending",
-      paymentMethod: "Credit Card",
-      shippingAddress: "654 Maple Dr, Seattle, WA 98101",
-      billingAddress: "654 Maple Dr, Seattle, WA 98101",
-      orderDate: "2024-01-19T16:30:00Z",
-      deliveryDate: null,
-      trackingNumber: null,
-      vendor: "TechCorp",
-      notes: "High-value order - requires insurance",
-    },
-  ]);
+  // Fetch orders data from API
+  const fetchOrders = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient.getOrders(
+        pagination.current,
+        pagination.pageSize
+      );
+
+      if (response.success && response.data) {
+        setOrders(response.data.data || []);
+        setPagination((prev) => ({
+          ...prev,
+          total: response.data?.pagination?.total || 0,
+        }));
+      } else {
+        message.error(response.error || "Failed to fetch orders");
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      message.error("Failed to fetch orders");
+    } finally {
+      setLoading(false);
+    }
+  }, [pagination.current, pagination.pageSize, statusFilter, dateRange]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
+
+  // Helper functions for UI
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -214,44 +138,73 @@ export default function OrdersPage() {
     }
   };
 
-  const handleViewOrder = (order: any) => {
+  const handleViewOrder = (order: Order) => {
     setSelectedOrder(order);
     setIsModalVisible(true);
   };
 
-  const handleEditOrder = (order: any) => {
+  const handleEditOrder = (_order: Order) => {
     message.info("Edit functionality would be implemented here");
   };
 
-  const handleDeleteOrder = (order: any) => {
+  const handleDeleteOrder = async (order: Order) => {
     Modal.confirm({
       title: "Delete Order",
       content: `Are you sure you want to delete order ${order.id}? This action cannot be undone.`,
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
-      onOk: () => {
-        setOrders(orders.filter((o) => o.key !== order.key));
-        message.success("Order deleted successfully");
+      onOk: async () => {
+        try {
+          const response = await apiClient.deleteOrder(order._id);
+          if (response.success) {
+            message.success("Order deleted successfully");
+            fetchOrders(); // Refresh the list
+          } else {
+            message.error(response.error || "Failed to delete order");
+          }
+        } catch (error) {
+          console.error("Error deleting order:", error);
+          message.error("Failed to delete order");
+        }
       },
     });
   };
 
-  const handleStatusChange = (orderId: string, newStatus: string) => {
-    setOrders(
-      orders.map((order) =>
-        order.key === orderId ? { ...order, status: newStatus } : order
-      )
-    );
-    message.success(`Order status updated to ${newStatus}`);
+  const handleStatusChange = async (orderId: string, newStatus: string) => {
+    try {
+      const response = await apiClient.updateOrder(orderId, {
+        status: newStatus,
+      });
+      if (response.success) {
+        message.success(`Order status updated to ${newStatus}`);
+        fetchOrders(); // Refresh the list
+      } else {
+        message.error(response.error || "Failed to update order status");
+      }
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      message.error("Failed to update order status");
+    }
+  };
+
+  const handleTableChange = (pagination: {
+    current?: number;
+    pageSize?: number;
+  }) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: pagination.current || 1,
+      pageSize: pagination.pageSize || 10,
+    }));
   };
 
   const filteredOrders = orders.filter((order) => {
     const matchesSearch =
-      order.id.toLowerCase().includes(searchText.toLowerCase()) ||
-      order.customer.toLowerCase().includes(searchText.toLowerCase()) ||
-      order.email.toLowerCase().includes(searchText.toLowerCase()) ||
-      order.vendor.toLowerCase().includes(searchText.toLowerCase());
+      order.id?.toLowerCase().includes(searchText.toLowerCase()) ||
+      order.customer?.toLowerCase().includes(searchText.toLowerCase()) ||
+      order.email?.toLowerCase().includes(searchText.toLowerCase()) ||
+      order.vendor?.toLowerCase().includes(searchText.toLowerCase());
 
     const matchesStatus =
       statusFilter === "all" || order.status === statusFilter;
@@ -365,7 +318,7 @@ export default function OrdersPage() {
           </div>
         </div>
       ),
-      sorter: (a: any, b: any) =>
+      sorter: (a: Order, b: Order) =>
         dayjs(a.orderDate).unix() - dayjs(b.orderDate).unix(),
     },
     {
@@ -456,7 +409,9 @@ export default function OrdersPage() {
             <RangePicker
               placeholder={["Start Date", "End Date"]}
               value={dateRange}
-              onChange={setDateRange}
+              onChange={(dates) =>
+                setDateRange(dates as [dayjs.Dayjs, dayjs.Dayjs] | null)
+              }
               className="w-full"
             />
           </Col>
@@ -483,12 +438,15 @@ export default function OrdersPage() {
           dataSource={filteredOrders}
           loading={loading}
           pagination={{
-            pageSize: 10,
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: pagination.total,
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total, range) =>
               `${range[0]}-${range[1]} of ${total} orders`,
           }}
+          onChange={handleTableChange}
           size="middle"
           scroll={{ x: 1200 }}
         />
@@ -530,16 +488,13 @@ export default function OrdersPage() {
             <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
               <div>
                 <div className="text-sm text-gray-500">Order Status</div>
-                <Tag color={getStatusColor(selectedOrder.status)} size="large">
+                <Tag color={getStatusColor(selectedOrder.status)}>
                   {selectedOrder.status.toUpperCase()}
                 </Tag>
               </div>
               <div>
                 <div className="text-sm text-gray-500">Payment Status</div>
-                <Tag
-                  color={getPaymentStatusColor(selectedOrder.paymentStatus)}
-                  size="large"
-                >
+                <Tag color={getPaymentStatusColor(selectedOrder.paymentStatus)}>
                   {selectedOrder.paymentStatus.toUpperCase()}
                 </Tag>
               </div>
@@ -607,33 +562,38 @@ export default function OrdersPage() {
                 Products
               </h3>
               <div className="border border-gray-200 rounded-lg">
-                {selectedOrder.products.map((product: any, index: number) => (
-                  <div
-                    key={index}
-                    className={`p-4 ${
-                      index !== selectedOrder.products.length - 1
-                        ? "border-b border-gray-200"
-                        : ""
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-medium">{product.name}</div>
-                        <div className="text-sm text-gray-500">
-                          Quantity: {product.quantity}
+                {selectedOrder.products.map(
+                  (
+                    product: { name: string; price: number; quantity: number },
+                    index: number
+                  ) => (
+                    <div
+                      key={index}
+                      className={`p-4 ${
+                        index !== selectedOrder.products.length - 1
+                          ? "border-b border-gray-200"
+                          : ""
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-medium">{product.name}</div>
+                          <div className="text-sm text-gray-500">
+                            Quantity: {product.quantity}
+                          </div>
                         </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-semibold text-green-600">
-                          ${(product.price * product.quantity).toFixed(2)}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          ${product.price.toFixed(2)} each
+                        <div className="text-right">
+                          <div className="font-semibold text-green-600">
+                            ${(product.price * product.quantity).toFixed(2)}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            ${product.price.toFixed(2)} each
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
 

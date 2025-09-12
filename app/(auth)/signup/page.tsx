@@ -58,7 +58,7 @@ export default function SignUpPage() {
       if (response.success) {
         message.success("Account created successfully!");
         // Set the token and redirect to dashboard
-        apiClient.setToken((response.data as any).token);
+        apiClient.setToken((response.data as { token: string }).token);
         router.push("/dashboard");
       } else {
         setError(response.error || "Registration failed");

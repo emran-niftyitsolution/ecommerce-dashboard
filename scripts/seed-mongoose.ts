@@ -23,19 +23,21 @@ async function seedDatabase() {
 
     // Create users
     console.log("👥 Creating users...");
-    const hashedPassword = await AuthService.hashPassword("abcd1234");
+    const adminPassword = await AuthService.hashPassword("admin123");
+    const managerPassword = await AuthService.hashPassword("manager123");
+    const userPassword = await AuthService.hashPassword("user123");
 
     const users = await User.insertMany([
       {
-        firstName: "John",
-        lastName: "Doe",
-        email: "john.doe@example.com",
-        password: hashedPassword,
+        firstName: "Admin",
+        lastName: "User",
+        email: "admin@dashboard.com",
+        password: adminPassword,
         role: "admin",
         isActive: true,
         phone: "+1234567890",
         address: {
-          street: "123 Main St",
+          street: "123 Admin St",
           city: "New York",
           state: "NY",
           zipCode: "10001",
@@ -48,15 +50,15 @@ async function seedDatabase() {
         },
       },
       {
-        firstName: "Jane",
-        lastName: "Smith",
-        email: "jane.smith@example.com",
-        password: hashedPassword,
+        firstName: "Manager",
+        lastName: "User",
+        email: "manager@dashboard.com",
+        password: managerPassword,
         role: "manager",
         isActive: true,
         phone: "+1234567891",
         address: {
-          street: "456 Oak Ave",
+          street: "456 Manager Ave",
           city: "Los Angeles",
           state: "CA",
           zipCode: "90210",
@@ -69,10 +71,10 @@ async function seedDatabase() {
         },
       },
       {
-        firstName: "Bob",
-        lastName: "Johnson",
-        email: "bob.johnson@example.com",
-        password: hashedPassword,
+        firstName: "Regular",
+        lastName: "User",
+        email: "user@dashboard.com",
+        password: userPassword,
         role: "user",
         isActive: true,
         phone: "+1234567892",
@@ -83,13 +85,20 @@ async function seedDatabase() {
         },
       },
       {
-        firstName: "Alice",
-        lastName: "Brown",
-        email: "alice.brown@example.com",
-        password: hashedPassword,
-        role: "user",
-        isActive: false,
+        firstName: "John",
+        lastName: "Doe",
+        email: "john.doe@example.com",
+        password: adminPassword,
+        role: "admin",
+        isActive: true,
         phone: "+1234567893",
+        address: {
+          street: "789 Demo St",
+          city: "Chicago",
+          state: "IL",
+          zipCode: "60601",
+          country: "USA",
+        },
         preferences: {
           theme: "light",
           language: "en",
@@ -370,12 +379,13 @@ async function seedDatabase() {
     console.log(`- Customers: ${customers.length}`);
     console.log(`- Orders: ${orders.length}`);
     console.log("\n🔑 Demo Login Credentials:");
+    console.log("Admin: admin@dashboard.com / admin123");
+    console.log("Manager: manager@dashboard.com / manager123");
+    console.log("User: user@dashboard.com / user123");
+    console.log("\nAdditional Demo User:");
     console.log("Email: john.doe@example.com");
-    console.log("Password: abcd1234");
+    console.log("Password: admin123");
     console.log("Role: Admin");
-    console.log("\nEmail: jane.smith@example.com");
-    console.log("Password: abcd1234");
-    console.log("Role: Manager");
   } catch (error) {
     console.error("❌ Error seeding database:", error);
     process.exit(1);

@@ -56,7 +56,7 @@ export default function CreateUserPage() {
     "Intern",
   ];
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: Record<string, unknown>) => {
     setLoading(true);
     try {
       // Simulate API call
@@ -82,14 +82,16 @@ export default function CreateUserPage() {
 
       // Redirect to users list
       router.push("/dashboard/users");
-    } catch (error) {
+    } catch (_error) {
       message.error("Failed to create user. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleAvatarUpload = (info: any) => {
+  const handleAvatarUpload = (info: {
+    file: { status: string; originFileObj: File };
+  }) => {
     if (info.file.status === "done") {
       // In a real app, you'd upload to your server and get the URL
       setAvatarUrl(URL.createObjectURL(info.file.originFileObj));

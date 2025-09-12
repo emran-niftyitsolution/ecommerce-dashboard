@@ -177,7 +177,7 @@ export default function UsersPage() {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: User) => (
+      render: (_: unknown, record: User) => (
         <Space size="small">
           <Tooltip title="View Details">
             <Button

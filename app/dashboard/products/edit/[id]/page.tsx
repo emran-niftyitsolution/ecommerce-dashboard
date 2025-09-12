@@ -35,7 +35,17 @@ export default function EditProductPage({
   const [form] = Form.useForm();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<{
+    id: string;
+    name: string;
+    vendor: string;
+    category: string;
+    price: number;
+    stock: number;
+    status: string;
+    description: string;
+    images: string[];
+  } | null>(null);
   const { id } = use(params);
 
   // Mock product data - in a real app, this would come from an API
@@ -75,9 +85,9 @@ export default function EditProductPage({
       ...mockProduct,
       joinDate: dayjs(mockProduct.joinDate),
     });
-  }, [id, form]);
+  }, [id, form, mockProduct]);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (_values: unknown) => {
     setLoading(true);
     try {
       // Simulate API call
@@ -85,14 +95,16 @@ export default function EditProductPage({
 
       message.success("Product updated successfully!");
       router.push("/dashboard/products");
-    } catch (error) {
+    } catch (_error) {
       message.error("Failed to update product. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleImageUpload = (info: any) => {
+  const handleImageUpload = (info: {
+    file: { status: string; name: string };
+  }) => {
     if (info.file.status === "done") {
       message.success(`${info.file.name} uploaded successfully`);
     } else if (info.file.status === "error") {

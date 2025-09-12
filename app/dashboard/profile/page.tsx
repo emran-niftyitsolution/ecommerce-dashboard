@@ -27,7 +27,7 @@ export default function ProfilePage() {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log("Profile updated:", values);
     setIsEditing(false);
     // Handle profile update logic here

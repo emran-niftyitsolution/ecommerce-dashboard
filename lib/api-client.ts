@@ -1,4 +1,19 @@
-import { ApiResponse, PaginatedResponse } from "./types";
+import {
+  ApiResponse,
+  CreateCustomerRequest,
+  CreateOrderRequest,
+  CreateProductRequest,
+  CreateUserRequest,
+  Customer,
+  Order,
+  PaginatedResponse,
+  Product,
+  UpdateCustomerRequest,
+  UpdateOrderRequest,
+  UpdateProductRequest,
+  UpdateUserRequest,
+  User,
+} from "./types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -113,21 +128,21 @@ class ApiClient {
       ...(search && { search }),
     });
 
-    return this.request<PaginatedResponse<any>>(`/api/users?${params}`);
+    return this.request<PaginatedResponse<User>>(`/api/users?${params}`);
   }
 
   async getUser(id: string) {
     return this.request(`/api/users/${id}`);
   }
 
-  async createUser(userData: any) {
+  async createUser(userData: CreateUserRequest) {
     return this.request("/api/users", {
       method: "POST",
       body: JSON.stringify(userData),
     });
   }
 
-  async updateUser(id: string, userData: any) {
+  async updateUser(id: string, userData: UpdateUserRequest) {
     return this.request(`/api/users/${id}`, {
       method: "PUT",
       body: JSON.stringify(userData),
@@ -141,28 +156,32 @@ class ApiClient {
   }
 
   // Products endpoints
-  async getProducts(page: number = 1, limit: number = 10, filters?: any) {
+  async getProducts(
+    page: number = 1,
+    limit: number = 10,
+    filters?: Record<string, string>
+  ) {
     const params = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString(),
       ...filters,
     });
 
-    return this.request<PaginatedResponse<any>>(`/api/products?${params}`);
+    return this.request<PaginatedResponse<Product>>(`/api/products?${params}`);
   }
 
   async getProduct(id: string) {
     return this.request(`/api/products/${id}`);
   }
 
-  async createProduct(productData: any) {
+  async createProduct(productData: CreateProductRequest) {
     return this.request("/api/products", {
       method: "POST",
       body: JSON.stringify(productData),
     });
   }
 
-  async updateProduct(id: string, productData: any) {
+  async updateProduct(id: string, productData: UpdateProductRequest) {
     return this.request(`/api/products/${id}`, {
       method: "PUT",
       body: JSON.stringify(productData),
@@ -176,28 +195,32 @@ class ApiClient {
   }
 
   // Orders endpoints
-  async getOrders(page: number = 1, limit: number = 10, filters?: any) {
+  async getOrders(
+    page: number = 1,
+    limit: number = 10,
+    filters?: Record<string, string>
+  ) {
     const params = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString(),
       ...filters,
     });
 
-    return this.request<PaginatedResponse<any>>(`/api/orders?${params}`);
+    return this.request<PaginatedResponse<Order>>(`/api/orders?${params}`);
   }
 
   async getOrder(id: string) {
     return this.request(`/api/orders/${id}`);
   }
 
-  async createOrder(orderData: any) {
+  async createOrder(orderData: CreateOrderRequest) {
     return this.request("/api/orders", {
       method: "POST",
       body: JSON.stringify(orderData),
     });
   }
 
-  async updateOrder(id: string, orderData: any) {
+  async updateOrder(id: string, orderData: UpdateOrderRequest) {
     return this.request(`/api/orders/${id}`, {
       method: "PUT",
       body: JSON.stringify(orderData),
@@ -218,21 +241,23 @@ class ApiClient {
       ...(search && { search }),
     });
 
-    return this.request<PaginatedResponse<any>>(`/api/customers?${params}`);
+    return this.request<PaginatedResponse<Customer>>(
+      `/api/customers?${params}`
+    );
   }
 
   async getCustomer(id: string) {
     return this.request(`/api/customers/${id}`);
   }
 
-  async createCustomer(customerData: any) {
+  async createCustomer(customerData: CreateCustomerRequest) {
     return this.request("/api/customers", {
       method: "POST",
       body: JSON.stringify(customerData),
     });
   }
 
-  async updateCustomer(id: string, customerData: any) {
+  async updateCustomer(id: string, customerData: UpdateCustomerRequest) {
     return this.request(`/api/customers/${id}`, {
       method: "PUT",
       body: JSON.stringify(customerData),

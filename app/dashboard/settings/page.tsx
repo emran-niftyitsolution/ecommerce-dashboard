@@ -346,7 +346,9 @@ export default function SettingsPage() {
                 {securityAlerts.map((alert, index) => (
                   <Alert
                     key={index}
-                    type={alert.type as any}
+                    type={
+                      alert.type as "success" | "info" | "warning" | "error"
+                    }
                     message={alert.message}
                     showIcon
                     closable

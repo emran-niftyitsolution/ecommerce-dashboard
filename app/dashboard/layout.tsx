@@ -244,68 +244,11 @@ export default function DashboardLayout({
     },
   ];
 
-  // Mock search data - in a real app, this would come from an API
+  // Dynamic search data - will be populated from API when search endpoints are available
   const searchData = {
-    users: [
-      {
-        id: "USR-001",
-        name: "John Doe",
-        email: "john@example.com",
-        role: "Admin",
-      },
-      {
-        id: "USR-002",
-        name: "Jane Smith",
-        email: "jane@example.com",
-        role: "Manager",
-      },
-      {
-        id: "USR-003",
-        name: "Mike Johnson",
-        email: "mike@example.com",
-        role: "User",
-      },
-    ],
-    products: [
-      {
-        id: "PROD-001",
-        name: "Wireless Headphones",
-        category: "Electronics",
-        price: "$89.99",
-      },
-      {
-        id: "PROD-002",
-        name: "Smart Watch",
-        category: "Electronics",
-        price: "$199.99",
-      },
-      {
-        id: "PROD-003",
-        name: "Running Shoes",
-        category: "Sports",
-        price: "$129.99",
-      },
-    ],
-    orders: [
-      {
-        id: "ORD-001",
-        customer: "John Doe",
-        amount: "$299.99",
-        status: "Delivered",
-      },
-      {
-        id: "ORD-002",
-        customer: "Jane Smith",
-        amount: "$149.50",
-        status: "Processing",
-      },
-      {
-        id: "ORD-003",
-        customer: "Mike Johnson",
-        amount: "$89.99",
-        status: "Shipped",
-      },
-    ],
+    users: [],
+    products: [],
+    orders: [],
   };
 
   const filteredSearchResults = () => {

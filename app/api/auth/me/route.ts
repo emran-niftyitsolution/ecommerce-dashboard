@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Return user data without password
-    const { password: _, ...userWithoutPassword } = userData;
+    const { password: _password, ...userWithoutPassword } = userData;
 
     return NextResponse.json({
       success: true,

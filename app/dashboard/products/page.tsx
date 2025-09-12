@@ -1,5 +1,7 @@
 "use client";
 
+import { apiClient } from "@/lib/api-client";
+import { Product } from "@/lib/types";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -28,7 +30,7 @@ import {
 } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -41,132 +43,54 @@ export default function ProductsPage() {
   const [vendorFilter, setVendorFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const [products, setProducts] = useState([
-    {
-      key: "1",
-      id: "PROD-001",
-      name: "Wireless Bluetooth Headphones",
-      vendor: "TechCorp",
-      category: "Electronics",
-      price: 89.99,
-      stock: 45,
-      status: "active",
-      rating: 4.8,
-      sales: 156,
-      revenue: 14038.44,
-      image: "🎧",
-      images: [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=400&h=400&fit=crop",
-      ],
-      description:
-        "High-quality wireless headphones with noise cancellation technology. Features include 30-hour battery life, premium sound quality, and comfortable over-ear design.",
-      sku: "WH-001",
-      weight: "0.3kg",
-      dimensions: "20x15x8cm",
-      colors: ["Black", "White", "Blue"],
-      warranty: "2 years",
-      shipping: "Free shipping",
-      returnPolicy: "30-day return policy",
-    },
-    {
-      key: "2",
-      id: "PROD-002",
-      name: "Smart Fitness Watch",
-      vendor: "TechCorp",
-      category: "Electronics",
-      price: 199.99,
-      stock: 23,
-      status: "active",
-      rating: 4.6,
-      sales: 98,
-      revenue: 19599.02,
-      image: "⌚",
-      images: [
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&h=400&fit=crop",
-      ],
-      description:
-        "Advanced fitness tracking smartwatch with heart rate monitor, GPS tracking, and 7-day battery life. Water-resistant and compatible with iOS and Android.",
-      sku: "SFW-002",
-      weight: "0.05kg",
-      dimensions: "4x4x1cm",
-      colors: ["Black", "Silver", "Rose Gold"],
-      warranty: "1 year",
-      shipping: "Free shipping",
-      returnPolicy: "30-day return policy",
-    },
-    {
-      key: "3",
-      id: "PROD-003",
-      name: "Professional Running Shoes",
-      vendor: "SportMax",
-      category: "Sports",
-      price: 129.99,
-      stock: 67,
-      status: "active",
-      rating: 4.7,
-      sales: 87,
-      revenue: 11309.13,
-      image: "👟",
-      images: [
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&h=400&fit=crop",
-      ],
-      description:
-        "Professional-grade running shoes designed for athletes. Features lightweight design, superior cushioning, and excellent traction for all weather conditions.",
-      sku: "PRS-003",
-      weight: "0.8kg",
-      dimensions: "30x25x15cm",
-      colors: ["White", "Black", "Red"],
-      warranty: "6 months",
-      shipping: "Free shipping",
-      returnPolicy: "30-day return policy",
-    },
-    {
-      key: "4",
-      id: "PROD-004",
-      name: "Premium Coffee Maker",
-      vendor: "HomeStyle",
-      category: "Home & Garden",
-      price: 299.99,
-      stock: 12,
-      status: "active",
-      rating: 4.9,
-      sales: 76,
-      revenue: 22799.24,
-      image: "☕",
-      description: "Automatic coffee maker with programmable settings",
-      sku: "PCM-004",
-      weight: "2.5kg",
-      dimensions: "35x25x40cm",
-    },
-    {
-      key: "5",
-      id: "PROD-005",
-      name: "Yoga Mat Premium",
-      vendor: "SportMax",
-      category: "Sports",
-      price: 29.99,
-      stock: 89,
-      status: "active",
-      rating: 4.5,
-      sales: 65,
-      revenue: 1949.35,
-      image: "🧘",
-      description: "Non-slip yoga mat with carrying strap",
-      sku: "YMP-005",
-      weight: "1.2kg",
-      dimensions: "180x60x0.5cm",
-    },
+  const [products, setProducts] = useState<Product[]>([]);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+
+  // Fetch products data from API
+  const fetchProducts = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient.getProducts(
+        pagination.current,
+        pagination.pageSize
+      );
+
+      if (response.success && response.data) {
+        setProducts(response.data.data || []);
+        setPagination((prev) => ({
+          ...prev,
+          total: response.data?.pagination?.total || 0,
+        }));
+      } else {
+        message.error(response.error || "Failed to fetch products");
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      message.error("Failed to fetch products");
+    } finally {
+      setLoading(false);
+    }
+  }, [
+    pagination.current,
+    pagination.pageSize,
+    searchText,
+    categoryFilter,
+    vendorFilter,
+    statusFilter,
   ]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  // Helper functions for UI
 
   const categories = [
     "Electronics",
@@ -195,7 +119,7 @@ export default function ProductsPage() {
       title: "Product",
       dataIndex: "name",
       key: "name",
-      render: (text: string, record: any) => (
+      render: (text: string, record: Product) => (
         <div className="flex items-center gap-3">
           <Avatar
             size={40}
@@ -287,7 +211,7 @@ export default function ProductsPage() {
     {
       title: "Actions",
       key: "actions",
-      render: (_, record: any) => (
+      render: (_: unknown, record: Product) => (
         <Space size="small">
           <Tooltip title="View Details">
             <Button
@@ -319,36 +243,55 @@ export default function ProductsPage() {
     },
   ];
 
-  const handleViewProduct = (product: any) => {
+  const handleViewProduct = (product: Product) => {
     setSelectedProduct(product);
     setSelectedImageIndex(0);
     setIsModalVisible(true);
   };
 
-  const handleEditProduct = (product: any) => {
+  const handleEditProduct = (product: Product) => {
     router.push(`/dashboard/products/edit/${product.id}`);
   };
 
-  const handleDeleteProduct = (product: any) => {
+  const handleDeleteProduct = async (product: Product) => {
     Modal.confirm({
       title: "Delete Product",
       content: `Are you sure you want to delete ${product.name}? This action cannot be undone.`,
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
-      onOk() {
-        setProducts((prevProducts) =>
-          prevProducts.filter((p) => p.id !== product.id)
-        );
-        message.success(`Product ${product.name} deleted successfully`);
+      onOk: async () => {
+        try {
+          const response = await apiClient.deleteProduct(product._id);
+          if (response.success) {
+            message.success(`Product ${product.name} deleted successfully`);
+            fetchProducts(); // Refresh the list
+          } else {
+            message.error(response.error || "Failed to delete product");
+          }
+        } catch (error) {
+          console.error("Error deleting product:", error);
+          message.error("Failed to delete product");
+        }
       },
     });
   };
 
+  const handleTableChange = (pagination: {
+    current?: number;
+    pageSize?: number;
+  }) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: pagination.current || 1,
+      pageSize: pagination.pageSize || 10,
+    }));
+  };
+
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
-      product.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      product.vendor.toLowerCase().includes(searchText.toLowerCase());
+      product.name?.toLowerCase().includes(searchText.toLowerCase()) ||
+      product.vendor?.toLowerCase().includes(searchText.toLowerCase());
     const matchesCategory =
       categoryFilter === "all" || product.category === categoryFilter;
     const matchesVendor =
@@ -362,7 +305,7 @@ export default function ProductsPage() {
   const stats = [
     {
       title: "Total Products",
-      value: products.length,
+      value: pagination.total,
       icon: <ShoppingCartOutlined />,
       color: "blue",
     },
@@ -519,12 +462,15 @@ export default function ProductsPage() {
           dataSource={filteredProducts}
           loading={loading}
           pagination={{
-            pageSize: 10,
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: pagination.total,
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total, range) =>
               `${range[0]}-${range[1]} of ${total} products`,
           }}
+          onChange={handleTableChange}
           size="middle"
         />
       </Card>

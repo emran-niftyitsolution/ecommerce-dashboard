@@ -22,45 +22,33 @@ import {
 const { RangePicker } = DatePicker;
 
 export default function AnalyticsPage() {
-  // Sample data for analytics
-  const trafficData = [
-    { date: "2024-01-01", visitors: 1200, pageviews: 3400, sessions: 1100 },
-    { date: "2024-01-02", visitors: 1350, pageviews: 3800, sessions: 1250 },
-    { date: "2024-01-03", visitors: 1180, pageviews: 3200, sessions: 1080 },
-    { date: "2024-01-04", visitors: 1420, pageviews: 4100, sessions: 1320 },
-    { date: "2024-01-05", visitors: 1680, pageviews: 4800, sessions: 1580 },
-    { date: "2024-01-06", visitors: 1520, pageviews: 4300, sessions: 1420 },
-    { date: "2024-01-07", visitors: 1780, pageviews: 5200, sessions: 1680 },
-  ];
-
-  const deviceData = [
-    { device: "Desktop", users: 45, color: "#3b82f6", percentage: 45 },
-    { device: "Mobile", users: 35, color: "#10b981", percentage: 35 },
-    { device: "Tablet", users: 20, color: "#f59e0b", percentage: 20 },
-  ];
-
-  const channelData = [
-    { channel: "Organic Search", visitors: 3200, percentage: 40 },
-    { channel: "Direct", visitors: 2400, percentage: 30 },
-    { channel: "Social Media", visitors: 1600, percentage: 20 },
-    { channel: "Email", visitors: 800, percentage: 10 },
-  ];
-
-  const topPages = [
-    { page: "/dashboard", views: 12500, bounce: 35, time: "3:45" },
-    { page: "/products", views: 8900, bounce: 42, time: "2:30" },
-    { page: "/about", views: 5600, bounce: 28, time: "4:20" },
-    { page: "/contact", views: 3400, bounce: 65, time: "1:15" },
-    { page: "/blog", views: 2800, bounce: 38, time: "5:10" },
-  ];
-
-  const conversionFunnelData = [
-    { stage: "Visitors", count: 10000, percentage: 100 },
-    { stage: "Product Views", count: 6500, percentage: 65 },
-    { stage: "Add to Cart", count: 2600, percentage: 26 },
-    { stage: "Checkout", count: 1300, percentage: 13 },
-    { stage: "Purchase", count: 780, percentage: 7.8 },
-  ];
+  // Dynamic analytics data - will be populated from API when analytics endpoints are available
+  const trafficData: Array<{
+    date: string;
+    visitors: number;
+    pageViews: number;
+    bounceRate: number;
+  }> = [];
+  const deviceData: Array<{
+    device: string;
+    visitors: number;
+    percentage: number;
+  }> = [];
+  const channelData: Array<{
+    channel: string;
+    visitors: number;
+    percentage: number;
+  }> = [];
+  const topPages: Array<{
+    page: string;
+    visitors: number;
+    bounceRate: number;
+  }> = [];
+  const conversionFunnelData: Array<{
+    stage: string;
+    visitors: number;
+    conversionRate: number;
+  }> = [];
 
   const columns = [
     {
@@ -78,7 +66,7 @@ export default function AnalyticsPage() {
       render: (views: number) => (
         <span className="font-semibold">{views.toLocaleString()}</span>
       ),
-      sorter: (a: any, b: any) => a.views - b.views,
+      sorter: (a: { views: number }, b: { views: number }) => a.views - b.views,
     },
     {
       title: "Bounce Rate",
@@ -98,7 +86,8 @@ export default function AnalyticsPage() {
           <span className="text-sm">{bounce}%</span>
         </div>
       ),
-      sorter: (a: any, b: any) => a.bounce - b.bounce,
+      sorter: (a: { bounce: number }, b: { bounce: number }) =>
+        a.bounce - b.bounce,
     },
     {
       title: "Avg. Time",

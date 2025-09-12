@@ -18,7 +18,7 @@ async function seedDatabase() {
     console.log("🗑️ Cleared existing data");
 
     // Create admin user
-    const adminPassword = await AuthService.hashPassword("abcd1234");
+    const adminPassword = await AuthService.hashPassword("admin123");
     const adminUser: User = {
       email: "admin@dashboard.com",
       password: adminPassword,
@@ -30,11 +30,11 @@ async function seedDatabase() {
       updatedAt: new Date(),
     };
 
-    const adminResult = await db.collection("users").insertOne(adminUser);
+    await db.collection("users").insertOne(adminUser);
     console.log("👤 Created admin user");
 
     // Create manager user
-    const managerPassword = await AuthService.hashPassword("abcd1234");
+    const managerPassword = await AuthService.hashPassword("manager123");
     const managerUser: User = {
       email: "manager@dashboard.com",
       password: managerPassword,
@@ -50,7 +50,7 @@ async function seedDatabase() {
     console.log("👤 Created manager user");
 
     // Create regular user
-    const userPassword = await AuthService.hashPassword("abcd1234");
+    const userPassword = await AuthService.hashPassword("user123");
     const regularUser: User = {
       email: "user@dashboard.com",
       password: userPassword,
@@ -281,9 +281,9 @@ async function seedDatabase() {
 
     console.log("✅ Database seeding completed successfully!");
     console.log("\n📝 Login credentials:");
-    console.log("Admin: admin@dashboard.com / abcd1234");
-    console.log("Manager: manager@dashboard.com / abcd1234");
-    console.log("User: user@dashboard.com / abcd1234");
+    console.log("Admin: admin@dashboard.com / admin123");
+    console.log("Manager: manager@dashboard.com / manager123");
+    console.log("User: user@dashboard.com / user123");
   } catch (error) {
     console.error("❌ Error seeding database:", error);
     process.exit(1);

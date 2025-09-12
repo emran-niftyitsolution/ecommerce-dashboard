@@ -98,7 +98,7 @@ export function withAuth(
       }
 
       // Add user to request object (this is a simplified approach)
-      (req as any).user = user;
+      (req as { user: User }).user = user;
       return handler(req, res);
     } catch {
       return new Response(
