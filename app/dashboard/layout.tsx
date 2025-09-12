@@ -30,7 +30,7 @@ import {
   Modal,
   Spin,
 } from "antd";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const { Header, Sider, Content } = Layout;
@@ -56,7 +56,10 @@ export default function DashboardLayout({
     useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [userLoading, setUserLoading] = useState(true);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
@@ -83,6 +86,40 @@ export default function DashboardLayout({
     setUser(null);
     router.push("/login");
   };
+
+  const handleMenuClick = (key: string) => {
+    setSelectedKeys([key]);
+  };
+
+  // Update active menu item based on current pathname
+  useEffect(() => {
+    const updateActiveMenu = () => {
+      // Set the selected key based on current pathname
+      setSelectedKeys([pathname]);
+
+      // Set open keys for submenus
+      const openKeysArray: string[] = [];
+
+      if (
+        pathname.startsWith("/dashboard/users") ||
+        pathname.startsWith("/dashboard/customers") ||
+        pathname.startsWith("/dashboard/vendors")
+      ) {
+        openKeysArray.push("people");
+      }
+
+      if (
+        pathname.startsWith("/dashboard/reports") ||
+        pathname.startsWith("/dashboard/analytics")
+      ) {
+        openKeysArray.push("reports");
+      }
+
+      setOpenKeys(openKeysArray);
+    };
+
+    updateActiveMenu();
+  }, [pathname]);
 
   // Fetch current user data
   useEffect(() => {
@@ -114,7 +151,10 @@ export default function DashboardLayout({
       key: "/dashboard",
       icon: <HomeOutlined />,
       label: "Overview",
-      onClick: () => router.push("/dashboard"),
+      onClick: () => {
+        handleMenuClick("/dashboard");
+        router.push("/dashboard");
+      },
     },
     {
       key: "people",
@@ -125,19 +165,28 @@ export default function DashboardLayout({
           key: "/dashboard/users",
           icon: <TeamOutlined />,
           label: "Users",
-          onClick: () => router.push("/dashboard/users"),
+          onClick: () => {
+            handleMenuClick("/dashboard/users");
+            router.push("/dashboard/users");
+          },
         },
         {
           key: "/dashboard/customers",
           icon: <UserOutlined />,
           label: "Customers",
-          onClick: () => router.push("/dashboard/customers"),
+          onClick: () => {
+            handleMenuClick("/dashboard/customers");
+            router.push("/dashboard/customers");
+          },
         },
         {
           key: "/dashboard/vendors",
           icon: <ShopOutlined />,
           label: "Vendors",
-          onClick: () => router.push("/dashboard/vendors"),
+          onClick: () => {
+            handleMenuClick("/dashboard/vendors");
+            router.push("/dashboard/vendors");
+          },
         },
       ],
     },
@@ -145,13 +194,19 @@ export default function DashboardLayout({
       key: "/dashboard/products",
       icon: <ShoppingCartOutlined />,
       label: "Products",
-      onClick: () => router.push("/dashboard/products"),
+      onClick: () => {
+        handleMenuClick("/dashboard/products");
+        router.push("/dashboard/products");
+      },
     },
     {
       key: "/dashboard/orders",
       icon: <ShoppingOutlined />,
       label: "Orders",
-      onClick: () => router.push("/dashboard/orders"),
+      onClick: () => {
+        handleMenuClick("/dashboard/orders");
+        router.push("/dashboard/orders");
+      },
     },
     {
       key: "reports",
@@ -162,13 +217,19 @@ export default function DashboardLayout({
           key: "/dashboard/reports",
           icon: <FileTextOutlined />,
           label: "General Reports",
-          onClick: () => router.push("/dashboard/reports"),
+          onClick: () => {
+            handleMenuClick("/dashboard/reports");
+            router.push("/dashboard/reports");
+          },
         },
         {
           key: "/dashboard/analytics",
           icon: <BarChartOutlined />,
           label: "Analytics",
-          onClick: () => router.push("/dashboard/analytics"),
+          onClick: () => {
+            handleMenuClick("/dashboard/analytics");
+            router.push("/dashboard/analytics");
+          },
         },
       ],
     },
@@ -176,7 +237,10 @@ export default function DashboardLayout({
       key: "/dashboard/settings",
       icon: <SettingOutlined />,
       label: "Settings",
-      onClick: () => router.push("/dashboard/settings"),
+      onClick: () => {
+        handleMenuClick("/dashboard/settings");
+        router.push("/dashboard/settings");
+      },
     },
   ];
 
@@ -315,7 +379,9 @@ export default function DashboardLayout({
               <div className="py-4">
                 <Menu
                   mode="inline"
-                  defaultSelectedKeys={["/dashboard"]}
+                  selectedKeys={selectedKeys}
+                  openKeys={openKeys}
+                  onOpenChange={setOpenKeys}
                   items={menuItems}
                   className="border-none bg-white"
                   style={{
