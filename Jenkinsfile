@@ -23,12 +23,21 @@ pipeline {
                 dir(APP_DIR) {
                     sh '''
                         echo "Deploying $PM2_NAME from $BRANCH_NAME..."
+                        
+                        # Use fetch/reset for a clean, non-interactive update
+                        git fetch origin
+                        git reset --hard origin/$BRANCH_NAME 
+                        
+                        # 1. Install all dependencies for the build
+                        npm ci 
 
-                        git pull origin $BRANCH_NAME
-
-                        npm ci --only=production
+                        # 2. Run the build (now devDependencies are available)
                         npm run build
-
+                        
+                        # 3. Prune dev dependencies before starting the app (optional, saves space)
+                        npm prune --production
+                        
+                        # 4. Restart or Start the application
                         pm2 restart $PM2_NAME || pm2 start npm --name "$PM2_NAME" -- start
 
                         echo "Deployed!"
