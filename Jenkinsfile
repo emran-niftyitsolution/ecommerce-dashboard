@@ -2,23 +2,25 @@ pipeline {
     agent any
     tools { nodejs 'nodejs' }
 
-    triggers { githubPush() }  // Auto-trigger on push
+    triggers { githubPush() }
 
     environment {
         APP_DIR  = '/home/nifty/ecommerce-dashboard'
         PM2_NAME = 'ecommerce-dashboard'
-        BRANCH   = 'main'
     }
 
     stages {
         stage('Deploy on Push') {
-            when { branch BRANCH }  // Only run on main
+            when {
+                expression { env.BRANCH_NAME == 'main' }  // Correct way!
+            }
             steps {
                 dir(APP_DIR) {
                     sh '''
-                        echo "Deploying $PM2_NAME from $BRANCH..."
+                        echo "Deploying $PM2_NAME from $BRANCH_NAME..."
 
-                        git pull origin $BRANCH
+                        git checkout $BRANCH_NAME
+                        git pull origin $BRANCH_NAME
 
                         npm ci --only=production
                         npm run build
