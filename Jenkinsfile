@@ -11,9 +11,6 @@ pipeline {
 
     stages {
         stage('Deploy on Push') {
-            when {
-                branch 'main'
-            }
             steps {
                 dir(APP_DIR) {
                     sh '''
