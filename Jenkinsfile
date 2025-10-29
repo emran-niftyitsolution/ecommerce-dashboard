@@ -18,13 +18,15 @@ pipeline {
             }
         }
 
-        stage('Deploy on Push') {
-
-stage('Fix Git Safety Error') {
+        stage('Fix Git Safety Error') {
             steps {
                 sh 'git config --global --add safe.directory /home/nifty/ecommerce-dashboard'
             }
         }
+
+        stage('Deploy on Push') {
+
+
 
             steps {
                     sh '''
