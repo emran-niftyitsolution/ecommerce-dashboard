@@ -33,6 +33,6 @@ pipeline {
 
     post {
         success { echo "$PM2_NAME updated & live!" }
-        failure { echo "Deploy failed." }
+        failure { echo "Deploy failed!" }
     }
 }
