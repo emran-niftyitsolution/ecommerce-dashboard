@@ -11,6 +11,13 @@ pipeline {
     }
 
     stages {
+
+        stage('Debug User') {
+            steps {
+                sh 'whoami'
+            }
+        }
+
         stage('Deploy on Push') {
             steps {
                 dir(APP_DIR) {
