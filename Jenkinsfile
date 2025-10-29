@@ -19,6 +19,13 @@ pipeline {
         }
 
         stage('Deploy on Push') {
+
+stage('Fix Git Safety Error') {
+            steps {
+                sh 'git config --global --add safe.directory /home/nifty/ecommerce-dashboard'
+            }
+        }
+
             steps {
                     sh '''
                         echo "Deploying $PM2_NAME from $BRANCH_NAME..."
