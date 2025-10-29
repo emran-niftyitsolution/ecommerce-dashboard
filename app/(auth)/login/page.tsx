@@ -1,11 +1,7 @@
 "use client";
 
 import { apiClient } from "@/lib/api-client";
-import {
-  GithubOutlined,
-  GoogleOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { GithubOutlined, GoogleOutlined } from "@ant-design/icons";
 import { Alert, Button, Checkbox, Divider, Form, Input, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -455,14 +451,7 @@ export default function LoginPage() {
                     disabled={loading}
                     className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 border-0 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-200"
                   >
-                    {loading ? (
-                      <>
-                        <LoadingOutlined className="mr-2" />
-                        Signing in...
-                      </>
-                    ) : (
-                      "Sign in to account"
-                    )}
+                    Sign in to account
                   </Button>
                 </Form.Item>
               </Form>
