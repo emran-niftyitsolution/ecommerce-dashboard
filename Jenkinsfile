@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Deploy on Push') {
             when {
-                expression { env.BRANCH_NAME == 'main' }  // Correct way!
+                branch 'main'
             }
             steps {
                 dir(APP_DIR) {
