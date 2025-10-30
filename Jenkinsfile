@@ -1,41 +1,46 @@
 pipeline {
     agent any
-    tools { nodejs 'nodejs' } // Optional: bun doesn't need Node.js tools
+    tools { nodejs 'nodejs' }
+
     triggers { githubPush() }
 
     environment {
-        APP_DIR     = '/home/nifty/ecommerce-dashboard'
-        PM2_NAME    = 'ecommerce-dashboard'
+        APP_DIR  = '/home/nifty/ecommerce-dashboard'
+        PM2_NAME = 'ecommerce-dashboard'
         BRANCH_NAME = 'main'
     }
 
     stages {
-        stage('Deploy with Bun') {
+
+        // stage('Fix Git Safety Error') {
+        //     steps {
+        //         sh 'git config --global --add safe.directory /home/nifty/ecommerce-dashboard'
+        //     }
+        // }
+
+        stage('Deploy on Push') {
             steps {
                     sh '''
-                        echo "Deploying $PM2_NAME from $BRANCH_NAME using Bun..."
+                        echo "Deploying $PM2_NAME from $BRANCH_NAME..."
 
-                        echo "Changing directory to $APP_DIR"
+                        echo "Current directory: $(pwd)"
                         cd $APP_DIR
 
-                        # Pull latest code
                         git pull origin $BRANCH_NAME
 
-                        # Use Bun to install & build
-                        bun install --frozen-lockfile
-                        bun run build
+                        npm i --only=production
+                        npm run build
 
-                        # Restart with PM2
-                        pm2 restart $PM2_NAME || pm2 start bun --name "$PM2_NAME" -- run start
+                        pm2 restart $PM2_NAME || pm2 start npm --name "$PM2_NAME" -- start
 
-                        echo "Deployed with Bun!"
+                        echo "Deployed!"
                     '''
             }
         }
     }
 
     post {
-        success { echo "$PM2_NAME updated & live with Bun!" }
-        failure { echo "Bun deploy failed!" }
+        success { echo "$PM2_NAME updated & live!" }
+        failure { echo "Deploy failed!" }
     }
 }
