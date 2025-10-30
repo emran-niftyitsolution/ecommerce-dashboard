@@ -20,10 +20,12 @@ pipeline {
                     sh '''
                         cd $APP_DIR
                         git pull origin $BRANCH_NAME
-                        npm i --only=production
-                        npm run build
+                        
+                        bun install --production
+                        bun run build
+
                         pm2 restart ${PM2_NAME} || \
-                        pm2 start npm --name "${PM2_NAME}" -- run start -- --port ${PORT}
+                        pm2 start bun --name "${PM2_NAME}" -- run start -- --port ${PORT}
 
                         echo "Deployed Successfully!"
                     '''
