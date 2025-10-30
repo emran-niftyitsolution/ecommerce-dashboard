@@ -235,7 +235,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Multi-Vendor Ecommerce Dashboard (Demo)
+          Multi-Vendor Ecommerce Dashboard
         </h1>
         <p className="text-gray-600 text-lg">
           Monitor your marketplace performance, vendor activities, and business
