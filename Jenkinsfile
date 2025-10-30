@@ -8,7 +8,7 @@ pipeline {
         APP_DIR  = '/home/nifty/ecommerce-dashboard'
         BRANCH_NAME = 'main'
 
-        PATH = "/usr/local/bin:/usr/bin:/bin"
+        PATH = "/home/nifty/.bun/bin:/usr/local/bin:/usr/bin:/bin"
         PM2_HOME = '/home/nifty/.pm2'
         PM2_NAME = 'ecommerce-dashboard'
         PORT = 3001
