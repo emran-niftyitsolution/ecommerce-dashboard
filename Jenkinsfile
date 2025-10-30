@@ -21,7 +21,7 @@ pipeline {
                         cd $APP_DIR
                         git pull origin $BRANCH_NAME
                         
-                        bun install --production
+                        bun install --production --frozen-lockfile
                         bun run build
 
                         pm2 restart ${PM2_NAME} || \
