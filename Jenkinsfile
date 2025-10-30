@@ -7,6 +7,8 @@ pipeline {
     environment {
         APP_DIR  = '/home/nifty/ecommerce-dashboard'
         BRANCH_NAME = 'main'
+
+        PM2 = "/usr/bin/pm2"
         PM2_NAME = 'ecommerce-dashboard'
     }
 
@@ -18,7 +20,7 @@ pipeline {
                         git pull origin $BRANCH_NAME
                         npm i --only=production
                         npm run build
-                        pm2 restart ${PM2_NAME} || pm2 start npm --name "${PM2_NAME}" -- run start
+                        ${PM2} restart ${PM2_NAME} || ${PM2} start npm --name "${PM2_NAME}" -- run start
 
                         echo "Deployed!"
                     '''
