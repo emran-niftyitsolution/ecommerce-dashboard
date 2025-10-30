@@ -8,6 +8,8 @@ pipeline {
         APP_DIR  = '/home/nifty/ecommerce-dashboard'
         BRANCH_NAME = 'main'
 
+        PATH = "/usr/local/bin:/usr/bin:/bin"
+        PM2_HOME = '/home/nifty/.pm2'
         PM2 = "/usr/bin/pm2"
         PM2_NAME = 'ecommerce-dashboard'
     }
@@ -22,7 +24,7 @@ pipeline {
                         npm run build
                         ${PM2} restart ${PM2_NAME} || ${PM2} start npm --name "${PM2_NAME}" -- run start
 
-                        echo "Deployed!"
+                        echo "Deployed Successfully!"
                     '''
             }
         }
@@ -30,6 +32,6 @@ pipeline {
 
     post {
         success { echo "$PM2_NAME updated & live!" }
-        failure { echo "Deploy failed!" }
+        failure { echo "Deploy Failed!" }
     }
 }
