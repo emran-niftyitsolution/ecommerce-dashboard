@@ -11,6 +11,7 @@ pipeline {
         PATH = "/usr/local/bin:/usr/bin:/bin"
         PM2_HOME = '/home/nifty/.pm2'
         PM2_NAME = 'ecommerce-dashboard'
+        PORT = 3001
     }
 
     stages {
@@ -22,7 +23,7 @@ pipeline {
                         npm i --only=production
                         npm run build
                         pm2 restart ${PM2_NAME} || \
-                        pm2 start npm --name "${PM2_NAME}" -- run start -- --port 3001
+                        pm2 start npm --name "${PM2_NAME}" -- run start -- --port ${PORT}
 
                         echo "Deployed Successfully!"
                     '''
