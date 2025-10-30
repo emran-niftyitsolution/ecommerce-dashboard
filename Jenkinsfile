@@ -12,9 +12,11 @@ pipeline {
     stages {
         stage('Deploy with Bun') {
             steps {
-                dir(APP_DIR) {
                     sh '''
                         echo "Deploying $PM2_NAME from $BRANCH_NAME using Bun..."
+
+                        echo "Changing directory to $APP_DIR"
+                        cd $APP_DIR
 
                         # Pull latest code
                         git pull origin $BRANCH_NAME
@@ -28,7 +30,6 @@ pipeline {
 
                         echo "Deployed with Bun!"
                     '''
-                }
             }
         }
     }
