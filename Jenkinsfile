@@ -6,8 +6,8 @@ pipeline {
 
     environment {
         APP_DIR  = '/home/nifty/ecommerce-dashboard'
-        PM2_NAME = 'ecommerce-dashboard'
         BRANCH_NAME = 'main'
+        PM2_NAME = 'ecommerce-dashboard'
     }
 
     stages {
@@ -18,7 +18,7 @@ pipeline {
                         git pull origin $BRANCH_NAME
                         npm i --only=production
                         npm run build
-                        pm2 restart $PM2_NAME || pm2 start npm --name "$PM2_NAME" -- start
+                        pm2 restart $PM2_NAME
 
                         echo "Deployed!"
                     '''
