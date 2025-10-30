@@ -18,7 +18,7 @@ pipeline {
                         git pull origin $BRANCH_NAME
                         npm i --only=production
                         npm run build
-                        pm2 restart $PM2_NAME
+                        pm2 restart ${PM2_NAME} || pm2 start bun --name "${PM2_NAME}" -- run start
 
                         echo "Deployed!"
                     '''
